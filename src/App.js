@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/LogPrueba';
-import MapaConductor from './components/Pruebas';
+import MapaConductor from './components/NuevaBusqueda';
 import AdminPanel from './components/AdminPanel';
 
 function App() {
