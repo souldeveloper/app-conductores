@@ -227,10 +227,11 @@ const MapaConductor = () => {
       const filteredHotels = allHotels.filter(hotel =>
         hotel.nombre && hotel.nombre.toLowerCase().includes(searchQuery.toLowerCase())
       );
+      // Usar "lng" de forma consistente
       const results = filteredHotels.map(hotel => ({
         displayName: hotel.nombre,
         lat: hotel.lat,
-        lon: hotel.lng
+        lng: hotel.lng
       }));
       setSearchResults(results);
     } catch (err) {
@@ -239,19 +240,24 @@ const MapaConductor = () => {
     setLoadingSearch(false);
   };
 
-  // Agregar hotel a la subcolección del conductor (usando "nombre")
+  // Agregar hotel a la subcolección del conductor (usando "nombre" y "lng")
   const handleAddHotel = async (hotelItem) => {
     if (!conductor) return;
+    // Verificar que existan las coordenadas
+    if (hotelItem.lat === undefined || hotelItem.lng === undefined) {
+      console.error("Faltan coordenadas en el hotel:", hotelItem);
+      return;
+    }
     try {
       const newHotelRef = doc(collection(db, `usuarios/${conductor.id}/hoteles`));
       await setDoc(newHotelRef, {
         nombre: hotelItem.displayName,
         lat: hotelItem.lat,
-        lng: hotelItem.lon
+        lng: hotelItem.lng
       });
       setHoteles((prev) => [
         ...prev,
-        { id: newHotelRef.id, nombre: hotelItem.displayName, lat: hotelItem.lat, lng: hotelItem.lon }
+        { id: newHotelRef.id, nombre: hotelItem.displayName, lat: hotelItem.lat, lng: hotelItem.lng }
       ]);
     } catch (err) {
       console.error("Error adding hotel:", err);
@@ -270,8 +276,8 @@ const MapaConductor = () => {
   };
 
   // Función para dibujar la línea entre el hotel y el punto de recogida.
-  // Se verifica si, al menos, uno de los textos (nombre del hotel o descripción de la alerta)
-  // está contenido en el otro (ignorando mayúsculas), para dibujar la línea.
+  // Se verifica si la descripción de la alerta contiene (ignorando mayúsculas) el nombre del hotel
+  // y se aseguran que ambas coordenadas existan.
   const handleHotelIconClick = (hotel) => {
     const hotelName = hotel.displayName
       ? hotel.displayName.split(',')[0].trim()
@@ -282,18 +288,23 @@ const MapaConductor = () => {
       const hName = hotelName.toLowerCase();
       return desc.includes(hName) || hName.includes(desc);
     });
-    if (matchingPickup && matchingPickup.coordenadas) {
+    if (
+      matchingPickup && 
+      matchingPickup.coordenadas &&
+      hotel.lat !== undefined &&
+      hotel.lng !== undefined &&
+      matchingPickup.coordenadas.lat !== undefined &&
+      matchingPickup.coordenadas.lng !== undefined
+    ) {
       const lineCoords = [
-        hotel.lat ? [hotel.lat, hotel.lng] : null,
+        [hotel.lat, hotel.lng],
         [matchingPickup.coordenadas.lat, matchingPickup.coordenadas.lng]
       ];
-      if (lineCoords[0]) {
-        setTempLine(lineCoords);
-        // Se elimina la línea después de 10 segundos
-        setTimeout(() => setTempLine(null), 10000);
-      }
+      setTempLine(lineCoords);
+      // Se elimina la línea después de 10 segundos
+      setTimeout(() => setTempLine(null), 10000);
     } else {
-      console.log("No se encontró punto de recogida para:", hotelName);
+      console.log("No se encontró punto de recogida válido para:", hotelName);
     }
   };
 
