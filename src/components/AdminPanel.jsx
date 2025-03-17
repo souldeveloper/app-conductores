@@ -1,6 +1,6 @@
 // src/components/AdminPanel.jsx
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Button, Row, Col, Table, Alert, Form } from 'react-bootstrap';
+import { Container, Button, Row, Col, Table, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, FeatureGroup, Polyline, Marker, Popup } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
@@ -25,7 +25,7 @@ const getColor = (tipo) => {
   }
 };
 
-// Íconos existentes
+// Íconos
 const alertaIcon = L.icon({
   iconUrl: '/iconos/alerta.png',
   iconSize: [25, 25],
@@ -41,15 +41,13 @@ const conductorIcon = L.icon({
   iconSize: [35, 35],
   iconAnchor: [17, 17],
 });
-
-// Ícono para hoteles (asegúrate de tener la imagen en /iconos/hotel.png)
 const hotelIcon = L.icon({
   iconUrl: '/iconos/hotel.png',
   iconSize: [25, 25],
   iconAnchor: [12, 12],
 });
 
-// Componente auxiliar para capturar la instancia del mapa usando useMap
+// Componente auxiliar para capturar la instancia del mapa
 const SetMapInstance = ({ setMapInstance }) => {
   const map = useMap();
   useEffect(() => {
@@ -65,22 +63,20 @@ const AdminPanel = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState('');
   const [mapInstance, setMapInstance] = useState(null);
-
-  // Estados de datos del mapa
   const [rutas, setRutas] = useState([]);
   const [alertas, setAlertas] = useState([]);
-  // Nuevo estado para hoteles
   const [hoteles, setHoteles] = useState([]);
-  
-  const [center, setCenter] = useState([39.70241114681138, 2.9437189174222302]); // Centro por defecto
-  const mapRef = useRef(null);
+  const [center, setCenter] = useState([39.70241114681138, 2.9437189174222302]);
   const featureGroupRef = useRef(null);
+
+  // Estado para saber qué ruta se está editando
+  const [editingRoute, setEditingRoute] = useState(null);
 
   // Estados para selectores
   const [selectedLineColor, setSelectedLineColor] = useState('green');
   const [selectedMarkerType, setSelectedMarkerType] = useState('alerta');
 
-  // Validación de sesión y acceso de admin (sin cambios)
+  // Validación de sesión y acceso de admin
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
@@ -130,7 +126,7 @@ const AdminPanel = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  // Cargar rutas y alertas
+  // Cargar rutas y alertas desde Firestore
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -158,7 +154,7 @@ const AdminPanel = () => {
     fetchData();
   }, []);
 
-  // Cargar hoteles desde Firestore
+  // Cargar hoteles
   useEffect(() => {
     const fetchHoteles = async () => {
       try {
@@ -177,7 +173,7 @@ const AdminPanel = () => {
     fetchHoteles();
   }, []);
 
-  // Cargar usuarios para el listado en el panel
+  // Cargar usuarios
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
@@ -227,10 +223,9 @@ const AdminPanel = () => {
     if (layerType === 'marker') {
       const { lat, lng } = layer.getLatLng();
 
-      // Caso de hotel
       if (selectedMarkerType === 'hotel') {
         const nombre = prompt('Ingrese el nombre del hotel', 'Hotel');
-        if (!nombre) return; // Si no se ingresa nombre, no se guarda
+        if (!nombre) return;
         try {
           const docRef = await addDoc(collection(db, 'hoteles'), { nombre, lat, lng });
           layer.options.docIdHotel = docRef.id;
@@ -239,7 +234,6 @@ const AdminPanel = () => {
           console.error('Error saving hotel:', err);
         }
       } else {
-        // Casos existentes: alerta y punto de recogida
         const tipo = selectedMarkerType;
         const title = prompt('Ingrese un título para la marca', 'Título');
         const description = prompt('Ingrese una descripción para la marca', 'Descripción');
@@ -262,14 +256,27 @@ const AdminPanel = () => {
     }
   };
 
+  // Actualización de rutas desde el EditControl (edición directa en la UI de leaflet-draw)
   const onEdited = async (e) => {
     const { layers } = e;
-    layers.eachLayer((layer) => {
-      console.log('Edited layer:', layer);
-      // Aquí se podría actualizar la información en Firestore si se detecta un cambio
+    layers.eachLayer(async (layer) => {
+      if (layer.options && layer.options.docId) {
+        const newCoordinates = layer.getLatLngs().map((ll) => ({ lat: ll.lat, lng: ll.lng }));
+        try {
+          await updateDoc(doc(db, 'rutas', layer.options.docId), { coordenadas: newCoordinates });
+          setRutas((prev) =>
+            prev.map((ruta) =>
+              ruta.id === layer.options.docId ? { ...ruta, coordenadas: newCoordinates } : ruta
+            )
+          );
+        } catch (err) {
+          console.error('Error actualizando la ruta:', err);
+        }
+      }
     });
   };
 
+  // Eliminación de figuras (rutas, alertas y hoteles)
   const onDeleted = async (e) => {
     const { layers } = e;
     layers.eachLayer(async (layer) => {
@@ -291,7 +298,6 @@ const AdminPanel = () => {
           console.error('Error deleting marker:', err);
         }
       }
-      // Si se elimina un marcador de hotel
       if (layer.options && layer.options.docIdHotel) {
         try {
           await deleteDoc(doc(db, 'hoteles', layer.options.docIdHotel));
@@ -305,7 +311,7 @@ const AdminPanel = () => {
     });
   };
 
-  // Función para actualizar la posición de un hotel al arrastrarlo
+  // Actualizar la posición de un hotel al arrastrarlo
   const handleHotelDragEnd = async (e, hotelId) => {
     const { lat, lng } = e.target.getLatLng();
     try {
@@ -321,18 +327,19 @@ const AdminPanel = () => {
   };
 
   // Función para desactivar un usuario
-const handleDeactivateUser = async (userId) => {
-  try {
-    await updateDoc(doc(db, 'usuarios', userId), { activo: false });
-    setUsuarios((prev) =>
-      prev.map((user) =>
-        user.id === userId ? { ...user, activo: false } : user
-      )
-    );
-  } catch (err) {
-    console.error('Error deactivating user:', err);
-  }
-};
+  const handleDeactivateUser = async (userId) => {
+    try {
+      await updateDoc(doc(db, 'usuarios', userId), { activo: false });
+      setUsuarios((prev) =>
+        prev.map((user) =>
+          user.id === userId ? { ...user, activo: false } : user
+        )
+      );
+    } catch (err) {
+      console.error('Error deactivating user:', err);
+    }
+  };
+
   // Función para editar un hotel (por ejemplo, cambiar el nombre)
   const handleEditHotel = async (hotelId, currentHotel) => {
     const nuevoNombre = prompt('Ingrese el nuevo nombre del hotel', currentHotel.nombre);
@@ -359,9 +366,8 @@ const handleDeactivateUser = async (userId) => {
     }
   };
 
-  // Función para editar información de usuario
+  // Función para editar la información de un usuario
   const handleEditUser = async (userId, currentUserData) => {
-    // Aquí se puede elegir qué campo editar. Por ejemplo, editar el nombre de usuario:
     const nuevoUsuario = prompt('Ingrese el nuevo nombre de usuario', currentUserData.usuario);
     if (!nuevoUsuario) return;
     try {
@@ -376,7 +382,7 @@ const handleDeactivateUser = async (userId) => {
     }
   };
 
-  // Cerrar sesión
+  // Función para cerrar sesión
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -388,197 +394,280 @@ const handleDeactivateUser = async (userId) => {
     }
   };
 
+  // --- Funcionalidad de edición personalizada de rutas ---
+  // Al hacer clic en "Editar ruta" desde el Popup se activa el modo de edición
+  const handleVertexDrag = (e, index) => {
+    const { lat, lng } = e.target.getLatLng();
+    setEditingRoute((prev) => {
+      const newCoords = [...prev.coordenadas];
+      newCoords[index] = { lat, lng };
+      return { ...prev, coordenadas: newCoords };
+    });
+  };
+
+  const saveEditedRoute = async () => {
+    if (!editingRoute) return;
+    try {
+      await updateDoc(doc(db, 'rutas', editingRoute.id), { coordenadas: editingRoute.coordenadas });
+      setRutas((prev) =>
+        prev.map((ruta) =>
+          ruta.id === editingRoute.id ? editingRoute : ruta
+        )
+      );
+      setEditingRoute(null);
+    } catch (err) {
+      console.error("Error guardando la edición de la ruta:", err);
+    }
+  };
+  // --- Fin funcionalidad de edición personalizada ---
+
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <Container fluid>
-      <Row className="mb-3">
-        <Col md={4}>
-          <Form.Group controlId="lineColor">
-            <Form.Label>Color de la línea:</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedLineColor}
-              onChange={(e) => setSelectedLineColor(e.target.value)}
-            >
-              <option value="green">Verde (Segura)</option>
-              <option value="yellow">Amarilla (Advertencia)</option>
-              <option value="red">Roja (Prohibida)</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col md={4}>
-          <Form.Group controlId="markerType">
-            <Form.Label>Tipo de punto:</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedMarkerType}
-              onChange={(e) => setSelectedMarkerType(e.target.value)}
-            >
-              <option value="alerta">Alerta (Triángulo)</option>
-              <option value="puntoRecogida">Punto de Recogida (Casita)</option>
-              <option value="hotel">Hotel</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-       
-      </Row>
-      <Row>
-        <Col md={9}>
-          <MapContainer center={center} zoom={10} style={{ height: '80vh' }}>
-            <SetMapInstance setMapInstance={setMapInstance} />
-            <TileLayer
-              attribution="&copy; OpenStreetMap contributors"
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <FeatureGroup ref={featureGroupRef}>
-              <EditControl
-                position="topright"
-                onCreated={onCreated}
-                onEdited={onEdited}
-                onDeleted={onDeleted}
-                draw={{
-                  rectangle: false,
-                  circle: false,
-                  circlemarker: false,
-                  polygon: false,
-                  marker: true,
-                  polyline: {
-                    shapeOptions: {
-                      color: selectedLineColor,
-                    },
-                  },
-                }}
-              />
-            </FeatureGroup>
-            {rutas.map((ruta) =>
-              Array.isArray(ruta.coordenadas) ? (
-                <Polyline
-                  key={ruta.id}
-                  positions={ruta.coordenadas.map((c) => [c.lat, c.lng])}
-                  color={getColor(ruta.tipo)}
-                >
-                  <Popup>
-                    <h5>Ruta: {ruta.tipo}</h5>
-                    <Button
-                      variant="danger"
-                      onClick={() =>
-                        deleteDoc(doc(db, 'rutas', ruta.id)).then(() =>
-                          setRutas((prev) =>
-                            prev.filter((r) => r.id !== ruta.id)
-                          )
-                        )
-                      }
-                    >
-                      Eliminar esta ruta
-                    </Button>
-                  </Popup>
-                </Polyline>
-              ) : null
-            )}
-            {alertas.map((alerta) =>
-              alerta.coordenadas ? (
-                <Marker
-                  key={alerta.id}
-                  position={[alerta.coordenadas.lat, alerta.coordenadas.lng]}
-                  icon={
-                    alerta.tipo === 'puntoRecogida'
-                      ? puntoRecogidaIcon
-                      : alertaIcon
-                  }
-                >
-                  <Popup>
-                    <h5>{alerta.title || 'Sin título'}</h5>
-                    <p>{alerta.description || 'Sin descripción'}</p>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() =>
-                        deleteDoc(doc(db, 'alertas', alerta.id)).then(() =>
-                          setAlertas((prev) =>
-                            prev.filter((a) => a.id !== alerta.id)
-                          )
-                        )
-                      }
-                    >
-                      Eliminar punto
-                    </Button>
-                  </Popup>
-                </Marker>
-              ) : null
-            )}
-            {hoteles.map((hotel) => (
-              <Marker
-                key={hotel.id}
-                position={[hotel.lat, hotel.lng]}
-                icon={hotelIcon}
-                draggable={true}
-                eventHandlers={{
-                  dragend: (e) => handleHotelDragEnd(e, hotel.id),
-                }}
+        <Row className="mb-3">
+          <Col md={4}>
+            <Form.Group controlId="lineColor">
+              <Form.Label>Color de la línea:</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedLineColor}
+                onChange={(e) => setSelectedLineColor(e.target.value)}
               >
-                <Popup>
-                  <h5>{hotel.nombre}</h5>
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => handleEditHotel(hotel.id, hotel)}
+                <option value="green">Verde (Segura)</option>
+                <option value="yellow">Amarilla (Advertencia)</option>
+                <option value="red">Roja (Prohibida)</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="markerType">
+              <Form.Label>Tipo de punto:</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedMarkerType}
+                onChange={(e) => setSelectedMarkerType(e.target.value)}
+              >
+                <option value="alerta">Alerta (Triángulo)</option>
+                <option value="puntoRecogida">Punto de Recogida (Casita)</option>
+                <option value="hotel">Hotel</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={9} style={{ position: 'relative' }}>
+            <MapContainer center={center} zoom={10} style={{ height: '80vh' }}>
+              <SetMapInstance setMapInstance={setMapInstance} />
+              <TileLayer
+                attribution="&copy; OpenStreetMap contributors"
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <FeatureGroup ref={featureGroupRef}>
+                <EditControl
+                  position="topright"
+                  onCreated={onCreated}
+                  onEdited={onEdited}
+                  onDeleted={onDeleted}
+                  draw={{
+                    rectangle: false,
+                    circle: false,
+                    circlemarker: false,
+                    polygon: false,
+                    marker: true,
+                    polyline: {
+                      shapeOptions: {
+                        color: selectedLineColor,
+                      },
+                    },
+                  }}
+                />
+              </FeatureGroup>
+              {/* Render de rutas que no están en edición */}
+              {rutas.map((ruta) =>
+                !editingRoute || ruta.id !== editingRoute.id ? (
+                  Array.isArray(ruta.coordenadas) && (
+                    <Polyline
+                      key={ruta.id}
+                      positions={ruta.coordenadas.map((c) => [c.lat, c.lng])}
+                      color={getColor(ruta.tipo)}
+                    >
+                      <Popup>
+                        <h5>Ruta: {ruta.tipo}</h5>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => setEditingRoute(ruta)}
+                        >
+                          Editar ruta
+                        </Button>{' '}
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() =>
+                            deleteDoc(doc(db, 'rutas', ruta.id)).then(() =>
+                              setRutas((prev) =>
+                                prev.filter((r) => r.id !== ruta.id)
+                              )
+                            )
+                          }
+                        >
+                          Eliminar ruta
+                        </Button>
+                      </Popup>
+                    </Polyline>
+                  )
+                ) : null
+              )}
+              {/* Si se ha seleccionado una ruta para editar */}
+              {editingRoute && (
+                <>
+                  <Polyline
+                    key={`editing-${editingRoute.id}`}
+                    positions={editingRoute.coordenadas.map((c) => [c.lat, c.lng])}
+                    color={getColor(editingRoute.tipo)}
+                    dashArray="5,10"
+                  />
+                  {editingRoute.coordenadas.map((c, index) => (
+                    <Marker
+                      key={`editing-marker-${index}`}
+                      position={[c.lat, c.lng]}
+                      draggable={true}
+                      eventHandlers={{
+                        dragend: (e) => handleVertexDrag(e, index),
+                      }}
+                    >
+                      <Popup>Punto {index + 1}</Popup>
+                    </Marker>
+                  ))}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 10,
+                      left: 10,
+                      zIndex: 1000,
+                      backgroundColor: 'white',
+                      padding: '10px',
+                      borderRadius: '5px',
+                    }}
                   >
-                    Editar
-                  </Button>{' '}
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDeleteHotel(hotel.id)}
+                    <Button variant="success" onClick={saveEditedRoute}>
+                      Guardar cambios
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setEditingRoute(null)}
+                      style={{ marginLeft: '10px' }}
+                    >
+                      Cancelar
+                    </Button>
+                  </div>
+                </>
+              )}
+              {/* Render de alertas */}
+              {alertas.map((alerta) =>
+                alerta.coordenadas ? (
+                  <Marker
+                    key={alerta.id}
+                    position={[alerta.coordenadas.lat, alerta.coordenadas.lng]}
+                    icon={
+                      alerta.tipo === 'puntoRecogida'
+                        ? puntoRecogidaIcon
+                        : alertaIcon
+                    }
                   >
-                    Eliminar
-                  </Button>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
-        </Col>
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <h4>Listado de Usuarios</h4>
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Usuario</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usuarios.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.usuario}</td>
-                  <td>
+                    <Popup>
+                      <h5>{alerta.title || 'Sin título'}</h5>
+                      <p>{alerta.description || 'Sin descripción'}</p>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() =>
+                          deleteDoc(doc(db, 'alertas', alerta.id)).then(() =>
+                            setAlertas((prev) =>
+                              prev.filter((a) => a.id !== alerta.id)
+                            )
+                          )
+                        }
+                      >
+                        Eliminar punto
+                      </Button>
+                    </Popup>
+                  </Marker>
+                ) : null
+              )}
+              {/* Render de hoteles */}
+              {hoteles.map((hotel) => (
+                <Marker
+                  key={hotel.id}
+                  position={[hotel.lat, hotel.lng]}
+                  icon={hotelIcon}
+                  draggable={true}
+                  eventHandlers={{
+                    dragend: (e) => handleHotelDragEnd(e, hotel.id),
+                  }}
+                >
+                  <Popup>
+                    <h5>{hotel.nombre}</h5>
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => handleEditUser(user.id, user)}
+                      onClick={() => handleEditHotel(hotel.id, hotel)}
                     >
                       Editar
                     </Button>{' '}
                     <Button
-                      variant="warning"
+                      variant="danger"
                       size="sm"
-                      onClick={() => handleDeactivateUser(user.id)}
+                      onClick={() => handleDeleteHotel(hotel.id)}
                     >
-                      Desactivar
+                      Eliminar
                     </Button>
-                  </td>
-                </tr>
+                  </Popup>
+                </Marker>
               ))}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-    </Container>
-      </div>
-    
+            </MapContainer>
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col>
+            <h4>Listado de Usuarios</h4>
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Usuario</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usuarios.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.usuario}</td>
+                    <td>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => handleEditUser(user.id, user)}
+                      >
+                        Editar
+                      </Button>{' '}
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={() => handleDeactivateUser(user.id)}
+                      >
+                        Desactivar
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
