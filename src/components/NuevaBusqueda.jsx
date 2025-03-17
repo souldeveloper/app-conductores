@@ -451,7 +451,15 @@ const MapaConductor = () => {
               {searchResults.map((res, idx) => (
                 <ListGroup.Item key={idx} action onClick={() => handleHotelIconClick(res)}>
                   {res.displayName}
-                  <Button variant="success" size="sm" className="float-end" onClick={() => handleAddHotel(res)}>
+                  <Button
+                    variant="success"
+                    size="sm"
+                    className="float-end"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddHotel(res);
+                    }}
+                  >
                     +
                   </Button>
                 </ListGroup.Item>
