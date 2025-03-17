@@ -4,7 +4,7 @@ import { Container, Button, Row, Col, Table, Alert, Form } from 'react-bootstrap
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, FeatureGroup, Polyline, Marker, Popup } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
-import { collection, getDocs, updateDoc, deleteDoc, doc, addDoc,onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, deleteDoc, doc, addDoc, onSnapshot } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { db, auth } from '../firebaseConfig';
 import Cookies from 'js-cookie';
@@ -25,7 +25,7 @@ const getColor = (tipo) => {
   }
 };
 
-// Íconos
+// Íconos existentes
 const alertaIcon = L.icon({
   iconUrl: '/iconos/alerta.png',
   iconSize: [25, 25],
@@ -42,8 +42,14 @@ const conductorIcon = L.icon({
   iconAnchor: [17, 17],
 });
 
-// Componente auxiliar para capturar la instancia del mapa usando useMap
+// Ícono para hoteles (asegúrate de tener la imagen en /iconos/hotel.png)
+const hotelIcon = L.icon({
+  iconUrl: '/iconos/hotel.png',
+  iconSize: [25, 25],
+  iconAnchor: [12, 12],
+});
 
+// Componente auxiliar para capturar la instancia del mapa usando useMap
 const SetMapInstance = ({ setMapInstance }) => {
   const map = useMap();
   useEffect(() => {
@@ -60,12 +66,13 @@ const AdminPanel = () => {
   const [error, setError] = useState('');
   const [mapInstance, setMapInstance] = useState(null);
 
-
-  // Datos del mapa: rutas y alertas
+  // Estados de datos del mapa
   const [rutas, setRutas] = useState([]);
   const [alertas, setAlertas] = useState([]);
+  // Nuevo estado para hoteles
+  const [hoteles, setHoteles] = useState([]);
   
-  const [center, setCenter] = useState([39.70241114681138, 2.9437189174222302]); // Centro por defecto (Madrid)
+  const [center, setCenter] = useState([39.70241114681138, 2.9437189174222302]); // Centro por defecto
   const mapRef = useRef(null);
   const featureGroupRef = useRef(null);
 
@@ -73,8 +80,7 @@ const AdminPanel = () => {
   const [selectedLineColor, setSelectedLineColor] = useState('green');
   const [selectedMarkerType, setSelectedMarkerType] = useState('alerta');
 
-  // Validación de sesión: se utiliza la cookie "currentUser" y "deviceUid".
-  // Además, se permite el acceso solo a los usuarios "admimanuel", "adminjose" o "admindani".
+  // Validación de sesión y acceso de admin (sin cambios)
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
@@ -94,7 +100,6 @@ const AdminPanel = () => {
       navigate('/');
       return;
     }
-    // Lista de usuarios admin permitidos
     const allowedAdmins = ["admimanuel", "adminjose", "admindani"];
     if (!allowedAdmins.includes(currentUserObj.usuario)) {
       navigate('/');
@@ -153,7 +158,26 @@ const AdminPanel = () => {
     fetchData();
   }, []);
 
-  // Cargar usuarios (para el listado en el panel)
+  // Cargar hoteles desde Firestore
+  useEffect(() => {
+    const fetchHoteles = async () => {
+      try {
+        const hotelesRef = collection(db, 'hoteles');
+        const hotelesSnap = await getDocs(hotelesRef);
+        const loadedHoteles = [];
+        hotelesSnap.forEach((docSnap) => {
+          loadedHoteles.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        setHoteles(loadedHoteles);
+      } catch (err) {
+        console.error('Error loading hoteles:', err);
+      }
+    };
+
+    fetchHoteles();
+  }, []);
+
+  // Cargar usuarios para el listado en el panel
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
@@ -177,6 +201,7 @@ const AdminPanel = () => {
   const onCreated = async (e) => {
     const { layerType, layer } = e;
 
+    // Si se dibuja una polilínea (ruta)
     if (layerType === 'polyline') {
       const latlngs = layer.getLatLngs();
       let tipo = 'segura';
@@ -198,25 +223,41 @@ const AdminPanel = () => {
       }
     }
 
+    // Si se crea un marcador (alerta, punto de recogida o hotel)
     if (layerType === 'marker') {
-      const tipo = selectedMarkerType;
-      const title = prompt('Ingrese un título para la marca', 'Título');
-      const description = prompt('Ingrese una descripción para la marca', 'Descripción');
       const { lat, lng } = layer.getLatLng();
-      try {
-        const docRef = await addDoc(collection(db, 'alertas'), {
-          tipo,
-          coordenadas: { lat, lng },
-          title,
-          description,
-        });
-        layer.options.docIdMarker = docRef.id;
-        setAlertas((prev) => [
-          ...prev,
-          { id: docRef.id, tipo, coordenadas: { lat, lng }, title, description },
-        ]);
-      } catch (err) {
-        console.error('Error saving marker:', err);
+
+      // Caso de hotel
+      if (selectedMarkerType === 'hotel') {
+        const nombre = prompt('Ingrese el nombre del hotel', 'Hotel');
+        if (!nombre) return; // Si no se ingresa nombre, no se guarda
+        try {
+          const docRef = await addDoc(collection(db, 'hoteles'), { nombre, lat, lng });
+          layer.options.docIdHotel = docRef.id;
+          setHoteles((prev) => [...prev, { id: docRef.id, nombre, lat, lng }]);
+        } catch (err) {
+          console.error('Error saving hotel:', err);
+        }
+      } else {
+        // Casos existentes: alerta y punto de recogida
+        const tipo = selectedMarkerType;
+        const title = prompt('Ingrese un título para la marca', 'Título');
+        const description = prompt('Ingrese una descripción para la marca', 'Descripción');
+        try {
+          const docRef = await addDoc(collection(db, 'alertas'), {
+            tipo,
+            coordenadas: { lat, lng },
+            title,
+            description,
+          });
+          layer.options.docIdMarker = docRef.id;
+          setAlertas((prev) => [
+            ...prev,
+            { id: docRef.id, tipo, coordenadas: { lat, lng }, title, description },
+          ]);
+        } catch (err) {
+          console.error('Error saving marker:', err);
+        }
       }
     }
   };
@@ -225,7 +266,7 @@ const AdminPanel = () => {
     const { layers } = e;
     layers.eachLayer((layer) => {
       console.log('Edited layer:', layer);
-      // Update in Firestore if needed.
+      // Aquí se podría actualizar la información en Firestore si se detecta un cambio
     });
   };
 
@@ -250,22 +291,92 @@ const AdminPanel = () => {
           console.error('Error deleting marker:', err);
         }
       }
+      // Si se elimina un marcador de hotel
+      if (layer.options && layer.options.docIdHotel) {
+        try {
+          await deleteDoc(doc(db, 'hoteles', layer.options.docIdHotel));
+          setHoteles((prev) =>
+            prev.filter((hotel) => hotel.id !== layer.options.docIdHotel)
+          );
+        } catch (err) {
+          console.error('Error deleting hotel:', err);
+        }
+      }
     });
   };
 
-  // Función para desactivar un usuario
-  const handleDeactivateUser = async (userId) => {
+  // Función para actualizar la posición de un hotel al arrastrarlo
+  const handleHotelDragEnd = async (e, hotelId) => {
+    const { lat, lng } = e.target.getLatLng();
     try {
-      await updateDoc(doc(db, 'usuarios', userId), { activo: false });
-      setUsuarios((prev) =>
-        prev.map((user) => (user.id === userId ? { ...user, activo: false } : user))
+      await updateDoc(doc(db, 'hoteles', hotelId), { lat, lng });
+      setHoteles((prev) =>
+        prev.map((hotel) =>
+          hotel.id === hotelId ? { ...hotel, lat, lng } : hotel
+        )
       );
     } catch (err) {
-      console.error('Error deactivating user:', err);
+      console.error('Error updating hotel position:', err);
     }
   };
 
-  // Cerrar sesión: se elimina la cookie "currentUser" y se redirige
+  // Función para desactivar un usuario
+const handleDeactivateUser = async (userId) => {
+  try {
+    await updateDoc(doc(db, 'usuarios', userId), { activo: false });
+    setUsuarios((prev) =>
+      prev.map((user) =>
+        user.id === userId ? { ...user, activo: false } : user
+      )
+    );
+  } catch (err) {
+    console.error('Error deactivating user:', err);
+  }
+};
+  // Función para editar un hotel (por ejemplo, cambiar el nombre)
+  const handleEditHotel = async (hotelId, currentHotel) => {
+    const nuevoNombre = prompt('Ingrese el nuevo nombre del hotel', currentHotel.nombre);
+    if (!nuevoNombre) return;
+    try {
+      await updateDoc(doc(db, 'hoteles', hotelId), { nombre: nuevoNombre });
+      setHoteles((prev) =>
+        prev.map((hotel) =>
+          hotel.id === hotelId ? { ...hotel, nombre: nuevoNombre } : hotel
+        )
+      );
+    } catch (err) {
+      console.error('Error editing hotel:', err);
+    }
+  };
+
+  // Función para eliminar un hotel
+  const handleDeleteHotel = async (hotelId) => {
+    try {
+      await deleteDoc(doc(db, 'hoteles', hotelId));
+      setHoteles((prev) => prev.filter((hotel) => hotel.id !== hotelId));
+    } catch (err) {
+      console.error('Error deleting hotel:', err);
+    }
+  };
+
+  // Función para editar información de usuario
+  const handleEditUser = async (userId, currentUserData) => {
+    // Aquí se puede elegir qué campo editar. Por ejemplo, editar el nombre de usuario:
+    const nuevoUsuario = prompt('Ingrese el nuevo nombre de usuario', currentUserData.usuario);
+    if (!nuevoUsuario) return;
+    try {
+      await updateDoc(doc(db, 'usuarios', userId), { usuario: nuevoUsuario });
+      setUsuarios((prev) =>
+        prev.map((user) =>
+          user.id === userId ? { ...user, usuario: nuevoUsuario } : user
+        )
+      );
+    } catch (err) {
+      console.error('Error editing user:', err);
+    }
+  };
+
+  // Cerrar sesión
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -278,10 +389,10 @@ const AdminPanel = () => {
   };
 
   return (
-    <Container fluid>
-      
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <Container fluid>
       <Row className="mb-3">
-        <Col md={6}>
+        <Col md={4}>
           <Form.Group controlId="lineColor">
             <Form.Label>Color de la línea:</Form.Label>
             <Form.Control
@@ -295,7 +406,7 @@ const AdminPanel = () => {
             </Form.Control>
           </Form.Group>
         </Col>
-        <Col md={6}>
+        <Col md={4}>
           <Form.Group controlId="markerType">
             <Form.Label>Tipo de punto:</Form.Label>
             <Form.Control
@@ -305,9 +416,11 @@ const AdminPanel = () => {
             >
               <option value="alerta">Alerta (Triángulo)</option>
               <option value="puntoRecogida">Punto de Recogida (Casita)</option>
+              <option value="hotel">Hotel</option>
             </Form.Control>
           </Form.Group>
         </Col>
+       
       </Row>
       <Row>
         <Col md={9}>
@@ -393,12 +506,79 @@ const AdminPanel = () => {
                 </Marker>
               ) : null
             )}
+            {hoteles.map((hotel) => (
+              <Marker
+                key={hotel.id}
+                position={[hotel.lat, hotel.lng]}
+                icon={hotelIcon}
+                draggable={true}
+                eventHandlers={{
+                  dragend: (e) => handleHotelDragEnd(e, hotel.id),
+                }}
+              >
+                <Popup>
+                  <h5>{hotel.nombre}</h5>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => handleEditHotel(hotel.id, hotel)}
+                  >
+                    Editar
+                  </Button>{' '}
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDeleteHotel(hotel.id)}
+                  >
+                    Eliminar
+                  </Button>
+                </Popup>
+              </Marker>
+            ))}
           </MapContainer>
         </Col>
-        
       </Row>
-      
+      <Row className="mt-4">
+        <Col>
+          <h4>Listado de Usuarios</h4>
+          <Table striped bordered hover responsive>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usuarios.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.usuario}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => handleEditUser(user.id, user)}
+                    >
+                      Editar
+                    </Button>{' '}
+                    <Button
+                      variant="warning"
+                      size="sm"
+                      onClick={() => handleDeactivateUser(user.id)}
+                    >
+                      Desactivar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     </Container>
+      </div>
+    
   );
 };
 

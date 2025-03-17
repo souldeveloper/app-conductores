@@ -1,4 +1,4 @@
-// src/components/MapaConductor.js
+// src/components/MapaConductor.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -64,9 +64,11 @@ const MapaConductor = () => {
   const navigate = useNavigate();
   const [rutas, setRutas] = useState([]);
   const [alertas, setAlertas] = useState([]);
-  // Hoteles guardados en la subcolección del conductor
+  // Hoteles asignados al conductor (incluyendo el campo "orden")
   const [hoteles, setHoteles] = useState([]);
-  // Resultados de búsqueda en la colección "hoteles" (raíz)
+  // Estado para filtrar la vista: si se selecciona un hotel, se guarda su id
+  const [selectedHotelId, setSelectedHotelId] = useState(null);
+  // Para la búsqueda de hoteles en la colección "hoteles" (raíz)
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
@@ -78,12 +80,11 @@ const MapaConductor = () => {
   const [conductor, setConductor] = useState(null);
   const [tempLine, setTempLine] = useState(null);
 
-  // Validación de sesión: se lee la cookie "currentUser" y se compara el deviceUid
+  // Validación de sesión: comprobamos la cookie "currentUser" y "deviceUid"
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
-    console.log({ currentUserStr });
-    console.log({ localDeviceUid });
+    console.log({ currentUserStr, localDeviceUid });
     if (!currentUserStr || !localDeviceUid) {
       navigate('/');
       return;
@@ -126,7 +127,7 @@ const MapaConductor = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  // Función para centrar el mapa en la posición actual del usuario
+  // Función para centrar el mapa en la ubicación actual del conductor
   const handleCenterMap = () => {
     if (!mapInstance) {
       console.warn("Map instance not yet created.");
@@ -144,6 +145,7 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance]);
 
+  // Cargar rutas y alertas
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -211,7 +213,7 @@ const MapaConductor = () => {
     }
   };
 
-  // Búsqueda de hoteles en Firestore (colección "hoteles")
+  // Búsqueda de hoteles en la colección "hoteles" (raíz)
   const handleSearchHotels = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -227,7 +229,7 @@ const MapaConductor = () => {
       const filteredHotels = allHotels.filter(hotel =>
         hotel.nombre && hotel.nombre.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      // Usar "lng" de forma consistente
+      // Aseguramos usar lat y lng de forma consistente
       const results = filteredHotels.map(hotel => ({
         displayName: hotel.nombre,
         lat: hotel.lat,
@@ -240,24 +242,26 @@ const MapaConductor = () => {
     setLoadingSearch(false);
   };
 
-  // Agregar hotel a la subcolección del conductor (usando "nombre" y "lng")
+  // Agregar hotel a la subcolección del conductor, asignando un "orden" (máximo actual + 1)
   const handleAddHotel = async (hotelItem) => {
     if (!conductor) return;
-    // Verificar que existan las coordenadas
     if (hotelItem.lat === undefined || hotelItem.lng === undefined) {
       console.error("Faltan coordenadas en el hotel:", hotelItem);
       return;
     }
     try {
+      const currentOrders = hoteles.map(h => h.orden || 0);
+      const nextOrden = currentOrders.length ? Math.max(...currentOrders) + 1 : 1;
       const newHotelRef = doc(collection(db, `usuarios/${conductor.id}/hoteles`));
       await setDoc(newHotelRef, {
         nombre: hotelItem.displayName,
         lat: hotelItem.lat,
-        lng: hotelItem.lng
+        lng: hotelItem.lng,
+        orden: nextOrden
       });
       setHoteles((prev) => [
         ...prev,
-        { id: newHotelRef.id, nombre: hotelItem.displayName, lat: hotelItem.lat, lng: hotelItem.lng }
+        { id: newHotelRef.id, nombre: hotelItem.displayName, lat: hotelItem.lat, lng: hotelItem.lng, orden: nextOrden }
       ]);
     } catch (err) {
       console.error("Error adding hotel:", err);
@@ -275,13 +279,55 @@ const MapaConductor = () => {
     }
   };
 
-  // Función para dibujar la línea entre el hotel y el punto de recogida.
-  // Se verifica si la descripción de la alerta contiene (ignorando mayúsculas) el nombre del hotel
-  // y se aseguran que ambas coordenadas existan.
+  // Funciones para reordenar hoteles
+  const handleMoveUp = async (hotel) => {
+    const sorted = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    const index = sorted.findIndex(h => h.id === hotel.id);
+    if (index <= 0) return; // ya es el primero, no se puede subir
+    const previousHotel = sorted[index - 1];
+    const currentOrder = hotel.orden || 0;
+    const previousOrder = previousHotel.orden || 0;
+    try {
+      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: previousOrder });
+      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, previousHotel.id), { ...previousHotel, orden: currentOrder });
+      setHoteles(hoteles.map(h => {
+        if (h.id === hotel.id) return { ...h, orden: previousOrder };
+        if (h.id === previousHotel.id) return { ...h, orden: currentOrder };
+        return h;
+      }));
+    } catch (err) {
+      console.error("Error reordering hotel:", err);
+    }
+  };
+
+  const handleMoveDown = async (hotel) => {
+    const sorted = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    const index = sorted.findIndex(h => h.id === hotel.id);
+    if (index === -1 || index >= sorted.length - 1) return; // ya es el último
+    const nextHotel = sorted[index + 1];
+    const currentOrder = hotel.orden || 0;
+    const nextOrder = nextHotel.orden || 0;
+    try {
+      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: nextOrder });
+      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextHotel.id), { ...nextHotel, orden: currentOrder });
+      setHoteles(hoteles.map(h => {
+        if (h.id === hotel.id) return { ...h, orden: nextOrder };
+        if (h.id === nextHotel.id) return { ...h, orden: currentOrder };
+        return h;
+      }));
+    } catch (err) {
+      console.error("Error reordering hotel:", err);
+    }
+  };
+
+  // Al hacer clic en una fila, se selecciona o se deselecciona un hotel para filtrar la vista
+  const handleSelectHotel = (hotelId) => {
+    setSelectedHotelId(selectedHotelId === hotelId ? null : hotelId);
+  };
+
+  // Ejemplo de función al hacer clic en el ícono del hotel (por ejemplo, para dibujar una línea)
   const handleHotelIconClick = (hotel) => {
-    const hotelName = hotel.displayName
-      ? hotel.displayName.split(',')[0].trim()
-      : hotel.nombre.split(',')[0].trim();
+    const hotelName = hotel.displayName ? hotel.displayName.split(',')[0].trim() : hotel.nombre.split(',')[0].trim();
     const matchingPickup = alertas.find((alerta) => {
       if (!alerta.description) return false;
       const desc = alerta.description.trim().toLowerCase();
@@ -301,12 +347,18 @@ const MapaConductor = () => {
         [matchingPickup.coordenadas.lat, matchingPickup.coordenadas.lng]
       ];
       setTempLine(lineCoords);
-      // Se elimina la línea después de 10 segundos
       setTimeout(() => setTempLine(null), 10000);
     } else {
       console.log("No se encontró punto de recogida válido para:", hotelName);
     }
   };
+
+  // Para el listado, ordenamos por el campo "orden"
+  const sortedHoteles = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
+  // Si hay un hotel seleccionado, se filtra la lista y los marcadores
+  const displayedHoteles = selectedHotelId
+    ? sortedHoteles.filter(h => h.id === selectedHotelId)
+    : sortedHoteles;
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
@@ -329,11 +381,13 @@ const MapaConductor = () => {
               attribution="&copy; OpenStreetMap contributors"
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            {/* Marcador del conductor */}
             {conductorPos && (
               <Marker position={conductorPos} icon={conductorIcon}>
                 <Popup>Tu ubicación actual</Popup>
               </Marker>
             )}
+            {/* Rutas */}
             {rutas.map((ruta) => {
               if (!Array.isArray(ruta.coordenadas)) return null;
               return (
@@ -344,6 +398,7 @@ const MapaConductor = () => {
                 />
               );
             })}
+            {/* Alertas */}
             {alertas.map((alerta) => {
               if (!alerta.coordenadas) return null;
               const iconUsed = alerta.tipo === 'puntoRecogida' ? puntoRecogidaIcon : alertaIcon;
@@ -356,20 +411,23 @@ const MapaConductor = () => {
                 </Marker>
               );
             })}
-            {hoteles.map((hotel) => (
-              <Marker
-                key={hotel.id}
-                position={[hotel.lat, hotel.lng]}
-                icon={hotelIcon}
-                eventHandlers={{ click: () => handleHotelIconClick(hotel) }}
-              >
-                <Popup>
-                  <h5>{hotel.nombre}</h5>
-                  <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(hotel.id)}>
-                    Eliminar Hotel
-                  </Button>
-                </Popup>
-              </Marker>
+            {/* Marcadores de hoteles (filtrados si se seleccionó alguno) */}
+            {hoteles
+              .filter(h => !selectedHotelId || h.id === selectedHotelId)
+              .map((hotel) => (
+                <Marker
+                  key={hotel.id}
+                  position={[hotel.lat, hotel.lng]}
+                  icon={hotelIcon}
+                  eventHandlers={{ click: () => handleHotelIconClick(hotel) }}
+                >
+                  <Popup>
+                    <h5>{hotel.nombre}</h5>
+                    <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(hotel.id)}>
+                      Eliminar Hotel
+                    </Button>
+                  </Popup>
+                </Marker>
             ))}
             {tempLine && <Polyline positions={tempLine} color="purple" dashArray="5, 10" />}
           </MapContainer>
@@ -401,21 +459,33 @@ const MapaConductor = () => {
             </ListGroup>
           )}
           <h4 className="mt-4">Mis Hoteles</h4>
-          {hoteles.length === 0 && <Alert variant="info">No hay hoteles agregados.</Alert>}
-          {hoteles.length > 0 && (
+          {displayedHoteles.length === 0 && <Alert variant="info">No hay hoteles agregados.</Alert>}
+          {displayedHoteles.length > 0 && (
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Acción</th>
+                  <th>Orden</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {hoteles.map((h) => (
-                  <tr key={h.id}>
+                {sortedHoteles.map((h) => (
+                  <tr
+                    key={h.id}
+                    onClick={() => handleSelectHotel(h.id)}
+                    style={{ cursor: 'pointer', backgroundColor: selectedHotelId === h.id ? '#e0e0e0' : 'inherit' }}
+                  >
                     <td>{h.nombre}</td>
+                    <td>{h.orden}</td>
                     <td>
-                      <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(h.id)}>
+                      <Button variant="secondary" size="sm" onClick={(e) => { e.stopPropagation(); handleMoveUp(h); }}>
+                        ↑
+                      </Button>{' '}
+                      <Button variant="secondary" size="sm" onClick={(e) => { e.stopPropagation(); handleMoveDown(h); }}>
+                        ↓
+                      </Button>{' '}
+                      <Button variant="danger" size="sm" onClick={(e) => { e.stopPropagation(); handleDeleteHotel(h.id); }}>
                         Eliminar
                       </Button>
                     </td>
