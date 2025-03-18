@@ -2,14 +2,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Button, Row, Col, Table, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, FeatureGroup, Polyline, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, FeatureGroup, Polyline, Marker, Popup, useMap } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
-import { collection, getDocs, updateDoc, deleteDoc, doc, addDoc, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, updateDoc, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { db, auth } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
-import { useMap } from 'react-leaflet';
 
 // Función para asignar el color de la línea según el tipo de ruta
 const getColor = (tipo) => {
@@ -126,78 +125,61 @@ const AdminPanel = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  // Cargar rutas y alertas desde Firestore
+  // Cargar rutas y alertas con listeners en tiempo real
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const rutasRef = collection(db, 'rutas');
-        const rutasSnap = await getDocs(rutasRef);
-        const loadedRutas = [];
-        rutasSnap.forEach((docSnap) => {
-          loadedRutas.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        setRutas(loadedRutas);
+    const rutasRef = collection(db, 'rutas');
+    const unsubscribeRutas = onSnapshot(rutasRef, (snapshot) => {
+      const loadedRutas = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+      setRutas(loadedRutas);
+    }, (error) => {
+      console.error('Error loading rutas:', error);
+      setError('Error loading map data.');
+    });
 
-        const alertasRef = collection(db, 'alertas');
-        const alertasSnap = await getDocs(alertasRef);
-        const loadedAlertas = [];
-        alertasSnap.forEach((docSnap) => {
-          loadedAlertas.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        setAlertas(loadedAlertas);
-      } catch (err) {
-        console.error('Error loading rutas/alertas:', err);
-        setError('Error loading map data.');
-      }
+    const alertasRef = collection(db, 'alertas');
+    const unsubscribeAlertas = onSnapshot(alertasRef, (snapshot) => {
+      const loadedAlertas = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+      setAlertas(loadedAlertas);
+    }, (error) => {
+      console.error('Error loading alertas:', error);
+      setError('Error loading map data.');
+    });
+
+    return () => {
+      unsubscribeRutas();
+      unsubscribeAlertas();
     };
-
-    fetchData();
   }, []);
 
-  // Cargar hoteles
+  // Cargar hoteles con listener en tiempo real
   useEffect(() => {
-    const fetchHoteles = async () => {
-      try {
-        const hotelesRef = collection(db, 'hoteles');
-        const hotelesSnap = await getDocs(hotelesRef);
-        const loadedHoteles = [];
-        hotelesSnap.forEach((docSnap) => {
-          loadedHoteles.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        setHoteles(loadedHoteles);
-      } catch (err) {
-        console.error('Error loading hoteles:', err);
-      }
-    };
-
-    fetchHoteles();
+    const hotelesRef = collection(db, 'hoteles');
+    const unsubscribeHoteles = onSnapshot(hotelesRef, (snapshot) => {
+      const loadedHoteles = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+      setHoteles(loadedHoteles);
+    }, (error) => {
+      console.error('Error loading hoteles:', error);
+    });
+    return () => unsubscribeHoteles();
   }, []);
 
-  // Cargar usuarios
+  // Cargar usuarios con listener en tiempo real
   useEffect(() => {
-    const fetchUsuarios = async () => {
-      try {
-        const usuariosRef = collection(db, 'usuarios');
-        const querySnapshot = await getDocs(usuariosRef);
-        const users = [];
-        querySnapshot.forEach((docSnap) => {
-          users.push({ id: docSnap.id, ...docSnap.data() });
-        });
-        setUsuarios(users);
-      } catch (err) {
-        console.error('Error loading users:', err);
-        setError('Error loading users.');
-      }
-    };
-
-    fetchUsuarios();
+    const usuariosRef = collection(db, 'usuarios');
+    const unsubscribeUsuarios = onSnapshot(usuariosRef, (snapshot) => {
+      const users = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+      setUsuarios(users);
+    }, (error) => {
+      console.error('Error loading users:', error);
+      setError('Error loading users.');
+    });
+    return () => unsubscribeUsuarios();
   }, []);
 
   // Manejo de figuras con react-leaflet-draw
   const onCreated = async (e) => {
     const { layerType, layer } = e;
 
-    // Si se dibuja una polilínea (ruta)
     if (layerType === 'polyline') {
       const latlngs = layer.getLatLngs();
       let tipo = 'segura';
@@ -210,16 +192,12 @@ const AdminPanel = () => {
           coordenadas: latlngs.map((ll) => ({ lat: ll.lat, lng: ll.lng })),
         });
         layer.options.docId = docRef.id;
-        setRutas((prev) => [
-          ...prev,
-          { id: docRef.id, tipo, coordenadas: latlngs.map((ll) => ({ lat: ll.lat, lng: ll.lng })) },
-        ]);
+        // El listener actualizará automáticamente el estado de rutas
       } catch (err) {
         console.error('Error saving route:', err);
       }
     }
 
-    // Si se crea un marcador (alerta, punto de recogida o hotel)
     if (layerType === 'marker') {
       const { lat, lng } = layer.getLatLng();
 
@@ -229,7 +207,7 @@ const AdminPanel = () => {
         try {
           const docRef = await addDoc(collection(db, 'hoteles'), { nombre, lat, lng });
           layer.options.docIdHotel = docRef.id;
-          setHoteles((prev) => [...prev, { id: docRef.id, nombre, lat, lng }]);
+          // El listener actualizará automáticamente el estado de hoteles
         } catch (err) {
           console.error('Error saving hotel:', err);
         }
@@ -245,10 +223,7 @@ const AdminPanel = () => {
             description,
           });
           layer.options.docIdMarker = docRef.id;
-          setAlertas((prev) => [
-            ...prev,
-            { id: docRef.id, tipo, coordenadas: { lat, lng }, title, description },
-          ]);
+          // El listener actualizará automáticamente el estado de alertas
         } catch (err) {
           console.error('Error saving marker:', err);
         }
@@ -256,7 +231,7 @@ const AdminPanel = () => {
     }
   };
 
-  // Actualización de rutas desde el EditControl (edición directa en la UI de leaflet-draw)
+  // Actualización de rutas desde el EditControl
   const onEdited = async (e) => {
     const { layers } = e;
     layers.eachLayer(async (layer) => {
@@ -264,11 +239,7 @@ const AdminPanel = () => {
         const newCoordinates = layer.getLatLngs().map((ll) => ({ lat: ll.lat, lng: ll.lng }));
         try {
           await updateDoc(doc(db, 'rutas', layer.options.docId), { coordenadas: newCoordinates });
-          setRutas((prev) =>
-            prev.map((ruta) =>
-              ruta.id === layer.options.docId ? { ...ruta, coordenadas: newCoordinates } : ruta
-            )
-          );
+          // El listener actualizará el estado de rutas
         } catch (err) {
           console.error('Error actualizando la ruta:', err);
         }
@@ -276,14 +247,14 @@ const AdminPanel = () => {
     });
   };
 
-  // Eliminación de figuras (rutas, alertas y hoteles)
+  // Eliminación de figuras
   const onDeleted = async (e) => {
     const { layers } = e;
     layers.eachLayer(async (layer) => {
       if (layer.options && layer.options.docId) {
         try {
           await deleteDoc(doc(db, 'rutas', layer.options.docId));
-          setRutas((prev) => prev.filter((ruta) => ruta.id !== layer.options.docId));
+          // El listener actualizará el estado de rutas
         } catch (err) {
           console.error('Error deleting route:', err);
         }
@@ -291,9 +262,7 @@ const AdminPanel = () => {
       if (layer.options && layer.options.docIdMarker) {
         try {
           await deleteDoc(doc(db, 'alertas', layer.options.docIdMarker));
-          setAlertas((prev) =>
-            prev.filter((alerta) => alerta.id !== layer.options.docIdMarker)
-          );
+          // El listener actualizará el estado de alertas
         } catch (err) {
           console.error('Error deleting marker:', err);
         }
@@ -301,9 +270,7 @@ const AdminPanel = () => {
       if (layer.options && layer.options.docIdHotel) {
         try {
           await deleteDoc(doc(db, 'hoteles', layer.options.docIdHotel));
-          setHoteles((prev) =>
-            prev.filter((hotel) => hotel.id !== layer.options.docIdHotel)
-          );
+          // El listener actualizará el estado de hoteles
         } catch (err) {
           console.error('Error deleting hotel:', err);
         }
@@ -316,11 +283,7 @@ const AdminPanel = () => {
     const { lat, lng } = e.target.getLatLng();
     try {
       await updateDoc(doc(db, 'hoteles', hotelId), { lat, lng });
-      setHoteles((prev) =>
-        prev.map((hotel) =>
-          hotel.id === hotelId ? { ...hotel, lat, lng } : hotel
-        )
-      );
+      // El listener se encargará de actualizar el estado de hoteles
     } catch (err) {
       console.error('Error updating hotel position:', err);
     }
@@ -330,27 +293,19 @@ const AdminPanel = () => {
   const handleDeactivateUser = async (userId) => {
     try {
       await updateDoc(doc(db, 'usuarios', userId), { activo: false });
-      setUsuarios((prev) =>
-        prev.map((user) =>
-          user.id === userId ? { ...user, activo: false } : user
-        )
-      );
+      // El listener actualizará el estado de usuarios
     } catch (err) {
       console.error('Error deactivating user:', err);
     }
   };
 
-  // Función para editar un hotel (por ejemplo, cambiar el nombre)
+  // Función para editar un hotel
   const handleEditHotel = async (hotelId, currentHotel) => {
     const nuevoNombre = prompt('Ingrese el nuevo nombre del hotel', currentHotel.nombre);
     if (!nuevoNombre) return;
     try {
       await updateDoc(doc(db, 'hoteles', hotelId), { nombre: nuevoNombre });
-      setHoteles((prev) =>
-        prev.map((hotel) =>
-          hotel.id === hotelId ? { ...hotel, nombre: nuevoNombre } : hotel
-        )
-      );
+      // El listener actualizará el estado de hoteles
     } catch (err) {
       console.error('Error editing hotel:', err);
     }
@@ -360,7 +315,7 @@ const AdminPanel = () => {
   const handleDeleteHotel = async (hotelId) => {
     try {
       await deleteDoc(doc(db, 'hoteles', hotelId));
-      setHoteles((prev) => prev.filter((hotel) => hotel.id !== hotelId));
+      // El listener actualizará el estado de hoteles
     } catch (err) {
       console.error('Error deleting hotel:', err);
     }
@@ -372,11 +327,7 @@ const AdminPanel = () => {
     if (!nuevoUsuario) return;
     try {
       await updateDoc(doc(db, 'usuarios', userId), { usuario: nuevoUsuario });
-      setUsuarios((prev) =>
-        prev.map((user) =>
-          user.id === userId ? { ...user, usuario: nuevoUsuario } : user
-        )
-      );
+      // El listener actualizará el estado de usuarios
     } catch (err) {
       console.error('Error editing user:', err);
     }
@@ -395,7 +346,6 @@ const AdminPanel = () => {
   };
 
   // --- Funcionalidad de edición personalizada de rutas ---
-  // Al hacer clic en "Editar ruta" desde el Popup se activa el modo de edición
   const handleVertexDrag = (e, index) => {
     const { lat, lng } = e.target.getLatLng();
     setEditingRoute((prev) => {
@@ -409,11 +359,6 @@ const AdminPanel = () => {
     if (!editingRoute) return;
     try {
       await updateDoc(doc(db, 'rutas', editingRoute.id), { coordenadas: editingRoute.coordenadas });
-      setRutas((prev) =>
-        prev.map((ruta) =>
-          ruta.id === editingRoute.id ? editingRoute : ruta
-        )
-      );
       setEditingRoute(null);
     } catch (err) {
       console.error("Error guardando la edición de la ruta:", err);
@@ -482,7 +427,6 @@ const AdminPanel = () => {
                   }}
                 />
               </FeatureGroup>
-              {/* Render de rutas que no están en edición */}
               {rutas.map((ruta) =>
                 !editingRoute || ruta.id !== editingRoute.id ? (
                   Array.isArray(ruta.coordenadas) && (
@@ -493,22 +437,14 @@ const AdminPanel = () => {
                     >
                       <Popup>
                         <h5>Ruta: {ruta.tipo}</h5>
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() => setEditingRoute(ruta)}
-                        >
+                        <Button variant="primary" size="sm" onClick={() => setEditingRoute(ruta)}>
                           Editar ruta
                         </Button>{' '}
                         <Button
                           variant="danger"
                           size="sm"
                           onClick={() =>
-                            deleteDoc(doc(db, 'rutas', ruta.id)).then(() =>
-                              setRutas((prev) =>
-                                prev.filter((r) => r.id !== ruta.id)
-                              )
-                            )
+                            deleteDoc(doc(db, 'rutas', ruta.id))
                           }
                         >
                           Eliminar ruta
@@ -518,7 +454,6 @@ const AdminPanel = () => {
                   )
                 ) : null
               )}
-              {/* Si se ha seleccionado una ruta para editar */}
               {editingRoute && (
                 <>
                   <Polyline
@@ -563,7 +498,6 @@ const AdminPanel = () => {
                   </div>
                 </>
               )}
-              {/* Render de alertas */}
               {alertas.map((alerta) =>
                 alerta.coordenadas ? (
                   <Marker
@@ -582,11 +516,7 @@ const AdminPanel = () => {
                         variant="danger"
                         size="sm"
                         onClick={() =>
-                          deleteDoc(doc(db, 'alertas', alerta.id)).then(() =>
-                            setAlertas((prev) =>
-                              prev.filter((a) => a.id !== alerta.id)
-                            )
-                          )
+                          deleteDoc(doc(db, 'alertas', alerta.id))
                         }
                       >
                         Eliminar punto
@@ -595,7 +525,6 @@ const AdminPanel = () => {
                   </Marker>
                 ) : null
               )}
-              {/* Render de hoteles */}
               {hoteles.map((hotel) => (
                 <Marker
                   key={hotel.id}
@@ -608,18 +537,10 @@ const AdminPanel = () => {
                 >
                   <Popup>
                     <h5>{hotel.nombre}</h5>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={() => handleEditHotel(hotel.id, hotel)}
-                    >
+                    <Button variant="primary" size="sm" onClick={() => handleEditHotel(hotel.id, hotel)}>
                       Editar
                     </Button>{' '}
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDeleteHotel(hotel.id)}
-                    >
+                    <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(hotel.id)}>
                       Eliminar
                     </Button>
                   </Popup>
@@ -645,18 +566,10 @@ const AdminPanel = () => {
                     <td>{user.id}</td>
                     <td>{user.usuario}</td>
                     <td>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => handleEditUser(user.id, user)}
-                      >
+                      <Button variant="primary" size="sm" onClick={() => handleEditUser(user.id, user)}>
                         Editar
                       </Button>{' '}
-                      <Button
-                        variant="warning"
-                        size="sm"
-                        onClick={() => handleDeactivateUser(user.id)}
-                      >
+                      <Button variant="warning" size="sm" onClick={() => handleDeactivateUser(user.id)}>
                         Desactivar
                       </Button>
                     </td>

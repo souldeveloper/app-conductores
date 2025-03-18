@@ -14,7 +14,7 @@ import {
   Spinner
 } from 'react-bootstrap';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
-import { collection, getDocs, doc, onSnapshot, deleteDoc, setDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, deleteDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
@@ -64,11 +64,8 @@ const MapaConductor = () => {
   const navigate = useNavigate();
   const [rutas, setRutas] = useState([]);
   const [alertas, setAlertas] = useState([]);
-  // Hoteles asignados al conductor (incluyendo el campo "orden")
   const [hoteles, setHoteles] = useState([]);
-  // Estado para filtrar la vista: si se selecciona un hotel, se guarda su id
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-  // Para la búsqueda de hoteles en la colección "hoteles" (raíz)
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
@@ -80,11 +77,10 @@ const MapaConductor = () => {
   const [conductor, setConductor] = useState(null);
   const [tempLine, setTempLine] = useState(null);
 
-  // Validación de sesión: comprobamos la cookie "currentUser" y "deviceUid"
+  // Validación de sesión
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
-    console.log({ currentUserStr, localDeviceUid });
     if (!currentUserStr || !localDeviceUid) {
       navigate('/');
       return;
@@ -92,7 +88,6 @@ const MapaConductor = () => {
     let currentUser;
     try {
       currentUser = JSON.parse(currentUserStr);
-      console.log({ currentUser });
     } catch (err) {
       console.error("Error parsing currentUser:", err);
       navigate('/');
@@ -134,7 +129,6 @@ const MapaConductor = () => {
       return;
     }
     if (conductorPos) {
-      console.log("Centering map at:", conductorPos);
       mapInstance.panTo(conductorPos, { animate: true });
     }
   };
@@ -145,46 +139,35 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance]);
 
-  // Cargar rutas y alertas
+  // Cargar rutas y alertas con listeners en tiempo real
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const rutasSnap = await getDocs(collection(db, "rutas"));
-        const tempRutas = [];
-        rutasSnap.forEach((doc) => {
-          tempRutas.push({ id: doc.id, ...doc.data() });
-        });
-        setRutas(tempRutas);
+    const rutasRef = collection(db, "rutas");
+    const unsubscribeRutas = onSnapshot(rutasRef, (snapshot) => {
+      const tempRutas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setRutas(tempRutas);
+    }, (error) => console.error("Error loading rutas:", error));
 
-        const alertasSnap = await getDocs(collection(db, "alertas"));
-        const tempAlertas = [];
-        alertasSnap.forEach((doc) => {
-          tempAlertas.push({ id: doc.id, ...doc.data() });
-        });
-        setAlertas(tempAlertas);
-      } catch (err) {
-        console.error("Error loading rutas/alertas:", err);
-      }
+    const alertasRef = collection(db, "alertas");
+    const unsubscribeAlertas = onSnapshot(alertasRef, (snapshot) => {
+      const tempAlertas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setAlertas(tempAlertas);
+    }, (error) => console.error("Error loading alertas:", error));
+
+    return () => {
+      unsubscribeRutas();
+      unsubscribeAlertas();
     };
-    fetchData();
   }, []);
 
-  // Cargar los hoteles asignados al conductor
+  // Cargar los hoteles asignados al conductor con listener en tiempo real
   useEffect(() => {
     if (!conductor) return;
-    const fetchHoteles = async () => {
-      try {
-        const hotelesSnap = await getDocs(collection(db, `usuarios/${conductor.id}/hoteles`));
-        const tempHoteles = [];
-        hotelesSnap.forEach((doc) => {
-          tempHoteles.push({ id: doc.id, ...doc.data() });
-        });
-        setHoteles(tempHoteles);
-      } catch (err) {
-        console.error("Error loading conductor's hoteles:", err);
-      }
-    };
-    fetchHoteles();
+    const hotelesRef = collection(db, `usuarios/${conductor.id}/hoteles`);
+    const unsubscribeHoteles = onSnapshot(hotelesRef, (snapshot) => {
+      const tempHoteles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setHoteles(tempHoteles);
+    }, (error) => console.error("Error loading conductor's hoteles:", error));
+    return () => unsubscribeHoteles();
   }, [conductor]);
 
   // Seguimiento de la ubicación del conductor
@@ -213,23 +196,22 @@ const MapaConductor = () => {
     }
   };
 
-  // Búsqueda de hoteles en la colección "hoteles" (raíz)
+  // Búsqueda de hoteles en la colección "hoteles"
   const handleSearchHotels = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     setLoadingSearch(true);
     setSearchResults([]);
     try {
-      const hotelesSnap = await getDocs(collection(db, "hoteles"));
+      const hotelesRef = collection(db, "hoteles");
+      const snapshot = await hotelesRef.get();
       const allHotels = [];
-      hotelesSnap.forEach((doc) => {
+      snapshot.forEach((doc) => {
         allHotels.push({ id: doc.id, ...doc.data() });
       });
-      // Filtrar hoteles cuyo campo "nombre" contenga la consulta (ignorando mayúsculas/minúsculas)
       const filteredHotels = allHotels.filter(hotel =>
         hotel.nombre && hotel.nombre.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      // Aseguramos usar lat y lng de forma consistente
       const results = filteredHotels.map(hotel => ({
         displayName: hotel.nombre,
         lat: hotel.lat,
@@ -242,7 +224,7 @@ const MapaConductor = () => {
     setLoadingSearch(false);
   };
 
-  // Agregar hotel a la subcolección del conductor, asignando un "orden" (máximo actual + 1)
+  // Agregar hotel a la subcolección del conductor
   const handleAddHotel = async (hotelItem) => {
     if (!conductor) return;
     if (hotelItem.lat === undefined || hotelItem.lng === undefined) {
@@ -259,10 +241,7 @@ const MapaConductor = () => {
         lng: hotelItem.lng,
         orden: nextOrden
       });
-      setHoteles((prev) => [
-        ...prev,
-        { id: newHotelRef.id, nombre: hotelItem.displayName, lat: hotelItem.lat, lng: hotelItem.lng, orden: nextOrden }
-      ]);
+      // El listener actualizará automáticamente el estado de hoteles
     } catch (err) {
       console.error("Error adding hotel:", err);
     }
@@ -273,7 +252,7 @@ const MapaConductor = () => {
     if (!conductor) return;
     try {
       await deleteDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotelId));
-      setHoteles((prev) => prev.filter((h) => h.id !== hotelId));
+      // El listener actualizará el estado de hoteles
     } catch (err) {
       console.error("Error deleting hotel:", err);
     }
@@ -283,18 +262,14 @@ const MapaConductor = () => {
   const handleMoveUp = async (hotel) => {
     const sorted = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
     const index = sorted.findIndex(h => h.id === hotel.id);
-    if (index <= 0) return; // ya es el primero, no se puede subir
+    if (index <= 0) return;
     const previousHotel = sorted[index - 1];
     const currentOrder = hotel.orden || 0;
     const previousOrder = previousHotel.orden || 0;
     try {
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: previousOrder });
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, previousHotel.id), { ...previousHotel, orden: currentOrder });
-      setHoteles(hoteles.map(h => {
-        if (h.id === hotel.id) return { ...h, orden: previousOrder };
-        if (h.id === previousHotel.id) return { ...h, orden: currentOrder };
-        return h;
-      }));
+      // El listener actualizará automáticamente el estado de hoteles
     } catch (err) {
       console.error("Error reordering hotel:", err);
     }
@@ -303,29 +278,24 @@ const MapaConductor = () => {
   const handleMoveDown = async (hotel) => {
     const sorted = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
     const index = sorted.findIndex(h => h.id === hotel.id);
-    if (index === -1 || index >= sorted.length - 1) return; // ya es el último
+    if (index === -1 || index >= sorted.length - 1) return;
     const nextHotel = sorted[index + 1];
     const currentOrder = hotel.orden || 0;
     const nextOrder = nextHotel.orden || 0;
     try {
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: nextOrder });
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextHotel.id), { ...nextHotel, orden: currentOrder });
-      setHoteles(hoteles.map(h => {
-        if (h.id === hotel.id) return { ...h, orden: nextOrder };
-        if (h.id === nextHotel.id) return { ...h, orden: currentOrder };
-        return h;
-      }));
     } catch (err) {
       console.error("Error reordering hotel:", err);
     }
   };
 
-  // Al hacer clic en una fila, se selecciona o se deselecciona un hotel para filtrar la vista
+  // Seleccionar o deseleccionar hotel
   const handleSelectHotel = (hotelId) => {
     setSelectedHotelId(selectedHotelId === hotelId ? null : hotelId);
   };
 
-  // Ejemplo de función al hacer clic en el ícono del hotel (por ejemplo, para dibujar una línea)
+  // Al hacer clic en el ícono del hotel para dibujar una línea
   const handleHotelIconClick = (hotel) => {
     const hotelName = hotel.displayName ? hotel.displayName.split(',')[0].trim() : hotel.nombre.split(',')[0].trim();
     const matchingPickup = alertas.find((alerta) => {
@@ -353,12 +323,8 @@ const MapaConductor = () => {
     }
   };
 
-  // Para el listado, ordenamos por el campo "orden"
   const sortedHoteles = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
-  // Si hay un hotel seleccionado, se filtra la lista y los marcadores
-  const displayedHoteles = selectedHotelId
-    ? sortedHoteles.filter(h => h.id === selectedHotelId)
-    : sortedHoteles;
+  const displayedHoteles = selectedHotelId ? sortedHoteles.filter(h => h.id === selectedHotelId) : sortedHoteles;
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
@@ -381,13 +347,11 @@ const MapaConductor = () => {
               attribution="&copy; OpenStreetMap contributors"
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {/* Marcador del conductor */}
             {conductorPos && (
               <Marker position={conductorPos} icon={conductorIcon}>
                 <Popup>Tu ubicación actual</Popup>
               </Marker>
             )}
-            {/* Rutas */}
             {rutas.map((ruta) => {
               if (!Array.isArray(ruta.coordenadas)) return null;
               return (
@@ -398,7 +362,6 @@ const MapaConductor = () => {
                 />
               );
             })}
-            {/* Alertas */}
             {alertas.map((alerta) => {
               if (!alerta.coordenadas) return null;
               const iconUsed = alerta.tipo === 'puntoRecogida' ? puntoRecogidaIcon : alertaIcon;
@@ -411,7 +374,6 @@ const MapaConductor = () => {
                 </Marker>
               );
             })}
-            {/* Marcadores de hoteles (filtrados si se seleccionó alguno) */}
             {hoteles
               .filter(h => !selectedHotelId || h.id === selectedHotelId)
               .map((hotel) => (
