@@ -383,7 +383,7 @@ const MapaConductor = () => {
                   eventHandlers={{ click: () => handleHotelIconClick(hotel) }}
                 >
                   <Popup>
-                    <h5>{hotel.nombre}</h5>
+                  <h5 style={{ textTransform: 'uppercase' }}>{hotel.nombre}</h5>
                     <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(hotel.id)}>
                       Eliminar Hotel
                     </Button>
