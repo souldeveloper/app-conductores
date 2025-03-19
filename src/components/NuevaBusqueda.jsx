@@ -1,4 +1,3 @@
-// src/components/MapaConductor.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,7 +13,7 @@ import {
   Spinner
 } from 'react-bootstrap';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
-import { collection, onSnapshot, doc, deleteDoc, setDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, deleteDoc, setDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
@@ -204,7 +203,7 @@ const MapaConductor = () => {
     setSearchResults([]);
     try {
       const hotelesRef = collection(db, "hoteles");
-      const snapshot = await hotelesRef.get();
+      const snapshot = await getDocs(hotelesRef);
       const allHotels = [];
       snapshot.forEach((doc) => {
         allHotels.push({ id: doc.id, ...doc.data() });
