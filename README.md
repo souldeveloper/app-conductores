@@ -1,1 +1,4 @@
-Cambio en el Readme, de momento este proyecto esta en pruebas en su version 1.0.0
+# Proyecto Admin Panel
+
+## Documentación
+Para más detalles sobre los componentes y su funcionamiento, consulta el archivo documentación_general.md
