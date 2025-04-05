@@ -121,6 +121,17 @@ const MapaConductor = () => {
     return () => unsubscribe();
   }, [navigate]);
 
+  // Listener para cargar los hoteles asignados al conductor en tiempo real
+  useEffect(() => {
+    if (!conductor) return;
+    const hotelesRef = collection(db, `usuarios/${conductor.id}/hoteles`);
+    const unsubscribeHoteles = onSnapshot(hotelesRef, (snapshot) => {
+      const tempHoteles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setHoteles(tempHoteles);
+    }, (error) => console.error("Error loading conductor's hoteles:", error));
+    return () => unsubscribeHoteles();
+  }, [conductor]);
+
   // Función para centrar el mapa en la ubicación actual del conductor
   const handleCenterMap = () => {
     if (!mapInstance) {
@@ -138,36 +149,57 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance]);
 
-  // Cargar rutas y alertas con listeners en tiempo real
+  // Consulta única a la colección "rutas" con caching de 24 horas
   useEffect(() => {
-    const rutasRef = collection(db, "rutas");
-    const unsubscribeRutas = onSnapshot(rutasRef, (snapshot) => {
-      const tempRutas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setRutas(tempRutas);
-    }, (error) => console.error("Error loading rutas:", error));
-
-    const alertasRef = collection(db, "alertas");
-    const unsubscribeAlertas = onSnapshot(alertasRef, (snapshot) => {
-      const tempAlertas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAlertas(tempAlertas);
-    }, (error) => console.error("Error loading alertas:", error));
-
-    return () => {
-      unsubscribeRutas();
-      unsubscribeAlertas();
-    };
+    async function fetchRutas() {
+      const cacheKey = 'rutasCache';
+      const timestampKey = 'rutasCacheTimestamp';
+      const cachedData = localStorage.getItem(cacheKey);
+      const cacheTimestamp = localStorage.getItem(timestampKey);
+      const now = Date.now();
+      if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp, 10)) < 24 * 60 * 60 * 1000) {
+        setRutas(JSON.parse(cachedData));
+      } else {
+        try {
+          const rutasRef = collection(db, "rutas");
+          const snapshot = await getDocs(rutasRef);
+          const tempRutas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setRutas(tempRutas);
+          localStorage.setItem(cacheKey, JSON.stringify(tempRutas));
+          localStorage.setItem(timestampKey, now.toString());
+        } catch (error) {
+          console.error("Error fetching rutas:", error);
+        }
+      }
+    }
+    fetchRutas();
   }, []);
 
-  // Cargar los hoteles asignados al conductor con listener en tiempo real
+  // Consulta única a la colección "alertas" con caching de 24 horas
   useEffect(() => {
-    if (!conductor) return;
-    const hotelesRef = collection(db, `usuarios/${conductor.id}/hoteles`);
-    const unsubscribeHoteles = onSnapshot(hotelesRef, (snapshot) => {
-      const tempHoteles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setHoteles(tempHoteles);
-    }, (error) => console.error("Error loading conductor's hoteles:", error));
-    return () => unsubscribeHoteles();
-  }, [conductor]);
+    async function fetchAlertas() {
+      const cacheKey = 'alertasCache';
+      const timestampKey = 'alertasCacheTimestamp';
+      const cachedData = localStorage.getItem(cacheKey);
+      const cacheTimestamp = localStorage.getItem(timestampKey);
+      const now = Date.now();
+      if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp, 10)) < 24 * 60 * 60 * 1000) {
+        setAlertas(JSON.parse(cachedData));
+      } else {
+        try {
+          const alertasRef = collection(db, "alertas");
+          const snapshot = await getDocs(alertasRef);
+          const tempAlertas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setAlertas(tempAlertas);
+          localStorage.setItem(cacheKey, JSON.stringify(tempAlertas));
+          localStorage.setItem(timestampKey, now.toString());
+        } catch (error) {
+          console.error("Error fetching alertas:", error);
+        }
+      }
+    }
+    fetchAlertas();
+  }, []);
 
   // Seguimiento de la ubicación del conductor
   const handleToggleTracking = () => {
@@ -240,7 +272,6 @@ const MapaConductor = () => {
         lng: hotelItem.lng,
         orden: nextOrden
       });
-      // El listener actualizará automáticamente el estado de hoteles
     } catch (err) {
       console.error("Error adding hotel:", err);
     }
@@ -251,7 +282,6 @@ const MapaConductor = () => {
     if (!conductor) return;
     try {
       await deleteDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotelId));
-      // El listener actualizará el estado de hoteles
     } catch (err) {
       console.error("Error deleting hotel:", err);
     }
@@ -268,7 +298,6 @@ const MapaConductor = () => {
     try {
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: previousOrder });
       await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, previousHotel.id), { ...previousHotel, orden: currentOrder });
-      // El listener actualizará automáticamente el estado de hoteles
     } catch (err) {
       console.error("Error reordering hotel:", err);
     }
@@ -383,7 +412,7 @@ const MapaConductor = () => {
                   eventHandlers={{ click: () => handleHotelIconClick(hotel) }}
                 >
                   <Popup>
-                  <h5 style={{ textTransform: 'uppercase' }}>{hotel.nombre}</h5>
+                    <h5 style={{ textTransform: 'uppercase' }}>{hotel.nombre}</h5>
                     <Button variant="danger" size="sm" onClick={() => handleDeleteHotel(hotel.id)}>
                       Eliminar Hotel
                     </Button>
