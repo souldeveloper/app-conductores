@@ -13,7 +13,7 @@ import {
   Spinner
 } from 'react-bootstrap';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
-import { collection, onSnapshot, doc, deleteDoc, setDoc, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, doc, deleteDoc, setDoc, getDocs, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
@@ -59,8 +59,12 @@ const getColor = (tipo) => {
   }
 };
 
+const DATA_VERSION_KEY = 'appDataVersion';
+
 const MapaConductor = () => {
   const navigate = useNavigate();
+
+  // Estados para usuario, mapa, geolocalización, etc.
   const [rutas, setRutas] = useState([]);
   const [alertas, setAlertas] = useState([]);
   const [hoteles, setHoteles] = useState([]);
@@ -72,11 +76,11 @@ const MapaConductor = () => {
   const [mapInstance, setMapInstance] = useState(null);
   const [conductorPos, setConductorPos] = useState(null);
   const [tracking, setTracking] = useState(false);
-  const watchIdRef = useRef(null);
   const [conductor, setConductor] = useState(null);
   const [tempLine, setTempLine] = useState(null);
+  const watchIdRef = useRef(null);
 
-  // Validación de sesión
+  // --- 1. Validación de sesión ---
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
@@ -121,7 +125,7 @@ const MapaConductor = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  // Listener para cargar los hoteles asignados al conductor en tiempo real
+  // --- 2. Escucha en tiempo real para los hoteles asignados al conductor ---
   useEffect(() => {
     if (!conductor) return;
     const hotelesRef = collection(db, `usuarios/${conductor.id}/hoteles`);
@@ -132,7 +136,72 @@ const MapaConductor = () => {
     return () => unsubscribeHoteles();
   }, [conductor]);
 
-  // Función para centrar el mapa en la ubicación actual del conductor
+  // --- 3. Funciones de actualización de datos con control de versión ---
+  const fetchRemoteVersion = async () => {
+    try {
+      const configRef = doc(db, 'config', 'appData');
+      const configSnap = await getDoc(configRef);
+      if (configSnap.exists()) {
+        return configSnap.data().dataVersion;
+      }
+    } catch (error) {
+      console.error("Error fetching remote version:", error);
+    }
+    return null;
+  };
+
+  const fetchRutas = async () => {
+    const rutasRef = collection(db, "rutas");
+    const snapshot = await getDocs(rutasRef);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  };
+
+  const fetchAlertas = async () => {
+    const alertasRef = collection(db, "alertas");
+    const snapshot = await getDocs(alertasRef);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  };
+
+  const updateLocalData = async () => {
+    try {
+      // Descarga de datos en paralelo
+      const [nuevasRutas, nuevasAlertas, remoteVersion] = await Promise.all([
+        fetchRutas(),
+        fetchAlertas(),
+        fetchRemoteVersion()
+      ]);
+      localStorage.setItem('rutasCache', JSON.stringify(nuevasRutas));
+      localStorage.setItem('alertasCache', JSON.stringify(nuevasAlertas));
+      localStorage.setItem(DATA_VERSION_KEY, remoteVersion);
+      console.log("Datos actualizados a la versión:", remoteVersion);
+      setRutas(nuevasRutas);
+      setAlertas(nuevasAlertas);
+    } catch (error) {
+      console.error("Error updating local data:", error);
+    }
+  };
+
+  // Comprobación y actualización de datos según versión
+  useEffect(() => {
+    async function checkForDataUpdate() {
+      const remoteVersion = await fetchRemoteVersion();
+      const localVersion = localStorage.getItem(DATA_VERSION_KEY);
+      if (!localVersion || remoteVersion !== localVersion) {
+        console.log("Nuevos datos disponibles, actualizando...");
+        await updateLocalData();
+      } else {
+        // Si no hay actualización, carga los datos desde la caché
+        const cachedRutas = JSON.parse(localStorage.getItem('rutasCache') || '[]');
+        const cachedAlertas = JSON.parse(localStorage.getItem('alertasCache') || '[]');
+        setRutas(cachedRutas);
+        setAlertas(cachedAlertas);
+        console.log("Datos cargados desde la caché, versión:", localVersion);
+      }
+    }
+    checkForDataUpdate();
+  }, []); // Se ejecuta una vez al montar el componente
+
+  // --- 4. Funciones de control del mapa y geolocalización ---
   const handleCenterMap = () => {
     if (!mapInstance) {
       console.warn("Map instance not yet created.");
@@ -149,59 +218,6 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance]);
 
-  // Consulta única a la colección "rutas" con caching de 24 horas
-  useEffect(() => {
-    async function fetchRutas() {
-      const cacheKey = 'rutasCache';
-      const timestampKey = 'rutasCacheTimestamp';
-      const cachedData = localStorage.getItem(cacheKey);
-      const cacheTimestamp = localStorage.getItem(timestampKey);
-      const now = Date.now();
-      if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp, 10)) < 24 * 60 * 60 * 1000) {
-        setRutas(JSON.parse(cachedData));
-      } else {
-        try {
-          const rutasRef = collection(db, "rutas");
-          const snapshot = await getDocs(rutasRef);
-          const tempRutas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setRutas(tempRutas);
-          localStorage.setItem(cacheKey, JSON.stringify(tempRutas));
-          localStorage.setItem(timestampKey, now.toString());
-        } catch (error) {
-          console.error("Error fetching rutas:", error);
-        }
-      }
-    }
-    fetchRutas();
-  }, []);
-
-  // Consulta única a la colección "alertas" con caching de 24 horas
-  useEffect(() => {
-    async function fetchAlertas() {
-      const cacheKey = 'alertasCache';
-      const timestampKey = 'alertasCacheTimestamp';
-      const cachedData = localStorage.getItem(cacheKey);
-      const cacheTimestamp = localStorage.getItem(timestampKey);
-      const now = Date.now();
-      if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp, 10)) < 24 * 60 * 60 * 1000) {
-        setAlertas(JSON.parse(cachedData));
-      } else {
-        try {
-          const alertasRef = collection(db, "alertas");
-          const snapshot = await getDocs(alertasRef);
-          const tempAlertas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setAlertas(tempAlertas);
-          localStorage.setItem(cacheKey, JSON.stringify(tempAlertas));
-          localStorage.setItem(timestampKey, now.toString());
-        } catch (error) {
-          console.error("Error fetching alertas:", error);
-        }
-      }
-    }
-    fetchAlertas();
-  }, []);
-
-  // Seguimiento de la ubicación del conductor
   const handleToggleTracking = () => {
     if (!tracking) {
       setTracking(true);
@@ -227,7 +243,7 @@ const MapaConductor = () => {
     }
   };
 
-  // Búsqueda de hoteles en la colección "hoteles"
+  // --- 5. Funciones de búsqueda y administración de hoteles ---
   const handleSearchHotels = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -255,7 +271,6 @@ const MapaConductor = () => {
     setLoadingSearch(false);
   };
 
-  // Agregar hotel a la subcolección del conductor
   const handleAddHotel = async (hotelItem) => {
     if (!conductor) return;
     if (hotelItem.lat === undefined || hotelItem.lng === undefined) {
@@ -277,7 +292,6 @@ const MapaConductor = () => {
     }
   };
 
-  // Eliminar hotel de la subcolección del conductor
   const handleDeleteHotel = async (hotelId) => {
     if (!conductor) return;
     try {
@@ -287,7 +301,6 @@ const MapaConductor = () => {
     }
   };
 
-  // Funciones para reordenar hoteles
   const handleMoveUp = async (hotel) => {
     const sorted = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
     const index = sorted.findIndex(h => h.id === hotel.id);
@@ -318,12 +331,11 @@ const MapaConductor = () => {
     }
   };
 
-  // Seleccionar o deseleccionar hotel
   const handleSelectHotel = (hotelId) => {
     setSelectedHotelId(selectedHotelId === hotelId ? null : hotelId);
   };
 
-  // Al hacer clic en el ícono del hotel para dibujar una línea
+  // Función para dibujar línea entre hotel y punto de recogida (si coincide en nombre)
   const handleHotelIconClick = (hotel) => {
     const hotelName = hotel.displayName ? hotel.displayName.split(',')[0].trim() : hotel.nombre.split(',')[0].trim();
     const matchingPickup = alertas.find((alerta) => {
@@ -354,6 +366,7 @@ const MapaConductor = () => {
   const sortedHoteles = [...hoteles].sort((a, b) => (a.orden || 0) - (b.orden || 0));
   const displayedHoteles = selectedHotelId ? sortedHoteles.filter(h => h.id === selectedHotelId) : sortedHoteles;
 
+  // --- Renderizado del componente ---
   return (
     <Container fluid style={{ padding: '2rem' }}>
       <Row className="mt-3">
