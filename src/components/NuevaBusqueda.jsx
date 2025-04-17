@@ -13,7 +13,7 @@ import {
   Spinner
 } from 'react-bootstrap';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
-import { doc, collection, deleteDoc, setDoc, getDocs, onSnapshot } from 'firebase/firestore';
+import { doc, collection, deleteDoc, setDoc, getDocs, getDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
@@ -42,9 +42,9 @@ const getColor = tipo => {
   }
 };
 
-const DATA_VERSION_KEY       = 'appDataVersion';
-const HOTELS_VERSION_PREFIX  = 'hotelesVersion_';
-const HOTELS_CACHE_KEY       = 'hotelesCache';
+// Claves para caché
+const DATA_VERSION_KEY   = 'appDataVersion';
+const HOTELS_CACHE_KEY   = 'hotelesCache';
 
 const MapaConductor = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const MapaConductor = () => {
   const [rutas, setRutas]                   = useState([]);
   const [alertas, setAlertas]               = useState([]);
   const [hoteles, setHoteles]               = useState([]);
-  const [allHotels, setAllHotels]           = useState([]); // Para búsqueda client-side
+  const [allHotels, setAllHotels]           = useState([]); // Catálogo global
   const [selectedHotelId, setSelectedHotelId] = useState(null);
   const [searchResults, setSearchResults]     = useState([]);
   const [searchQuery, setSearchQuery]         = useState('');
@@ -65,8 +65,6 @@ const MapaConductor = () => {
   const [conductor, setConductor]             = useState(null);
   const [tempLine, setTempLine]               = useState(null);
 
-  const hotelsLoadedRef = useRef(false);
-  const rutasLoadedRef  = useRef(false);
   const watchIdRef      = useRef(null);
 
   // 1. Validación de sesión
@@ -109,32 +107,52 @@ const MapaConductor = () => {
     })();
   }, []);
 
-  // 3. Hoteles del conductor: versión + caché + CRUD inmediato
+  // 3. Versionado y carga de appData (rutas, alertas y hoteles)
   useEffect(() => {
-    if (!conductor || hotelsLoadedRef.current) return;
-    hotelsLoadedRef.current = true;
-    const versionKey = HOTELS_VERSION_PREFIX + conductor.id;
-    (async () => {
+    if (!conductor) return;
+    const loadAppData = async () => {
       try {
-        const res = await fetch(`/api/hoteles?userId=${conductor.id}`, { cache: 'force-cache' });
-        if (!res.ok) { console.error('Error HTTP hoteles:', res.status); return; }
-        const { version: remoteVer, hoteles: remoteHoteles } = await res.json();
-        const localVer = localStorage.getItem(versionKey);
-        const list = (localVer === remoteVer)
-          ? JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]')
-          : (()=>{
-              localStorage.setItem(versionKey, remoteVer);
-              localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(remoteHoteles));
-              return remoteHoteles;
-            })();
-        setHoteles(list);
+        // Obtener versión remota
+        const versionRef = doc(db, 'appDataVersion', 'appData');
+        const versionSnap = await getDoc(versionRef);
+        if (!versionSnap.exists()) return;
+        const remoteVer = versionSnap.data().version;
+        const localVer = localStorage.getItem(DATA_VERSION_KEY);
+
+        if (localVer !== remoteVer) {
+          // Nueva versión: limpiar cachés
+          localStorage.setItem(DATA_VERSION_KEY, remoteVer);
+          localStorage.removeItem('rutasCache');
+          localStorage.removeItem('alertasCache');
+          localStorage.removeItem(HOTELS_CACHE_KEY);
+
+          // Cargar rutas y alertas desde API
+          const raRes = await fetch('/api/rutasAlertas', { cache: 'force-cache' });
+          const { rutas: newRutas, alertas: newAlertas } = await raRes.json();
+          setRutas(newRutas);
+          setAlertas(newAlertas);
+          localStorage.setItem('rutasCache', JSON.stringify(newRutas));
+          localStorage.setItem('alertasCache', JSON.stringify(newAlertas));
+
+          // Cargar hoteles desde API
+          const hRes = await fetch(`/api/hoteles?userId=${conductor.id}`, { cache: 'force-cache' });
+          const { hoteles: newHoteles } = await hRes.json();
+          setHoteles(newHoteles);
+          localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(newHoteles));
+        } else {
+          // Misma versión: cargar desde caché
+          setRutas(JSON.parse(localStorage.getItem('rutasCache') || '[]'));
+          setAlertas(JSON.parse(localStorage.getItem('alertasCache') || '[]'));
+          setHoteles(JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]'));
+        }
       } catch (err) {
-        console.error('Error cargando hoteles del conductor:', err);
+        console.error('Error cargando appData:', err);
       }
-    })();
+    };
+    loadAppData();
   }, [conductor]);
 
-  // CRUD de hoteles
+  // CRUD de hoteles en Firestore & actualización de caché
   const handleAddHotel = async hotel => {
     if (!conductor) return;
     const ordenes = hoteles.map(h => h.orden || 0);
@@ -161,8 +179,8 @@ const MapaConductor = () => {
     if (idx<=0) return;
     const prev = sorted[idx-1];
     await Promise.all([
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id),   { ...hotel, orden: prev.orden }),
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, prev.id),    { ...prev, orden: hotel.orden })
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: prev.orden }),
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, prev.id), { ...prev, orden: hotel.orden })
     ]);
     const updated = hoteles.map(h =>
       h.id===hotel.id?{...h,orden:prev.orden}:
@@ -179,8 +197,8 @@ const MapaConductor = () => {
     if (idx===-1||idx>=sorted.length-1) return;
     const nextH = sorted[idx+1];
     await Promise.all([
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id),   { ...hotel, orden: nextH.orden }),
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextH.id),  { ...nextH, orden: hotel.orden })
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: nextH.orden }),
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextH.id), { ...nextH, orden: hotel.orden })
     ]);
     const updated = hoteles.map(h =>
       h.id===hotel.id?{...h,orden:nextH.orden}:
@@ -190,36 +208,7 @@ const MapaConductor = () => {
     localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
   };
 
-  // 4. Rutas y Alertas: cargar una vez al inicio
-  useEffect(() => {
-    if (rutasLoadedRef.current) return;
-    rutasLoadedRef.current = true;
-    (async () => {
-      try {
-        const v = await fetch('/api/version', { cache:'force-cache' });
-        if (!v.ok) return;
-        const { dataVersion: remoteVer } = await v.json();
-        const localVer = localStorage.getItem(DATA_VERSION_KEY);
-        if (localVer === remoteVer) {
-          setRutas(JSON.parse(localStorage.getItem('rutasCache')||'[]'));
-          setAlertas(JSON.parse(localStorage.getItem('alertasCache')||'[]'));
-        } else {
-          const d = await fetch('/api/rutasAlertas', { cache:'force-cache' });
-          if (!d.ok) return;
-          const { rutas: nr, alertas: na } = await d.json();
-          localStorage.setItem('rutasCache', JSON.stringify(nr));
-          localStorage.setItem('alertasCache', JSON.stringify(na));
-          localStorage.setItem(DATA_VERSION_KEY, remoteVer);
-          setRutas(nr);
-          setAlertas(na);
-        }
-      } catch (e) {
-        console.error('Error cargando rutas/alertas:', e);
-      }
-    })();
-  }, []);
-
-  // 5. Geolocalización y mapa
+  // Geolocalización y mapa
   const handleCenterMap = () => {
     if (mapInstance && conductorPos) {
       mapInstance.panTo(conductorPos, { animate: true });
@@ -246,7 +235,7 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance]);
 
-  // 6. Búsqueda de hoteles (client-side)
+  // Búsqueda de hoteles (client-side)
   const handleSearchHotels = e => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -263,8 +252,8 @@ const MapaConductor = () => {
   // Renderizado final
   const sortedHoteles = [...hoteles].sort((a,b)=>(a.orden||0)-(b.orden||0));
   const displayed     = selectedHotelId
-                      ? sortedHoteles.filter(h=>h.id===selectedHotelId)
-                      : sortedHoteles;
+                        ? sortedHoteles.filter(h=>h.id===selectedHotelId)
+                        : sortedHoteles;
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
