@@ -44,7 +44,7 @@ const getColor = tipo => {
 };
 
 // Claves de localStorage
-const DATA_VERSION_KEY           = 'dataVersion';
+const DATA_VERSION_KEY           = 'appDataVersion';
 const GLOBAL_HOTELS_VERSION_KEY = 'hotelesAllVersion';
 const GLOBAL_HOTELS_CACHE_KEY   = 'hotelesAllCache';
 const HOTELS_CACHE_KEY          = 'hotelesCache';
@@ -129,7 +129,7 @@ const MapaConductor = () => {
     if (!conductor) return;
     const loadAppData = async () => {
       try {
-        const verRef = doc(db, 'config', 'appData');
+        const verRef = doc(db, 'appDataVersion', 'appData');
         const verSnap = await getDoc(verRef);
         if (!verSnap.exists()) return;
         const remoteVer = verSnap.data().version;
