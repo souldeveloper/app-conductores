@@ -35,34 +35,35 @@ const conductorIcon = L.icon({ iconUrl: '/iconos/bus.png', iconSize: [35,35], ic
 
 const getColor = tipo => {
   switch(tipo) {
-    case 'segura': return 'green';
-    case 'advertencia': return 'yellow';
-    case 'prohibida': return 'red';
-    default: return 'blue';
+    case 'segura':       return 'green';
+    case 'advertencia':  return 'yellow';
+    case 'prohibida':    return 'red';
+    default:             return 'blue';
   }
 };
 
-const DATA_VERSION_KEY   = 'appDataVersion';
-const HOTELS_CACHE_KEY   = 'hotelesCache';
+const DATA_VERSION_KEY       = 'appDataVersion';
+const HOTELS_VERSION_PREFIX  = 'hotelesVersion_';
+const HOTELS_CACHE_KEY       = 'hotelesCache';
 
 const MapaConductor = () => {
   const navigate = useNavigate();
-  const [rutas, setRutas]               = useState([]);
-  const [alertas, setAlertas]           = useState([]);
-  const [hoteles, setHoteles]           = useState([]);
+  const [rutas, setRutas]                     = useState([]);
+  const [alertas, setAlertas]                 = useState([]);
+  const [hoteles, setHoteles]                 = useState([]);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
   const [searchResults, setSearchResults]     = useState([]);
   const [searchQuery, setSearchQuery]         = useState('');
   const [loadingSearch, setLoadingSearch]     = useState(false);
-  const [center, setCenter]           = useState([39.6908, 2.9271]);
-  const [mapInstance, setMapInstance]     = useState(null);
-  const [conductorPos, setConductorPos]   = useState(null);
-  const [tracking, setTracking]       = useState(false);
-  const [conductor, setConductor]     = useState(null);
-  const [tempLine, setTempLine]       = useState(null);
+  const [center]                              = useState([39.6908, 2.9271]);
+  const [mapInstance, setMapInstance]         = useState(null);
+  const [conductorPos, setConductorPos]       = useState(null);
+  const [tracking, setTracking]               = useState(false);
+  const [conductor, setConductor]             = useState(null);
+  const [tempLine, setTempLine]               = useState(null);
   const watchIdRef = useRef(null);
 
-  // 1. Validación de sesión y listener de usuario
+  // 1️⃣ Validación de sesión — onSnapshot en usuario
   useEffect(() => {
     const currentUserStr = Cookies.get('currentUser');
     const localDeviceUid = Cookies.get('deviceUid');
@@ -71,22 +72,29 @@ const MapaConductor = () => {
     try { currentUser = JSON.parse(currentUserStr); }
     catch { return navigate('/'); }
     if (!currentUser.id) return navigate('/');
-    const userDocRef = doc(db, 'usuarios', currentUser.id);
-    const unsub = onSnapshot(userDocRef, snap => {
-      if (!snap.exists()) return Cookies.remove('currentUser') && navigate('/');
+    const userRef = doc(db, 'usuarios', currentUser.id);
+    const unsub = onSnapshot(userRef, snap => {
+      if (!snap.exists()) {
+        Cookies.remove('currentUser');
+        return navigate('/');
+      }
       const data = snap.data();
       if (data.deviceUid !== localDeviceUid) {
-        Cookies.remove('currentUser'); return navigate('/');
+        Cookies.remove('currentUser');
+        return navigate('/');
       }
       setConductor({ id: snap.id, ...data });
-    }, err => { console.error(err); navigate('/'); });
+    }, err => {
+      console.error(err);
+      navigate('/');
+    });
     return () => unsub();
   }, [navigate]);
 
-  // 2. Hoteles: versionado + cache local
+  // 2️⃣ Hoteles del conductor: versión + caché + estado inmediato en CRUD
   useEffect(() => {
     if (!conductor) return;
-    const versionKey = `hotelesVersion_${conductor.id}`;
+    const versionKey = HOTELS_VERSION_PREFIX + conductor.id;
     (async () => {
       try {
         const res = await fetch(`/api/hoteles?userId=${conductor.id}`);
@@ -96,20 +104,58 @@ const MapaConductor = () => {
         }
         const { version: remoteVer, hoteles: remoteHoteles } = await res.json();
         const localVer = localStorage.getItem(versionKey);
-        if (!localVer || remoteVer !== localVer) {
+        let list = remoteHoteles;
+        if (localVer && remoteVer === localVer) {
+          list = JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]');
+        } else {
           localStorage.setItem(versionKey, remoteVer);
           localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(remoteHoteles));
-          setHoteles(remoteHoteles);
-        } else {
-          setHoteles(JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]'));
         }
+        setHoteles(list);
       } catch (err) {
-        console.error('Error cargando hoteles versionados:', err);
+        console.error('Error cargando hoteles:', err);
       }
     })();
   }, [conductor]);
 
-  // 3. Rutas y Alertas: versionado + cache local
+  // Añadir hotel — Firestore + estado local + caché
+  const handleAddHotel = async hotel => {
+    if (!conductor) return;
+    const ordenes = hoteles.map(h => h.orden || 0);
+    const next    = ordenes.length ? Math.max(...ordenes) + 1 : 1;
+    try {
+      const ref = doc(collection(db, `usuarios/${conductor.id}/hoteles`));
+      await setDoc(ref, {
+        nombre: hotel.displayName,
+        lat: hotel.lat,
+        lng: hotel.lng,
+        orden: next
+      });
+      const updated = [
+        ...hoteles,
+        { id: ref.id, nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next }
+      ];
+      setHoteles(updated);
+      localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.error('Error añadiendo hotel:', err);
+    }
+  };
+
+  // Eliminar hotel — Firestore + estado local + caché
+  const handleDeleteHotel = async id => {
+    if (!conductor) return;
+    try {
+      await deleteDoc(doc(db, `usuarios/${conductor.id}/hoteles`, id));
+      const updated = hoteles.filter(h => h.id !== id);
+      setHoteles(updated);
+      localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.error('Error eliminando hotel:', err);
+    }
+  };
+
+  // 3️⃣ Rutas y Alertas: versión + caché
   useEffect(() => {
     (async () => {
       try {
@@ -126,12 +172,12 @@ const MapaConductor = () => {
             console.error('Error HTTP rutasAlertas:', dataRes.status, await dataRes.text());
             return;
           }
-          const { rutas: nuevasRutas, alertas: nuevasAlertas } = await dataRes.json();
-          localStorage.setItem('rutasCache', JSON.stringify(nuevasRutas));
-          localStorage.setItem('alertasCache', JSON.stringify(nuevasAlertas));
+          const { rutas: nr, alertas: na } = await dataRes.json();
+          localStorage.setItem('rutasCache', JSON.stringify(nr));
+          localStorage.setItem('alertasCache', JSON.stringify(na));
           localStorage.setItem(DATA_VERSION_KEY, remoteVer);
-          setRutas(nuevasRutas);
-          setAlertas(nuevasAlertas);
+          setRutas(nr);
+          setAlertas(na);
         } else {
           setRutas(JSON.parse(localStorage.getItem('rutasCache') || '[]'));
           setAlertas(JSON.parse(localStorage.getItem('alertasCache') || '[]'));
@@ -142,23 +188,18 @@ const MapaConductor = () => {
     })();
   }, []);
 
-  // 4. Geolocalización y control del mapa
+  // 4️⃣ Geolocalización y mapa
   const handleCenterMap = () => {
     if (mapInstance && conductorPos) {
       mapInstance.panTo(conductorPos, { animate: true });
     }
   };
-  useEffect(() => {
-    if (conductorPos && mapInstance) {
-      mapInstance.panTo(conductorPos, { animate: true });
-    }
-  }, [conductorPos, mapInstance]);
   const handleToggleTracking = () => {
     if (!tracking && navigator.geolocation) {
       setTracking(true);
       watchIdRef.current = navigator.geolocation.watchPosition(
         pos => setConductorPos([pos.coords.latitude, pos.coords.longitude]),
-        err => console.error('Error geoloc:', err),
+        err => console.error(err),
         { enableHighAccuracy: true, maximumAge: 0 }
       );
     } else {
@@ -168,97 +209,100 @@ const MapaConductor = () => {
       }
     }
   };
+  useEffect(() => {
+    if (conductorPos && mapInstance) {
+      mapInstance.panTo(conductorPos, { animate: true });
+    }
+  }, [conductorPos, mapInstance]);
 
-  // 5. Búsqueda y gestión de hoteles
+  // 5️⃣ Búsqueda de hoteles global
   const handleSearchHotels = async e => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     setLoadingSearch(true);
     try {
       const snap = await getDocs(collection(db, 'hoteles'));
-      const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      const filt = all.filter(h => h.nombre?.toLowerCase().includes(searchQuery.toLowerCase()));
-      setSearchResults(filt.map(h => ({ displayName: h.nombre, lat: h.lat, lng: h.lng })));
+      const all  = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const filt = all.filter(h =>
+        h.nombre?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchResults(filt.map(h => ({
+        displayName: h.nombre,
+        lat: h.lat,
+        lng: h.lng
+      })));
     } catch (err) {
-      console.error('Error buscando hoteles:', err);
+      console.error(err);
     }
     setLoadingSearch(false);
   };
-  const handleAddHotel = async hotel => {
-    if (!conductor) return;
-    const ordenes = hoteles.map(h => h.orden || 0);
-    const next = ordenes.length ? Math.max(...ordenes) + 1 : 1;
-    try {
-      await setDoc(
-        doc(collection(db, `usuarios/${conductor.id}/hoteles`)),
-        { nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next }
-      );
-    } catch (err) {
-      console.error('Error añadiendo hotel:', err);
-    }
-  };
-  const handleDeleteHotel = async id => {
-    await deleteDoc(doc(db, `usuarios/${conductor.id}/hoteles`, id));
-  };
-  const handleMoveUp = async hotel => {
-    const sorted = [...hoteles].sort((a,b)=> (a.orden||0)-(b.orden||0));
-    const idx = sorted.findIndex(h=>h.id===hotel.id);
-    if (idx>0) {
-      const prev = sorted[idx-1];
-      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: prev.orden });
-      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, prev.id), { ...prev, orden: hotel.orden });
-    }
-  };
-  const handleMoveDown = async hotel => {
-    const sorted = [...hoteles].sort((a,b)=> (a.orden||0)-(b.orden||0));
-    const idx = sorted.findIndex(h=>h.id===hotel.id);
-    if (idx < sorted.length-1) {
-      const nextHotel = sorted[idx+1];
-      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id),   { ...hotel, orden: nextHotel.orden });
-      await setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextHotel.id), { ...nextHotel, orden: hotel.orden });
-    }
-  };
-  const handleSelectHotel = id => setSelectedHotelId(selectedHotelId===id?null:id);
 
   // Renderizado
   const sortedHoteles = [...hoteles].sort((a,b)=> (a.orden||0)-(b.orden||0));
-  const displayed    = selectedHotelId
-                     ? sortedHoteles.filter(h=>h.id===selectedHotelId)
-                     : sortedHoteles;
+  const displayed     = selectedHotelId
+                      ? sortedHoteles.filter(h=>h.id===selectedHotelId)
+                      : sortedHoteles;
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
       <Row className="mt-3">
         <Col>
           <h2>Mapa del Conductor</h2>
-          <Button variant={tracking?'danger':'success'} onClick={handleToggleTracking}>
+          <Button variant={tracking ? 'danger' : 'success'} onClick={handleToggleTracking}>
             {tracking ? 'Detener Ruta' : 'Iniciar Ruta'}
           </Button>{' '}
-          <Button variant="info" onClick={handleCenterMap}>Centrar en mi ubicación</Button>
+          <Button variant="info" onClick={handleCenterMap}>
+            Centrar en mi ubicación
+          </Button>
         </Col>
       </Row>
       <Row>
         <Col md={9}>
           <MapContainer center={center} zoom={10} style={{ height: '80vh' }}>
             <SetMapInstance setMapInstance={setMapInstance} />
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap contributors"/>
-            {conductorPos && <Marker position={conductorPos} icon={conductorIcon}><Popup>Tu ubicación</Popup></Marker>}
-            {rutas.map(r=>Array.isArray(r.coordenadas)&&(
-              <Polyline key={r.id} positions={r.coordenadas.map(c=>[c.lat,c.lng])} color={getColor(r.tipo)} />
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="© OpenStreetMap contributors"
+            />
+            {conductorPos && (
+              <Marker position={conductorPos} icon={conductorIcon}>
+                <Popup>Tu ubicación actual</Popup>
+              </Marker>
+            )}
+            {rutas.map(r=> Array.isArray(r.coordenadas) && (
+              <Polyline
+                key={r.id}
+                positions={r.coordenadas.map(c=>[c.lat,c.lng])}
+                color={getColor(r.tipo)}
+              />
             ))}
-            {alertas.map(a=>a.coordenadas&&(
-              <Marker key={a.id} position={[a.coordenadas.lat,a.coordenadas.lng]}
-                      icon={a.tipo==='puntoRecogida'?puntoRecogidaIcon:alertaIcon}>
-                <Popup><h5>{a.title||'Sin título'}</h5><p>{a.description||'Sin descripción'}</p></Popup>
+            {alertas.map(a=> a.coordenadas && (
+              <Marker
+                key={a.id}
+                position={[a.coordenadas.lat,a.coordenadas.lng]}
+                icon={a.tipo==='puntoRecogida'?puntoRecogidaIcon:alertaIcon}
+              >
+                <Popup>
+                  <h5>{a.title||'Sin título'}</h5>
+                  <p>{a.description||'Sin descripción'}</p>
+                </Popup>
               </Marker>
             ))}
             {displayed.map(h=>(
-              <Marker key={h.id} position={[h.lat,h.lng]} icon={hotelIcon}
-                      eventHandlers={{ click:()=>handleSelectHotel(h.id) }}>
+              <Marker
+                key={h.id}
+                position={[h.lat,h.lng]}
+                icon={hotelIcon}
+                eventHandlers={{ click: ()=>setSelectedHotelId(h.id) }}
+              >
                 <Popup>
                   <h5>{h.nombre}</h5>
-                  <Button variant="danger" size="sm" onClick={()=>handleDeleteHotel(h.id)}>
-                    Eliminar Hotel
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDeleteHotel(h.id)}
+                  >
+                    Eliminar
                   </Button>
                 </Popup>
               </Marker>
@@ -275,34 +319,56 @@ const MapaConductor = () => {
               value={searchQuery}
               onChange={e=>setSearchQuery(e.target.value)}
             />
-            <Button variant="primary" type="submit" className="mt-2">Buscar</Button>
+            <Button variant="primary" type="submit" className="mt-2">
+              Buscar
+            </Button>
           </Form>
           {loadingSearch && <Spinner animation="border" className="my-2" />}
-          {searchResults.length>0 && (
+          {searchResults.length > 0 && (
             <ListGroup className="mt-2">
-              {searchResults.map((res,i)=>(
-                <ListGroup.Item key={i} action onClick={()=>handleAddHotel(res)}>
+              {searchResults.map((res,i) => (
+                <ListGroup.Item key={i} className="d-flex justify-content-between align-items-center">
                   {res.displayName}
-                  <Button variant="success" size="sm" className="float-end">+</Button>
+                  <Button
+                    variant="success"
+                    size="sm"
+                    onClick={() => handleAddHotel(res)}
+                  >
+                    +
+                  </Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
           )}
           <h4 className="mt-4">Mis Hoteles</h4>
-          {displayed.length===0 && <Alert variant="info">No hay hoteles agregados.</Alert>}
-          {displayed.length>0 && (
+          {displayed.length === 0 && (
+            <Alert variant="info">No hay hoteles agregados.</Alert>
+          )}
+          {displayed.length > 0 && (
             <Table striped bordered hover size="sm">
-              <thead><tr><th>Nombre</th><th>Orden</th><th>Acciones</th></tr></thead>
+              <thead>
+                <tr><th>Nombre</th><th>Orden</th><th>Acciones</th></tr>
+              </thead>
               <tbody>
-                {sortedHoteles.map(h=>(
-                  <tr key={h.id} onClick={()=>handleSelectHotel(h.id)}
-                      style={{ cursor:'pointer', backgroundColor:selectedHotelId===h.id?'#e0e0e0':'inherit' }}>
+                {sortedHoteles.map(h => (
+                  <tr
+                    key={h.id}
+                    onClick={() => setSelectedHotelId(h.id)}
+                    style={{
+                      cursor: 'pointer',
+                      backgroundColor: selectedHotelId===h.id?'#e0e0e0':'inherit'
+                    }}
+                  >
                     <td>{h.nombre}</td>
                     <td>{h.orden}</td>
                     <td>
-                      <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveUp(h)}}>↑</Button>{' '}
-                      <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveDown(h)}}>↓</Button>{' '}
-                      <Button variant="danger" size="sm" onClick={e=>{e.stopPropagation();handleDeleteHotel(h.id)}}>
+                      <Button size="sm" onClick={e=>{e.stopPropagation(); handleMoveUp(h);}}>↑</Button>{' '}
+                      <Button size="sm" onClick={e=>{e.stopPropagation(); handleMoveDown(h);}}>↓</Button>{' '}
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={e=>{e.stopPropagation(); handleDeleteHotel(h.id);}}
+                      >
                         Eliminar
                       </Button>
                     </td>
