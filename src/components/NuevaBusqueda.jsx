@@ -12,24 +12,13 @@ import {
   ListGroup,
   Spinner
 } from 'react-bootstrap';
-import {
-  MapContainer, TileLayer, Polyline, Marker, Popup, useMap
-} from 'react-leaflet';
-import {
-  doc,
-  collection,
-  deleteDoc,
-  setDoc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-  limit
-} from 'firebase/firestore';
+import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
+import { doc, collection, deleteDoc, setDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
 
+// Captura la instancia del mapa
 const SetMapInstance = ({ setMapInstance }) => {
   const map = useMap();
   useEffect(() => {
@@ -38,6 +27,7 @@ const SetMapInstance = ({ setMapInstance }) => {
   return null;
 };
 
+// Íconos
 const alertaIcon = L.icon({ iconUrl: '/iconos/alerta.png', iconSize: [25,25], iconAnchor: [12,12] });
 const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/recogida.png', iconSize: [25,25], iconAnchor: [12,12] });
 const hotelIcon = L.icon({ iconUrl: '/iconos/hotel.png', iconSize: [25,25], iconAnchor: [12,12] });
@@ -58,19 +48,23 @@ const HOTELS_CACHE_KEY       = 'hotelesCache';
 
 const MapaConductor = () => {
   const navigate = useNavigate();
+
+  // Estados principales
   const [rutas, setRutas]                   = useState([]);
   const [alertas, setAlertas]               = useState([]);
   const [hoteles, setHoteles]               = useState([]);
+  const [allHotels, setAllHotels]           = useState([]); // Para búsqueda client-side
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-  const [searchResults, setSearchResults]   = useState([]);
-  const [searchQuery, setSearchQuery]       = useState('');
-  const [loadingSearch, setLoadingSearch]   = useState(false);
-  const [center]                            = useState([39.6908, 2.9271]);
-  const [mapInstance, setMapInstance]       = useState(null);
-  const [conductorPos, setConductorPos]     = useState(null);
-  const [tracking, setTracking]             = useState(false);
-  const [conductor, setConductor]           = useState(null);
-  const [tempLine, setTempLine]             = useState(null);
+  const [searchResults, setSearchResults]     = useState([]);
+  const [searchQuery, setSearchQuery]         = useState('');
+  const [loadingSearch, setLoadingSearch]     = useState(false);
+  const [center]                              = useState([39.6908, 2.9271]);
+  const [mapInstance, setMapInstance]         = useState(null);
+  const [conductorPos, setConductorPos]       = useState(null);
+  const [tracking, setTracking]               = useState(false);
+  const [conductor, setConductor]             = useState(null);
+  const [tempLine, setTempLine]               = useState(null);
+
   const hotelsLoadedRef = useRef(false);
   const rutasLoadedRef  = useRef(false);
   const watchIdRef      = useRef(null);
@@ -86,18 +80,36 @@ const MapaConductor = () => {
     const ref = doc(db, 'usuarios', user.id);
     const unsub = onSnapshot(ref, snap => {
       if (!snap.exists()) {
-        Cookies.remove('currentUser'); navigate('/'); return;
+        Cookies.remove('currentUser');
+        return navigate('/');
       }
       const data = snap.data();
       if (data.deviceUid !== devUid) {
-        Cookies.remove('currentUser'); navigate('/'); return;
+        Cookies.remove('currentUser');
+        return navigate('/');
       }
       setConductor({ id: snap.id, ...data });
-    }, err => { console.error(err); navigate('/'); });
+    }, err => {
+      console.error(err);
+      navigate('/');
+    });
     return () => unsub();
   }, [navigate]);
 
-  // 2. Hoteles: solo una carga al login, versión + caché + CRUD inmediato
+  // 2. Carga global de hoteles para búsqueda (solo una vez)
+  useEffect(() => {
+    (async () => {
+      try {
+        const snap = await getDocs(collection(db, 'hoteles'));
+        const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        setAllHotels(list);
+      } catch (err) {
+        console.error('Error cargando catálogo de hoteles:', err);
+      }
+    })();
+  }, []);
+
+  // 3. Hoteles del conductor: versión + caché + CRUD inmediato
   useEffect(() => {
     if (!conductor || hotelsLoadedRef.current) return;
     hotelsLoadedRef.current = true;
@@ -110,21 +122,23 @@ const MapaConductor = () => {
         const localVer = localStorage.getItem(versionKey);
         const list = (localVer === remoteVer)
           ? JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]')
-          : (localStorage.setItem(versionKey, remoteVer),
-             localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(remoteHoteles)),
-             remoteHoteles);
+          : (()=>{
+              localStorage.setItem(versionKey, remoteVer);
+              localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(remoteHoteles));
+              return remoteHoteles;
+            })();
         setHoteles(list);
       } catch (err) {
-        console.error('Error cargando hoteles:', err);
+        console.error('Error cargando hoteles del conductor:', err);
       }
     })();
   }, [conductor]);
 
-  // CRUD de hoteles + cache inmediato
+  // CRUD de hoteles
   const handleAddHotel = async hotel => {
     if (!conductor) return;
     const ordenes = hoteles.map(h => h.orden || 0);
-    const next = ordenes.length ? Math.max(...ordenes)+1 : 1;
+    const next = ordenes.length ? Math.max(...ordenes) + 1 : 1;
     const ref = doc(collection(db, `usuarios/${conductor.id}/hoteles`));
     await setDoc(ref, { nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next });
     const updated = [...hoteles, { id: ref.id, nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next }];
@@ -142,12 +156,12 @@ const MapaConductor = () => {
 
   const handleMoveUp = async hotel => {
     if (!conductor) return;
-    const sorted = [...hoteles].sort((a,b)=> (a.orden||0)-(b.orden||0));
+    const sorted = [...hoteles].sort((a,b)=>(a.orden||0)-(b.orden||0));
     const idx = sorted.findIndex(h=>h.id===hotel.id);
     if (idx<=0) return;
     const prev = sorted[idx-1];
     await Promise.all([
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: prev.orden }),
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id),   { ...hotel, orden: prev.orden }),
       setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, prev.id),    { ...prev, orden: hotel.orden })
     ]);
     const updated = hoteles.map(h =>
@@ -160,13 +174,13 @@ const MapaConductor = () => {
 
   const handleMoveDown = async hotel => {
     if (!conductor) return;
-    const sorted = [...hoteles].sort((a,b)=> (a.orden||0)-(b.orden||0));
+    const sorted = [...hoteles].sort((a,b)=>(a.orden||0)-(b.orden||0));
     const idx = sorted.findIndex(h=>h.id===hotel.id);
     if (idx===-1||idx>=sorted.length-1) return;
     const nextH = sorted[idx+1];
     await Promise.all([
       setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id),   { ...hotel, orden: nextH.orden }),
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextH.id),    { ...nextH, orden: hotel.orden })
+      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextH.id),  { ...nextH, orden: hotel.orden })
     ]);
     const updated = hoteles.map(h =>
       h.id===hotel.id?{...h,orden:nextH.orden}:
@@ -176,66 +190,73 @@ const MapaConductor = () => {
     localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
   };
 
-  // 3. Rutas+Alertas: cargar una vez al inicio
+  // 4. Rutas y Alertas: cargar una vez al inicio
   useEffect(() => {
     if (rutasLoadedRef.current) return;
     rutasLoadedRef.current = true;
     (async () => {
       try {
-        const v = await fetch('/api/version', { cache:'force-cache' }); if (!v.ok) return;
+        const v = await fetch('/api/version', { cache:'force-cache' });
+        if (!v.ok) return;
         const { dataVersion: remoteVer } = await v.json();
         const localVer = localStorage.getItem(DATA_VERSION_KEY);
-        if (localVer===remoteVer) {
+        if (localVer === remoteVer) {
           setRutas(JSON.parse(localStorage.getItem('rutasCache')||'[]'));
           setAlertas(JSON.parse(localStorage.getItem('alertasCache')||'[]'));
         } else {
-          const d = await fetch('/api/rutasAlertas', { cache:'force-cache' }); if (!d.ok) return;
+          const d = await fetch('/api/rutasAlertas', { cache:'force-cache' });
+          if (!d.ok) return;
           const { rutas: nr, alertas: na } = await d.json();
           localStorage.setItem('rutasCache', JSON.stringify(nr));
-          localStorage.setItem('alertasCache',JSON.stringify(na));
+          localStorage.setItem('alertasCache', JSON.stringify(na));
           localStorage.setItem(DATA_VERSION_KEY, remoteVer);
-          setRutas(nr); setAlertas(na);
+          setRutas(nr);
+          setAlertas(na);
         }
-      } catch(e){console.error(e);}
+      } catch (e) {
+        console.error('Error cargando rutas/alertas:', e);
+      }
     })();
   }, []);
 
-  // 4. Geolocalización
+  // 5. Geolocalización y mapa
   const handleCenterMap = () => {
-    if (mapInstance&&conductorPos) mapInstance.panTo(conductorPos,{animate:true});
+    if (mapInstance && conductorPos) {
+      mapInstance.panTo(conductorPos, { animate: true });
+    }
   };
   const handleToggleTracking = () => {
-    if (!tracking&&navigator.geolocation) {
+    if (!tracking && navigator.geolocation) {
       setTracking(true);
       watchIdRef.current = navigator.geolocation.watchPosition(
-        pos=>setConductorPos([pos.coords.latitude,pos.coords.longitude]),
-        e=>console.error(e),{enableHighAccuracy:true,maximumAge:0}
+        pos => setConductorPos([pos.coords.latitude, pos.coords.longitude]),
+        err => console.error(err),
+        { enableHighAccuracy: true, maximumAge: 0 }
       );
     } else {
       setTracking(false);
-      if (watchIdRef.current!==null) navigator.geolocation.clearWatch(watchIdRef.current);
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
     }
   };
   useEffect(() => {
-    if (conductorPos&&mapInstance) mapInstance.panTo(conductorPos,{animate:true});
-  },[conductorPos,mapInstance]);
+    if (conductorPos && mapInstance) {
+      mapInstance.panTo(conductorPos, { animate: true });
+    }
+  }, [conductorPos, mapInstance]);
 
-  // 5. Búsqueda hotels con query + limit
-  const handleSearchHotels = async e => {
+  // 6. Búsqueda de hoteles (client-side)
+  const handleSearchHotels = e => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     setLoadingSearch(true);
-    try {
-      const hotelsRef = collection(db,'hoteles');
-      const q = query(
-        hotelsRef,
-        where('nombre','>=',searchQuery),
-        where('nombre','<=',searchQuery+'\uf8ff'),
-        limit(10)
-      );
-      const snap = await getDocs(q);
-      setSearchResults(snap.docs.map(d=>({displayName:d.data().nombre,lat:d.data().lat,lng:d.data().lng})));
-    } catch(e){console.error(e);}    
+    const lower = searchQuery.toLowerCase();
+    const results = allHotels
+      .filter(h => h.nombre.toLowerCase().includes(lower))
+      .slice(0, 10)
+      .map(h => ({ displayName: h.nombre, lat: h.lat, lng: h.lng }));
+    setSearchResults(results);
     setLoadingSearch(false);
   };
 
@@ -246,47 +267,84 @@ const MapaConductor = () => {
                       : sortedHoteles;
 
   return (
-    <Container fluid style={{padding:'2rem'}}>
-      <Row className="mt-3"><Col>
-        <h2>Mapa del Conductor</h2>
-        <Button variant={tracking?'danger':'success'} onClick={handleToggleTracking}>
-          {tracking?'Detener Ruta':'Iniciar Ruta'}
-        </Button>{' '}
-        <Button variant="info" onClick={handleCenterMap}>Centrar en mi ubicación</Button>
-      </Col></Row>
+    <Container fluid style={{ padding: '2rem' }}>
+      <Row className="mt-3">
+        <Col>
+          <h2>Mapa del Conductor</h2>
+          <Button variant={tracking?'danger':'success'} onClick={handleToggleTracking}>
+            {tracking?'Detener Ruta':'Iniciar Ruta'}
+          </Button>{' '}
+          <Button variant="info" onClick={handleCenterMap}>
+            Centrar en mi ubicación
+          </Button>
+        </Col>
+      </Row>
       <Row>
+        {/* Mapa */}
         <Col md={9}>
-          <MapContainer center={center} zoom={10} style={{height:'80vh'}}>
+          <MapContainer center={center} zoom={10} style={{ height: '80vh' }}>
             <SetMapInstance setMapInstance={setMapInstance}/>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap contributors"/>
-            {conductorPos&&<Marker position={conductorPos} icon={conductorIcon}><Popup>Tu ubicación</Popup></Marker>}
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="© OpenStreetMap contributors"
+            />
+            {conductorPos && (
+              <Marker position={conductorPos} icon={conductorIcon}>
+                <Popup>Tu ubicación actual</Popup>
+              </Marker>
+            )}
             {rutas.map(r=>Array.isArray(r.coordenadas)&&(
-              <Polyline key={r.id} positions={r.coordenadas.map(c=>[c.lat,c.lng])} color={getColor(r.tipo)}/>
+              <Polyline
+                key={r.id}
+                positions={r.coordenadas.map(c=>[c.lat,c.lng])}
+                color={getColor(r.tipo)}
+              />
             ))}
             {alertas.map(a=>a.coordenadas&&(
-              <Marker key={a.id} position={[a.coordenadas.lat,a.coordenadas.lng]} icon={a.tipo==='puntoRecogida'?puntoRecogidaIcon:alertaIcon}>
-                <Popup><h5>{a.title||'Sin título'}</h5><p>{a.description||'Sin descripción'}</p></Popup>
-              </Marker>
-            ))}
-            {displayed.map(h=>(
-              <Marker key={h.id} position={[h.lat,h.lng]} icon={hotelIcon} eventHandlers={{click:()=>setSelectedHotelId(h.id)}}>
+              <Marker
+                key={a.id}
+                position={[a.coordenadas.lat,a.coordenadas.lng]}
+                icon={a.tipo==='puntoRecogida'? puntoRecogidaIcon: alertaIcon}
+              >
                 <Popup>
-                  <h5>{h.nombre}</h5>
-                  <Button variant="danger" size="sm" onClick={()=>handleDeleteHotel(h.id)}>Eliminar</Button>
+                  <h5>{a.title||'Sin título'}</h5>
+                  <p>{a.description||'Sin descripción'}</p>
                 </Popup>
               </Marker>
             ))}
-            {tempLine&&<Polyline positions={tempLine} color="purple" dashArray="5,10"/>}
+            {displayed.map(h=>(
+              <Marker
+                key={h.id}
+                position={[h.lat,h.lng]}
+                icon={hotelIcon}
+                eventHandlers={{ click: ()=>setSelectedHotelId(h.id) }}
+              >
+                <Popup>
+                  <h5>{h.nombre}</h5>
+                  <Button variant="danger" size="sm" onClick={()=>handleDeleteHotel(h.id)}>
+                    Eliminar
+                  </Button>
+                </Popup>
+              </Marker>
+            ))}
+            {tempLine && <Polyline positions={tempLine} color="purple" dashArray="5,10"/>}
           </MapContainer>
         </Col>
+
+        {/* Panel lateral */}
         <Col md={3}>
           <h4>Buscar Hoteles</h4>
           <Form onSubmit={handleSearchHotels}>
-            <FormControl placeholder="Nombre del hotel" value={searchQuery} onChange={e=>setSearchQuery(e.target.value)}/>
-            <Button type="submit" className="mt-2">Buscar</Button>
+            <FormControl
+              type="text"
+              placeholder="Nombre del hotel"
+              value={searchQuery}
+              onChange={e=>setSearchQuery(e.target.value)}
+            />
+            <Button variant="primary" type="submit" className="mt-2">Buscar</Button>
           </Form>
-          {loadingSearch&&<Spinner animation="border" className="my-2"/>}
-          {searchResults.length>0&&(
+          {loadingSearch && <Spinner animation="border" className="my-2"/>}
+          {searchResults.length>0 && (
             <ListGroup className="mt-2">
               {searchResults.map((res,i)=>(
                 <ListGroup.Item key={i} className="d-flex justify-content-between">
@@ -297,22 +355,34 @@ const MapaConductor = () => {
             </ListGroup>
           )}
           <h4 className="mt-4">Mis Hoteles</h4>
-          {displayed.length===0?
-            <Alert variant="info">No hay hoteles agregados.</Alert>:
-            <Table striped bordered hover size="sm">
-              <thead><tr><th>Nombre</th><th>Orden</th><th>Acciones</th></tr></thead>
-              <tbody>
-                {sortedHoteles.map(h=>(
-                  <tr key={h.id} onClick={()=>setSelectedHotelId(h.id)} style={{cursor:'pointer',backgroundColor:selectedHotelId===h.id?'#e0e0e0':'inherit'}}>
-                    <td>{h.nombre}</td><td>{h.orden}</td><td>
-                      <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveUp(h);}}>↑</Button>{' '}
-                      <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveDown(h);}}>↓</Button>{' '}
-                      <Button variant="danger" size="sm" onClick={e=>{e.stopPropagation();handleDeleteHotel(h.id);}}>Eliminar</Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+          {displayed.length===0
+            ? <Alert variant="info">No hay hoteles agregados.</Alert>
+            : (
+              <Table striped bordered hover size="sm">
+                <thead>
+                  <tr><th>Nombre</th><th>Orden</th><th>Acciones</th></tr>
+                </thead>
+                <tbody>
+                  {sortedHoteles.map(h=>(
+                    <tr
+                      key={h.id}
+                      onClick={()=>setSelectedHotelId(h.id)}
+                      style={{ cursor:'pointer', backgroundColor:selectedHotelId===h.id?'#e0e0e0':'inherit' }}
+                    >
+                      <td>{h.nombre}</td>
+                      <td>{h.orden}</td>
+                      <td>
+                        <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveUp(h);}}>↑</Button>{' '}
+                        <Button size="sm" onClick={e=>{e.stopPropagation();handleMoveDown(h);}}>↓</Button>{' '}
+                        <Button variant="danger" size="sm" onClick={e=>{e.stopPropagation();handleDeleteHotel(h.id);}}>
+                          Eliminar
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )
           }
         </Col>
       </Row>
