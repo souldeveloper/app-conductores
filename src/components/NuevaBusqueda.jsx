@@ -43,7 +43,7 @@ const getColor = tipo => {
 };
 
 // Claves para caché
-const DATA_VERSION_KEY   = 'appDataVersion';
+const DATA_VERSION_KEY   = 'dataVersion';
 const HOTELS_CACHE_KEY   = 'hotelesCache';
 
 const MapaConductor = () => {
@@ -113,7 +113,7 @@ const MapaConductor = () => {
     const loadAppData = async () => {
       try {
         // Obtener versión remota
-        const versionRef = doc(db, 'appDataVersion', 'appData');
+        const versionRef = doc(db, 'config', 'appData');
         const versionSnap = await getDoc(versionRef);
         if (!versionSnap.exists()) return;
         const remoteVer = versionSnap.data().version;
