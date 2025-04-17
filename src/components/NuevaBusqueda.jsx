@@ -5,25 +5,27 @@ import {
   Row,
   Col,
   Button,
-  Table,
-  Alert,
   Form,
   FormControl,
   ListGroup,
   Spinner
 } from 'react-bootstrap';
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
-import { doc, collection, deleteDoc, setDoc, getDocs, getDoc, onSnapshot } from 'firebase/firestore';
+import {
+  doc,
+  collection,
+  getDocs,
+  getDoc,
+  onSnapshot
+} from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
 
-// Captura la instancia del mapa
+// Captura instancia del mapa
 const SetMapInstance = ({ setMapInstance }) => {
   const map = useMap();
-  useEffect(() => {
-    setMapInstance(map);
-  }, [map, setMapInstance]);
+  useEffect(() => setMapInstance(map), [map, setMapInstance]);
   return null;
 };
 
@@ -33,9 +35,9 @@ const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/recogida.png', iconSize: [2
 const hotelIcon = L.icon({ iconUrl: '/iconos/hotel.png', iconSize: [25,25], iconAnchor: [12,12] });
 const conductorIcon = L.icon({ iconUrl: '/iconos/bus.png', iconSize: [35,35], iconAnchor: [17,17] });
 
-// Función para color de rutas
+// Color de rutas según tipo
 const getColor = tipo => {
-  switch(tipo) {
+  switch (tipo) {
     case 'segura': return 'green';
     case 'advertencia': return 'yellow';
     case 'prohibida': return 'red';
@@ -43,34 +45,32 @@ const getColor = tipo => {
   }
 };
 
-// Claves de localStorage
-const DATA_VERSION_KEY           = 'appDataVersion';
-const GLOBAL_HOTELS_VERSION_KEY = 'hotelesAllVersion';
-const GLOBAL_HOTELS_CACHE_KEY   = 'hotelesAllCache';
-const HOTELS_CACHE_KEY          = 'hotelesCache';
+// Clave de versión en localStorage
+const DATA_VERSION_KEY = 'dataVersion';
 
 const MapaConductor = () => {
   const navigate = useNavigate();
 
-  // Estados
-  const [rutas, setRutas]                     = useState([]);
-  const [alertas, setAlertas]                 = useState([]);
-  const [hoteles, setHoteles]                 = useState([]);             // Hoteles del conductor
-  const [allHotels, setAllHotels]             = useState([]);             // Catálogo global
-  const [searchResults, setSearchResults]     = useState([]);
-  const [searchQuery, setSearchQuery]         = useState('');
-  const [loadingSearch, setLoadingSearch]     = useState(false);
+  // Datos cacheados
+  const [alertas, setAlertas]     = useState([]);
+  const [rutas, setRutas]         = useState([]);
+  const [allHotels, setAllHotels] = useState([]);
+
+  // UI
+  const [searchQuery, setSearchQuery]       = useState('');
+  const [searchResults, setSearchResults]   = useState([]);
+  const [loadingSearch, setLoadingSearch]   = useState(false);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
-  const [center]                              = useState([39.6908, 2.9271]);
-  const [mapInstance, setMapInstance]         = useState(null);
-  const [conductorPos, setConductorPos]       = useState(null);
-  const [tracking, setTracking]               = useState(false);
-  const [conductor, setConductor]             = useState(null);
-  const [tempLine, setTempLine]               = useState(null);
+
+  // Mapa / geolocalización
+  const [center]            = useState([39.6908, 2.9271]);
+  const [mapInstance, setMapInstance] = useState(null);
+  const [conductorPos, setConductorPos] = useState(null);
+  const [tracking, setTracking]         = useState(false);
 
   const watchIdRef = useRef(null);
 
-  // 1. Validación de sesión
+  // 1. Validar sesión
   useEffect(() => {
     const cur = Cookies.get('currentUser');
     const devUid = Cookies.get('deviceUid');
@@ -89,139 +89,60 @@ const MapaConductor = () => {
         Cookies.remove('currentUser');
         return navigate('/');
       }
-      setConductor({ id: snap.id, ...data });
-    }, err => {
-      console.error(err);
-      navigate('/');
-    });
+      // usuario validado
+    }, () => navigate('/'));
     return () => unsub();
   }, [navigate]);
 
-  // 2. Versionado y cache global de todos los hoteles
+  // 2. Cache inicial: alertas, rutas y hoteles
   useEffect(() => {
-    const loadGlobalHotels = async () => {
+    const loadCache = async () => {
       try {
-        const versionRef = doc(db, 'appDataVersion', 'hoteles');
-        const versionSnap = await getDoc(versionRef);
-        if (!versionSnap.exists()) return;
-        const remoteVer = versionSnap.data().version;
-        const localVer = localStorage.getItem(GLOBAL_HOTELS_VERSION_KEY);
+        // Leer versión en Firestore
+        const cfgRef = doc(db, 'config', 'appData');
+        const cfgSnap = await getDoc(cfgRef);
+        if (!cfgSnap.exists()) return;
+        const remoteVer = cfgSnap.data().dataVersion;
+        const localVer = localStorage.getItem(DATA_VERSION_KEY);
+
         if (localVer !== remoteVer) {
-          localStorage.setItem(GLOBAL_HOTELS_VERSION_KEY, remoteVer);
-          localStorage.removeItem(GLOBAL_HOTELS_CACHE_KEY);
-          const snap = await getDocs(collection(db, 'hoteles'));
-          const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-          setAllHotels(list);
-          localStorage.setItem(GLOBAL_HOTELS_CACHE_KEY, JSON.stringify(list));
+          // Nueva versión: limpiar y recargar
+          localStorage.setItem(DATA_VERSION_KEY, remoteVer);
+          localStorage.removeItem('alertas');
+          localStorage.removeItem('rutas');
+          localStorage.removeItem('hoteles');
+
+          const [aSnap, rSnap, hSnap] = await Promise.all([
+            getDocs(collection(db, 'alertas')),
+            getDocs(collection(db, 'rutas')),
+            getDocs(collection(db, 'hoteles'))
+          ]);
+
+          const newAlertas = aSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const newRutas   = rSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const newHotels  = hSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+          setAlertas(newAlertas);
+          setRutas(newRutas);
+          setAllHotels(newHotels);
+
+          localStorage.setItem('alertas', JSON.stringify(newAlertas));
+          localStorage.setItem('rutas', JSON.stringify(newRutas));
+          localStorage.setItem('hoteles', JSON.stringify(newHotels));
         } else {
-          const cached = localStorage.getItem(GLOBAL_HOTELS_CACHE_KEY) || '[]';
-          setAllHotels(JSON.parse(cached));
+          // Misma versión: cargar de localStorage
+          setAlertas(JSON.parse(localStorage.getItem('alertas') || '[]'));
+          setRutas(JSON.parse(localStorage.getItem('rutas') || '[]'));
+          setAllHotels(JSON.parse(localStorage.getItem('hoteles') || '[]'));
         }
       } catch (err) {
-        console.error('Error cargando hoteles globales:', err);
+        console.error('Error cargando caché inicial:', err);
       }
     };
-    loadGlobalHotels();
+    loadCache();
   }, []);
 
-  // 3. Versionado y carga de rutas, alertas y hoteles del conductor
-  useEffect(() => {
-    if (!conductor) return;
-    const loadAppData = async () => {
-      try {
-        const verRef = doc(db, 'appDataVersion', 'appData');
-        const verSnap = await getDoc(verRef);
-        if (!verSnap.exists()) return;
-        const remoteVer = verSnap.data().version;
-        const localVer = localStorage.getItem(DATA_VERSION_KEY);
-        if (localVer !== remoteVer) {
-          localStorage.setItem(DATA_VERSION_KEY, remoteVer);
-          localStorage.removeItem('rutasCache');
-          localStorage.removeItem('alertasCache');
-          localStorage.removeItem(HOTELS_CACHE_KEY);
-          
-          // Rutas y alertas
-          const raRes = await fetch('/api/rutasAlertas', { cache: 'force-cache' });
-          const { rutas: newRutas, alertas: newAlertas } = await raRes.json();
-          setRutas(newRutas);
-          setAlertas(newAlertas);
-          localStorage.setItem('rutasCache', JSON.stringify(newRutas));
-          localStorage.setItem('alertasCache', JSON.stringify(newAlertas));
-          
-          // Hoteles del conductor
-          const hRes = await fetch(`/api/hoteles?userId=${conductor.id}`, { cache: 'force-cache' });
-          const { hoteles: newHoteles } = await hRes.json();
-          setHoteles(newHoteles);
-          localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(newHoteles));
-        } else {
-          setRutas(JSON.parse(localStorage.getItem('rutasCache') || '[]'));
-          setAlertas(JSON.parse(localStorage.getItem('alertasCache') || '[]'));
-          setHoteles(JSON.parse(localStorage.getItem(HOTELS_CACHE_KEY) || '[]'));
-        }
-      } catch (err) {
-        console.error('Error cargando appData:', err);
-      }
-    };
-    loadAppData();
-  }, [conductor]);
-
-  // CRUD de hoteles del conductor
-  const handleAddHotel = async hotel => {
-    if (!conductor) return;
-    const ordenes = hoteles.map(h => h.orden || 0);
-    const next = ordenes.length ? Math.max(...ordenes) + 1 : 1;
-    const refDoc = doc(collection(db, `usuarios/${conductor.id}/hoteles`));
-    await setDoc(refDoc, { nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next });
-    const updated = [...hoteles, { id: refDoc.id, nombre: hotel.displayName, lat: hotel.lat, lng: hotel.lng, orden: next }];
-    setHoteles(updated);
-    localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
-  };
-
-  const handleDeleteHotel = async id => {
-    if (!conductor) return;
-    await deleteDoc(doc(db, `usuarios/${conductor.id}/hoteles`, id));
-    const updated = hoteles.filter(h => h.id !== id);
-    setHoteles(updated);
-    localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
-  };
-
-  const handleMoveUp = async hotel => {
-    if (!conductor) return;
-    const sorted = [...hoteles].sort((a,b) => (a.orden||0) - (b.orden||0));
-    const idx = sorted.findIndex(h => h.id === hotel.id);
-    if (idx <= 0) return;
-    const prev = sorted[idx - 1];
-    await Promise.all([
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: prev.orden }),
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, prev.id), { ...prev, orden: hotel.orden })
-    ]);
-    const updated = hoteles.map(h =>
-      h.id === hotel.id ? { ...h, orden: prev.orden } :
-      h.id === prev.id   ? { ...h, orden: hotel.orden } : h
-    );
-    setHoteles(updated);
-    localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
-  };
-
-  const handleMoveDown = async hotel => {
-    if (!conductor) return;
-    const sorted = [...hoteles].sort((a,b) => (a.orden||0) - (b.orden||0));
-    const idx = sorted.findIndex(h => h.id === hotel.id);
-    if (idx === -1 || idx >= sorted.length - 1) return;
-    const nextH = sorted[idx + 1];
-    await Promise.all([
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, hotel.id), { ...hotel, orden: nextH.orden }),
-      setDoc(doc(db, `usuarios/${conductor.id}/hoteles`, nextH.id), { ...nextH, orden: hotel.orden })
-    ]);
-    const updated = hoteles.map(h =>
-      h.id === hotel.id   ? { ...h, orden: nextH.orden } :
-      h.id === nextH.id   ? { ...h, orden: hotel.orden } : h
-    );
-    setHoteles(updated);
-    localStorage.setItem(HOTELS_CACHE_KEY, JSON.stringify(updated));
-  };
-
-  // Geolocalización y mapa
+  // 3. Geolocalización / mapa
   const handleCenterMap = () => {
     if (mapInstance && conductorPos) {
       mapInstance.panTo(conductorPos);
@@ -237,32 +158,30 @@ const MapaConductor = () => {
       );
     } else {
       setTracking(false);
-      if (watchIdRef.current !== null) navigator.geolocation.clearWatch(watchIdRef.current);
+      if (watchIdRef.current != null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
     }
   };
   useEffect(() => {
-    if (conductorPos && mapInstance) mapInstance.panTo(conductorPos);
+    if (conductorPos && mapInstance) {
+      mapInstance.panTo(conductorPos);
+    }
   }, [conductorPos, mapInstance]);
 
-  // Búsqueda de hoteles (cliente-side) siempre desde caché global
+  // 4. Búsqueda client-side de hoteles
   const handleSearchHotels = e => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     setLoadingSearch(true);
-    const lower = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase();
     const results = allHotels
-      .filter(h => h.nombre.toLowerCase().includes(lower))
+      .filter(h => h.nombre.toLowerCase().includes(q))
       .slice(0, 10)
       .map(h => ({ displayName: h.nombre, lat: h.lat, lng: h.lng }));
     setSearchResults(results);
     setLoadingSearch(false);
   };
-
-  // Datos para render
-  const sortedHoteles = [...hoteles].sort((a,b) => (a.orden||0) - (b.orden||0));
-  const displayed     = selectedHotelId
-                        ? sortedHoteles.filter(h => h.id === selectedHotelId)
-                        : sortedHoteles;
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
@@ -272,36 +191,66 @@ const MapaConductor = () => {
           <Button variant={tracking ? 'danger' : 'success'} onClick={handleToggleTracking}>
             {tracking ? 'Detener Ruta' : 'Iniciar Ruta'}
           </Button>{' '}
-          <Button variant="info" onClick={handleCenterMap}>Centrar en mi ubicación</Button>
+          <Button variant="info" onClick={handleCenterMap}>
+            Centrar en mi ubicación
+          </Button>
         </Col>
       </Row>
       <Row>
         <Col md={9}>
           <MapContainer center={center} zoom={10} style={{ height: '80vh' }}>
             <SetMapInstance setMapInstance={setMapInstance} />
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap contributors" />
-            {conductorPos && <Marker position={conductorPos} icon={conductorIcon}><Popup>Tu ubicación actual</Popup></Marker>}
-            {rutas.map(r => Array.isArray(r.coordenadas) && (
-              <Polyline key={r.id} positions={r.coordenadas.map(c => [c.lat, c.lng])} color={getColor(r.tipo)} />
-            ))}
-            {alertas.map(a => a.coordenadas && (
-              <Marker key={a.id} position={[a.coordenadas.lat, a.coordenadas.lng]} icon={a.tipo === 'puntoRecogida' ? puntoRecogidaIcon : alertaIcon}>
-                <Popup><h5>{a.title || 'Sin título'}</h5><p>{a.description || 'Sin descripción'}</p></Popup>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="© OpenStreetMap contributors"
+            />
+            {conductorPos && (
+              <Marker position={conductorPos} icon={conductorIcon}>
+                <Popup>Tu ubicación actual</Popup>
+              </Marker>
+            )}
+            {rutas.map(r =>
+              Array.isArray(r.coordenadas) ? (
+                <Polyline
+                  key={r.id}
+                  positions={r.coordenadas.map(c => [c.lat, c.lng])}
+                  color={getColor(r.tipo)}
+                />
+              ) : null
+            )}
+            {alertas.map(a =>
+              a.coordenadas ? (
+                <Marker
+                  key={a.id}
+                  position={[a.coordenadas.lat, a.coordenadas.lng]}
+                  icon={a.tipo === 'puntoRecogida' ? puntoRecogidaIcon : alertaIcon}
+                >
+                  <Popup>
+                    <h5>{a.title || 'Sin título'}</h5>
+                    <p>{a.description || 'Sin descripción'}</p>
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {searchResults.map((h, i) => (
+              <Marker key={i} position={[h.lat, h.lng]} icon={hotelIcon}>
+                <Popup>{h.displayName}</Popup>
               </Marker>
             ))}
-            {displayed.map(h => (
-              <Marker key={h.id} position={[h.lat, h.lng]} icon={hotelIcon} eventHandlers={{ click: () => setSelectedHotelId(h.id) }}>
-                <Popup><h5>{h.nombre}</h5><Button variant="danger" size="sm" onClick={() => handleDeleteHotel(h.id)}>Eliminar</Button></Popup>
-              </Marker>
-            ))}
-            {tempLine && <Polyline positions={tempLine} color="purple" dashArray="5,10" />}
           </MapContainer>
         </Col>
         <Col md={3}>
           <h4>Buscar Hoteles</h4>
           <Form onSubmit={handleSearchHotels}>
-            <FormControl type="text" placeholder="Nombre del hotel" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-            <Button variant="primary" type="submit" className="mt-2">Buscar</Button>
+            <FormControl
+              type="text"
+              placeholder="Nombre del hotel"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+            <Button variant="primary" type="submit" className="mt-2">
+              Buscar
+            </Button>
           </Form>
           {loadingSearch && <Spinner animation="border" className="my-2" />}
           {searchResults.length > 0 && (
@@ -309,31 +258,12 @@ const MapaConductor = () => {
               {searchResults.map((res, i) => (
                 <ListGroup.Item key={i} className="d-flex justify-content-between">
                   {res.displayName}
-                  <Button variant="success" size="sm" onClick={() => handleAddHotel(res)}>+</Button>
+                  <Button size="sm" onClick={() => setSelectedHotelId(res.displayName)}>
+                    Ver
+                  </Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
-          )}
-          <h4 className="mt-4">Mis Hoteles</h4>
-          {displayed.length === 0 ? (
-            <Alert variant="info">No hay hoteles agregados.</Alert>
-          ) : (
-            <Table striped bordered hover size="sm">
-              <thead><tr><th>Nombre</th><th>Orden</th><th>Acciones</th></tr></thead>
-              <tbody>
-                {sortedHoteles.map(h => (
-                  <tr key={h.id} onClick={() => setSelectedHotelId(h.id)} style={{ cursor: 'pointer', backgroundColor: selectedHotelId === h.id ? '#e0e0e0' : 'inherit' }}>
-                    <td>{h.nombre}</td>
-                    <td>{h.orden}</td>
-                    <td>
-                      <Button size="sm" onClick={e => { e.stopPropagation(); handleMoveUp(h); }}>↑</Button>{' '}
-                      <Button size="sm" onClick={e => { e.stopPropagation(); handleMoveDown(h); }}>↓</Button>{' '}
-                      <Button variant="danger" size="sm" onClick={e => { e.stopPropagation(); handleDeleteHotel(h.id); }}>Eliminar</Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
           )}
         </Col>
       </Row>
