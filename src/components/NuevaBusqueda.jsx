@@ -116,7 +116,7 @@ const MapaConductor = () => {
         const versionRef = doc(db, 'config', 'appData');
         const versionSnap = await getDoc(versionRef);
         if (!versionSnap.exists()) return;
-        const remoteVer = versionSnap.data().version;
+        const remoteVer = versionSnap.data().dataVersion;
         const localVer = localStorage.getItem(DATA_VERSION_KEY);
 
         if (localVer !== remoteVer) {
