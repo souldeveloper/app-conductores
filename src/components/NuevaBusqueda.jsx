@@ -148,7 +148,7 @@ const MapaConductor = () => {
     const q = searchQuery.toLowerCase();
     const results = allHotels
       .filter(h => h.nombre.toLowerCase().includes(q))
-      .slice(0, 10);
+      .slice(0, 1000);
     setSearchResults(results);
     setLoadingSearch(false);
   };
