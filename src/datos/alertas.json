@@ -1,0 +1,821 @@
+{
+    "0M5Uqpop3oxihbWB8Xhs": {
+        "tipo": "alerta",
+        "title": "PRECAUSION",
+        "description": "CALLE ES ESTRECHA",
+        "coordenadas": {
+            "lat": 39.91126692667486,
+            "lng": 3.092302998882897
+        }
+    },
+    "1fKDMXVn5gxaZ4htJTyO": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "ENTRAR POR AQUI PARA NO TENER PROBLEMAS CON UN ARBOL QUE HAY EN LA OTRA ENTRADA",
+        "coordenadas": {
+            "lat": 39.8442241,
+            "lng": 3.1297889
+        }
+    },
+    "21XM6HBFGHJ2QPBNtEtg": {
+        "tipo": "puntoRecogida",
+        "title": "CUEVAS DEL DRAC",
+        "description": null,
+        "coordenadas": {
+            "lat": 39.535606751638724,
+            "lng": 3.330660609083909
+        }
+    },
+    "2AZAOEUGTWrKINuplOyj": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "HACER MANIOBRA MARCHA ATRAS Y SALIR POR LA MISMA",
+        "coordenadas": {
+            "lat": 39.5310815369369,
+            "lng": 2.437618780740505
+        }
+    },
+    "361ehmYt3sl0XKUrsBJL": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "AQUI ES DONDE PUEDES ENCONTRAR PROBLEMAS AL GIRAR",
+        "coordenadas": {
+            "lat": 39.76674,
+            "lng": 3.153079
+        }
+    },
+    "4IhK077l0iHtCXfcoJKO": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA QUE PUEDE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.786154,
+            "lng": 3.128075
+        }
+    },
+    "66eQOsakzhPFHe4Sd7Tv": {
+        "tipo": "puntoRecogida",
+        "title": "PUNTO DE RECOJIDA",
+        "description": "DIQUE EL ESTE",
+        "coordenadas": {
+            "lat": 39.553803896248205,
+            "lng": 2.6273095607757573
+        }
+    },
+    "89g5530rZdkiPMJvsfRF": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "MIRAR QUE NO HAYA VEHICULO EN LA ESQUINA ESTA",
+        "coordenadas": {
+            "lat": 39.8166495,
+            "lng": 3.1140527
+        }
+    },
+    "9Nccvdlti96ItvconwSg": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "DEJAR AQUI LOS CLIENTES Y A LA HORA DE SALIDA IR A BUSCAR LOS CLIENTES YA QUE LA CALLE TE VA A COMPLICAR LA VIDA",
+        "coordenadas": {
+            "lat": 39.71013943797214,
+            "lng": 3.455556353477581
+        }
+    },
+    "9khdAVQOmRFEZhfShWsX": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "MIRAR BIEN PARA NO DAR EN LA ESQUINA CON LA PARTE TRASERA",
+        "coordenadas": {
+            "lat": 39.91090483054819,
+            "lng": 3.0952646846257093
+        }
+    },
+    "ANQT9iI0dlyimylgaRcD": {
+        "tipo": "alerta",
+        "title": "RECOJIDA Y DEJADA",
+        "description": "TODOS LOS HOTELES SE DEJAN Y SE RECOGEN AQUI",
+        "coordenadas": {
+            "lat": 39.87434796448369,
+            "lng": 3.0171524819625177
+        }
+    },
+    "Abf1Q1zpq7wm7FNeDwOV": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "MIRAR QUE NO HAYA VEHICULO EN LA ESQUINA ESTA",
+        "coordenadas": {
+            "lat": 39.8166495,
+            "lng": 3.1140527
+        }
+    },
+    "Ama0mzr7lSLMhYFvPBls": {
+        "tipo": "puntoRecogida",
+        "title": "PUNTO DE RECOJIDA",
+        "description": "DIQUE DEL ESTE",
+        "coordenadas": {
+            "lat": 39.55394434605232,
+            "lng": 2.634712457656861
+        }
+    },
+    "Ax0LSP6TEGLx0xqJ4lRC": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "AQUI ES DONDE SE PUEDE HACER MANIOBRA PARA DAR LLA VUELTA O ENTRAR AL HOTEL MARCHA ATRAS",
+        "coordenadas": {
+            "lat": 39.8095889,
+            "lng": 3.1139358
+        }
+    },
+    "B2MzzfL5FsMqvpxmeHgA": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "EN ESTE PUNTO HACER MANIOBRA MARCHA ATRAS SALIR MISMO SITIO POR DONDE ENTRASTE",
+        "coordenadas": {
+            "lat": 39.90162957964206,
+            "lng": 3.0689844006977918
+        }
+    },
+    "CeSeeJqqzRguSQ5SIN6e": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE DA LA VUELTA PARA VOLVER A SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.816586,
+            "lng": 3.115827
+        }
+    },
+    "DFHyhlQ4QwPD9acSzfNp": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "DAR AQUI LA VUELTA Y MANTENER EL MOTOR APACADO YA QUE NO SE PUEDE TENER EN MARCHA MAS DE 2 MINUTOS",
+        "coordenadas": {
+            "lat": 39.8220512,
+            "lng": 3.115835
+        }
+    },
+    "DLx8us2WgfV2SHVE6KLR": {
+        "tipo": "alerta",
+        "title": "PRECAUCION SUBIR EL BUS A TOPE",
+        "description": "SUBIR EL BUS A TOPE",
+        "coordenadas": {
+            "lat": 39.80394934638012,
+            "lng": 3.1166844487635763
+        }
+    },
+    "E8VQ17FtVdgSNHXUH4dK": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "AQUI SE DEJAN TODOS!, DAR LA VUELTA AQUI.",
+        "coordenadas": {
+            "lat": 39.57804697646743,
+            "lng": 2.3542550797813715
+        }
+    },
+    "EOn8v5xSIVa04RU1Yp6e": {
+        "tipo": "alerta",
+        "title": "APARCAMIENTO",
+        "description": "SE PUEDE APARCAR PARA DESCANSOS....",
+        "coordenadas": {
+            "lat": 39.53184973093443,
+            "lng": 2.728467288019805
+        }
+    },
+    "FGECg1umYHkzWTBYkDjM": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "ENTRAR POR AQUI PARA NO TENER PROBLEMAS CON UN ARBOL QUE HAY EN LA OTRA ENTRADA",
+        "coordenadas": {
+            "lat": 39.8442241,
+            "lng": 3.1297889
+        }
+    },
+    "GHTO1G6OnLJQZf8xbFb6": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "DAR AQUI LA VUELTA Y MANTENER EL MOTOR APACADO YA QUE NO SE PUEDE TENER EN MARCHA MAS DE 2 MINUTOS",
+        "coordenadas": {
+            "lat": 39.8220512,
+            "lng": 3.115835
+        }
+    },
+    "IF82iRWtCpSYYm9V6zXg": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "ENTRAR POR AQUI PARA NO TENER PROBLEMAS CON UN ARBOL QUE HAY EN LA OTRA ENTRADA",
+        "coordenadas": {
+            "lat": 39.8442241,
+            "lng": 3.1297889
+        }
+    },
+    "IksuF86UD3POMWYekzWp": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "SALIDA A PORT CRISTO",
+        "coordenadas": {
+            "lat": 39.56599959584719,
+            "lng": 3.2222613660122383
+        }
+    },
+    "LOBcWj8yUAi4FiLd2Qjh": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "NO ENTRAR CON UN VEHICULO DE MAS DE 3500 KILOS",
+        "coordenadas": {
+            "lat": 39.436412391553866,
+            "lng": 2.7603475260130232
+        }
+    },
+    "MnpTEraDAl92LbXZzN6J": {
+        "tipo": "alerta",
+        "title": "PRECAUCION ",
+        "description": "CUIDADO AL GIRAR SI NO SE PUEDE TIRAR POR CAMINO SEGURO",
+        "coordenadas": {
+            "lat": 39.76456,
+            "lng": 3.160009
+        }
+    },
+    "NC7ZFgGLM5mTYZw1FViC": {
+        "tipo": "alerta",
+        "title": "DIQUE DEL OESTE",
+        "description": "AQUI HAY UN APARCAMIENTO MUY GRANDE",
+        "coordenadas": {
+            "lat": 39.54672798755632,
+            "lng": 2.63297975063324
+        }
+    },
+    "NM0jkLIn6lCHtxePGSY0": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "DAR LA VUELTA EN ESTE PUNTO",
+        "coordenadas": {
+            "lat": 39.55574546124633,
+            "lng": 2.619772553443909
+        }
+    },
+    "NTOEsr0dztaFvlyt72yb": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "ENTRAR DE CULO AL HOTEL Y HACER MANIOBRA Y DESCARGAR!",
+        "coordenadas": {
+            "lat": 39.550223328585545,
+            "lng": 2.381179744510727
+        }
+    },
+    "NbSkyuw9iRgOGtkl1gMf": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "CALLE ESTRECHA",
+        "coordenadas": {
+            "lat": 39.70789186505861,
+            "lng": 3.4573207865022675
+        }
+    },
+    "OQoBPSqrBxlQJQN4fWH8": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "CUIDADO QUE SI APARCAN COCHES NO PUEDES GIRAR, MEJOR HACER EL CIRCUITO VERDE",
+        "coordenadas": {
+            "lat": 39.83912641668828,
+            "lng": 3.124822634975262
+        }
+    },
+    "PpJ4BqJpj99K5PGtEnRm": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE TIENE QUE HABER MANIOBRA PARA SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.817387,
+            "lng": 3.112209
+        }
+    },
+    "QghP2DovoZsMpEuxa7qA": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "LEVANTA BIEN EL BUS PARA NO DAR AL ESCALON",
+        "coordenadas": {
+            "lat": 39.8401985,
+            "lng": 3.1234852
+        }
+    },
+    "Rj19TRzaozfqv8iatzJi": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "LEVANTA BIEN EL BUS PARA NO DAR AL ESCALON",
+        "coordenadas": {
+            "lat": 39.8401985,
+            "lng": 3.1234852
+        }
+    },
+    "RqFPxecnQvAgENHmxX9r": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "AQUI ES DONDE SE PUEDE HACER MANIOBRA PARA DAR LLA VUELTA O ENTRAR AL HOTEL MARCHA ATRAS",
+        "coordenadas": {
+            "lat": 39.8095889,
+            "lng": 3.1139358
+        }
+    },
+    "RxGpP3mBMfCnwRXIs63g": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "LEVANTA BIEN EL BUS PARA NO DAR AL ESCALON",
+        "coordenadas": {
+            "lat": 39.8401985,
+            "lng": 3.1234852
+        }
+    },
+    "S5upjkmsCyG6ad1uRPRz": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "EN ESTA ESQUINA ES DONDE LOS VEHICULOS APARCAN MAL",
+        "coordenadas": {
+            "lat": 39.764846,
+            "lng": 3.157859
+        }
+    },
+    "T7TKwGJQ8fM4Bh1bhUCl": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA A TENER ENCUENTA SI HAY VEHICULOS MAL APARCADOS Y NO DA GIRO",
+        "coordenadas": {
+            "lat": 39.757377,
+            "lng": 3.164964
+        }
+    },
+    "UY28twlXvXOvqJFHi0nx": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AL FINAL DE LA CALLE HAY UNA ROTANDA ES DONDE SE LLENA DE VEHICULOS Y DONDE SUELE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.8110154,
+            "lng": 3.1072793
+        }
+    },
+    "UdSJN0pOUkdEbMgEzNjN": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AL FINAL DE LA CALLE HAY UNA ROTANDA ES DONDE SE LLENA DE VEHICULOS Y DONDE SUELE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.8110154,
+            "lng": 3.1072793
+        }
+    },
+    "UqWKezWKcQANnkUvAv1j": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "SEÑAL DE 3500KG PERO TODOS PASAMOS",
+        "coordenadas": {
+            "lat": 39.812818814845755,
+            "lng": 3.112451686184339
+        }
+    },
+    "V4vm9dqVEtfmWHmy7cLk": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "DAR AQUI LA VUELTA Y MANTENER EL MOTOR APACADO YA QUE NO SE PUEDE TENER EN MARCHA MAS DE 2 MINUTOS",
+        "coordenadas": {
+            "lat": 39.8220512,
+            "lng": 3.115835
+        }
+    },
+    "W9nZgZrIyhn9XWE4ME7T": {
+        "tipo": "alerta",
+        "title": "PRRECAUCION",
+        "description": "SI NO SE PUEDE GIRAR A LA IZQUIERDA HACER MANIOBRA Y SALIR POR LA MISMA QUE VINISTE",
+        "coordenadas": {
+            "lat": 39.8097145,
+            "lng": 3.1144854
+        }
+    },
+    "WXryVpVGqZ3rveTQC3ik": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "AQUI PODEIS DAR LA VUELTA",
+        "coordenadas": {
+            "lat": 39.8379338870189,
+            "lng": 3.1585859259623748
+        }
+    },
+    "XtT5zkcIOejdkhRrCcBh": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "FELANIX",
+        "coordenadas": {
+            "lat": 39.56077990202081,
+            "lng": 3.2062060159967625
+        }
+    },
+    "XvqzX914vpKcaKIHUAbS": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE HACE LA MANIOBRA PARA VOLVER A SALIR",
+        "coordenadas": {
+            "lat": 39.763422,
+            "lng": 3.148739
+        }
+    },
+    "Y9RBbgYIWXWFUMdqBXtR": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "POR AQUI ES DONDE SE SALE COMO 2º OPCION",
+        "coordenadas": {
+            "lat": 39.802075,
+            "lng": 3.118311
+        }
+    },
+    "Yv0JCeElQXbkdo1zNBqj": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA DODE PUEDES DAR PROBLEMA DE GIRO",
+        "coordenadas": {
+            "lat": 39.802796,
+            "lng": 3.117977
+        }
+    },
+    "aFVrKaMzsgKLY9QroP7O": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE TIENE QUE HABER MANIOBRA PARA SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.817387,
+            "lng": 3.112209
+        }
+    },
+    "aHxtobW8sgkKtj8i5ErM": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "TODOS LOS HOTELES DEL CENTROR DE ALCUDIA PUEBLO EN LA PARADAD DEL TIB DEL MERCADO",
+        "coordenadas": {
+            "lat": 39.85141387479424,
+            "lng": 3.122320819431571
+        }
+    },
+    "bGAxdTQmbYCtzWBqKU8k": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "ENTRAR EN LA CALLE MARCHA ARTAS O DEJARLO EN LA MISMA CALLE PRINCIPAL",
+        "coordenadas": {
+            "lat": 39.60463736747434,
+            "lng": 3.378083722232135
+        }
+    },
+    "bYR6KcyE1pggJzlSZV3M": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "HAY UN RESERVADO PARA DEJAR A LOS CLIENTES SE METE EL MORRO DEL BUS Y LUEGO PARA SALIR MARCHA ATRAS",
+        "coordenadas": {
+            "lat": 39.79921,
+            "lng": 3.119799
+        }
+    },
+    "bgrC2890L2ZaAAC1xYDI": {
+        "tipo": "alerta",
+        "title": "APARCAMIENTO",
+        "description": "EN ESTA ZONA SE PUEDE DEJAR EL BUS PARA TEMA DE DESCANSOS Y DE ESCURCIONES",
+        "coordenadas": {
+            "lat": 39.85607869263596,
+            "lng": 3.1231217103022324
+        }
+    },
+    "cEKKDtocnUed0zRJ3DDb": {
+        "tipo": "alerta",
+        "title": "PRRECAUCION",
+        "description": "SI NO SE PUEDE GIRAR A LA IZQUIERDA HACER MANIOBRA Y SALIR POR LA MISMA QUE VINISTE",
+        "coordenadas": {
+            "lat": 39.8097145,
+            "lng": 3.1144854
+        }
+    },
+    "ceNUDQmwgBQVVbkdzGlo": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "EN ESTA SUBIDA SULE HABER COCHES MAL APARCADOS, NORMALMENTE ES DE DIA CUANDO MAS LOS PONEN",
+        "coordenadas": {
+            "lat": 39.74577110690314,
+            "lng": 3.4310020005963846
+        }
+    },
+    "cmSkrtL5wwUNIEuDMtRG": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA QUE PUEDE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.786154,
+            "lng": 3.128075
+        }
+    },
+    "d835AxJQ6DmlntiZzvk6": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "ES UNA CALLE ESTRECHA PERO NORMALMENTE SE PUEDE PASAR",
+        "coordenadas": {
+            "lat": 39.852063494832734,
+            "lng": 3.1249676410106813
+        }
+    },
+    "dkIrPnR9LdQGQ1NL6J9r": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "NO ENTRAR AL HOTEL NUNCA!!! DEJAR EN LA ESQUINA",
+        "coordenadas": {
+            "lat": 39.52476133343279,
+            "lng": 2.739308620428931
+        }
+    },
+    "e55MR298nfvehvFQo7kE": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA QUE PUEDE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.786154,
+            "lng": 3.128075
+        }
+    },
+    "fCxNpPwzMyQ0JGq2UlkZ": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "AQUI TE PUEDES CREAR ATASCADO MEJOR EVETARLA",
+        "coordenadas": {
+            "lat": 39.565145779457055,
+            "lng": 3.368848941571803
+        }
+    },
+    "gslpPf17eFFAuqx9B1wk": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "NUNCA BAJAR POR ESTA CALLE, DAL LA VUELTA Y SUBIR DESDE ABAJO",
+        "coordenadas": {
+            "lat": 39.54051294659516,
+            "lng": 2.5838684004637544
+        }
+    },
+    "kDrOJTBrbK7hOjmfEM8l": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "MIRAR QUE NO HAYA VEHICULO EN LA ESQUINA ESTA",
+        "coordenadas": {
+            "lat": 39.8166495,
+            "lng": 3.1140527
+        }
+    },
+    "kQUhA5sQxMCYykCbOsYV": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA DODE PUEDES DAR PROBLEMA DE GIRO",
+        "coordenadas": {
+            "lat": 39.802796,
+            "lng": 3.117977
+        }
+    },
+    "kVE2kZwXwLsHSxLkerWF": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE TIENE QUE HABER MANIOBRA PARA SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.817387,
+            "lng": 3.112209
+        }
+    },
+    "kyE1HLTAJf93jZOcvpg4": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "DAR LA VUELTA EN ESTE APARCAMIENTO",
+        "coordenadas": {
+            "lat": 39.68125352769811,
+            "lng": 3.4504164054821156
+        }
+    },
+    "l658OgBI3AnPUYvXiq5m": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE DA LA VUELTA PARA VOLVER A SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.816586,
+            "lng": 3.115827
+        }
+    },
+    "lL6xSHTqegeO6XbPma7w": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "POR AQUI ES DONDE SE SALE COMO 2º OPCION",
+        "coordenadas": {
+            "lat": 39.802075,
+            "lng": 3.118311
+        }
+    },
+    "nGXQhgqtGLZuc21mw4O6": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "CALLE ESTRECHA",
+        "coordenadas": {
+            "lat": 39.511478227436456,
+            "lng": 2.752424583228859
+        }
+    },
+    "nWhwnnjyMImv2sRiv2My": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "Mirar si la rotonda esta llena de coches, en caso de estar llena de coches dejar AQUI",
+        "coordenadas": {
+            "lat": 39.78868406141356,
+            "lng": 3.12541758420958
+        }
+    },
+    "nrGJPTgZgZlYfjp7aY3t": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "CALAS ",
+        "coordenadas": {
+            "lat": 39.562335458973685,
+            "lng": 3.2130184708776937
+        }
+    },
+    "qfLAxF9h1ef8t8wn8IbX": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "DAR LA VUELTA Y VOLVER POR LA MISMA CALLE",
+        "coordenadas": {
+            "lat": 39.7149248455695,
+            "lng": 3.469561412589962
+        }
+    },
+    "qrST5SSW6J4PcdHuEfDt": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "EN ESTE  PUNTO O ENTRA MARCA ATRAS LA CALLE O RECOJES Y DEJAS LA GENTE AQUI",
+        "coordenadas": {
+            "lat": 39.9060328056263,
+            "lng": 3.075496423263578
+        }
+    },
+    "qzMprEocSlmqJrr2UnHY": {
+        "tipo": "alerta",
+        "title": "PARQUING",
+        "description": "PARQUING DE TIERRA ZONA DE DESCANSO",
+        "coordenadas": {
+            "lat": 39.4978318503337,
+            "lng": 2.756752414389303
+        }
+    },
+    "rV7OBHellEOSHQNjPZAt": {
+        "tipo": "alerta",
+        "title": "PRECAUCION",
+        "description": "ESTA ES LA ESQUINA DODE PUEDES DAR PROBLEMA DE GIRO",
+        "coordenadas": {
+            "lat": 39.802796,
+            "lng": 3.117977
+        }
+    },
+    "rjeAs9tLKG55vUNR4QXX": {
+        "tipo": "alerta",
+        "title": "ZONA DE DESCANSO",
+        "description": "ZONA DE DESCANSO",
+        "coordenadas": {
+            "lat": 39.50444791463718,
+            "lng": 2.526475047878676
+        }
+    },
+    "sF8z2RWurCZRCobf30ZY": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "MANACOR",
+        "coordenadas": {
+            "lat": 39.47696602331413,
+            "lng": 3.1559414324473254
+        }
+    },
+    "sNLWTEquFgJVqGq5ayHo": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "DEJAR LO MAS A LA DERECHA POSIBLE DE LA ROTONDA EN LA SALIDA DEL PARQUING",
+        "coordenadas": {
+            "lat": 39.53024138654863,
+            "lng": 2.7300763368367913
+        }
+    },
+    "tbAw1xAO5C9A9Kj2zgLl": {
+        "tipo": "puntoRecogida",
+        "title": "PREGUNTAR",
+        "description": "NO SSE SABE DONDE VA",
+        "coordenadas": {
+            "lat": 39.53984000710786,
+            "lng": 2.4440397825302544
+        }
+    },
+    "tlwfJ5gniXCZnXkiVuOE": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "AQUI DAR LA VUELTA EN EL APARCAMIENTO",
+        "coordenadas": {
+            "lat": 39.43812728718293,
+            "lng": 2.801299621888585
+        }
+    },
+    "uMLJiRepwUUv7iRvrspe": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "NO DAR LA VUELTA AL ARBOL GIRAR MORRO A LA IZQUIERDA Y MANIOBRA",
+        "coordenadas": {
+            "lat": 39.5147631132144,
+            "lng": 2.7527784894612184
+        }
+    },
+    "v7lT8TPuFx9YcTukySnZ": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "DAR LA VUELTA JUSTO AQUI",
+        "coordenadas": {
+            "lat": 39.56045607513224,
+            "lng": 2.6708257198333745
+        }
+    },
+    "vII811rs34wghIPC5tv8": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AQUI ES DONDE SE DA LA VUELTA PARA VOLVER A SALIR POR EL MISMO SITIO",
+        "coordenadas": {
+            "lat": 39.816586,
+            "lng": 3.115827
+        }
+    },
+    "vIdQjtXpQ70CSsKHV6fx": {
+        "tipo": "alerta",
+        "title": "ALERTA",
+        "description": "DEJA Y RECOGIDA DE HOTELES ",
+        "coordenadas": {
+            "lat": 39.538632415027955,
+            "lng": 2.4221317425235305
+        }
+    },
+    "xKFXL6IABIvj86iDdEVm": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "HAY UN RESERVADO PARA DEJAR A LOS CLIENTES SE METE EL MORRO DEL BUS Y LUEGO PARA SALIR MARCHA ATRAS",
+        "coordenadas": {
+            "lat": 39.79921,
+            "lng": 3.119799
+        }
+    },
+    "xLcMtUEbuBg1FpbWOy9w": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "CALLE MUY MUY ESTRECHA SIEMPRE QUE PUEDASS EVITALA",
+        "coordenadas": {
+            "lat": 39.656491780288526,
+            "lng": 3.4371517151737594
+        }
+    },
+    "xhdIHg59x7J8djWtqkCr": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "POR AQUI ES DONDE SE SALE COMO 2º OPCION",
+        "coordenadas": {
+            "lat": 39.802075,
+            "lng": 3.118311
+        }
+    },
+    "xiihEx14j7Wy9KXDDNGE": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "ESTA CALLE SE ESTRECHA IR CON PRECAUCION",
+        "coordenadas": {
+            "lat": 39.76681181737658,
+            "lng": 3.1495849353008025
+        }
+    },
+    "ypQbVQDSJ8KZKzytsP8u": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "AL FINAL DE LA CALLE HAY UNA ROTANDA ES DONDE SE LLENA DE VEHICULOS Y DONDE SUELE DAR PROBLEMAS",
+        "coordenadas": {
+            "lat": 39.8110154,
+            "lng": 3.1072793
+        }
+    },
+    "zNxGIScU96itAYdule78": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "HACER GIRO DESDE LA PRINCIPAL NO DESDE EL VIAL",
+        "coordenadas": {
+            "lat": 39.7641103,
+            "lng": 3.1497791
+        }
+    },
+    "zlgjGYAX76ePG6CXitGt": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "HAY UN RESERVADO PARA DEJAR A LOS CLIENTES SE METE EL MORRO DEL BUS Y LUEGO PARA SALIR MARCHA ATRAS",
+        "coordenadas": {
+            "lat": 39.79921,
+            "lng": 3.119799
+        }
+    },
+    "zrDEapDUSsWn94NEP1Px": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "SOLO SE PUEDE SUBIR POR AQUI NUNCA BAJAR POR ESTA CALLE",
+        "coordenadas": {
+            "lat": 39.53849410852799,
+            "lng": 2.5909768854050705
+        }
+    }
+}
