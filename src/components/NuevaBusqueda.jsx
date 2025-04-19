@@ -85,7 +85,6 @@ const MapaConductor = () => {
 
   // cargar y transformar datos de JSON
   useEffect(() => {
-    // rutasData es un objeto { id: { tipo, coordenadas }, ... }
     const rutasArray = Object.entries(rutasData).map(([id, val]) => ({
       id,
       tipo: val.tipo,
@@ -95,7 +94,6 @@ const MapaConductor = () => {
     }));
     setRutas(rutasArray);
 
-    // alertasData es { id: { tipo, title, description, coordenadas:{lat,lng} }, ... }
     const alertasArray = Object.entries(alertasData).map(([id, val]) => ({
       id,
       tipo: val.tipo,
@@ -105,7 +103,6 @@ const MapaConductor = () => {
     }));
     setAlertas(alertasArray);
 
-    // hotelesData es { id: { lat, lng, nombre }, ... }
     const hotelesArray = Object.entries(hotelesData).map(([id, val]) => ({
       id,
       nombre: val.nombre,
@@ -161,6 +158,24 @@ const MapaConductor = () => {
   };
   const handleRemoveFromMyHotels = id => {
     setMyHotels(prev => prev.filter(h => h.id !== id));
+  };
+
+  // mover elementos de la lista hacia arriba y abajo
+  const handleMoveUp = index => {
+    if (index === 0) return;
+    setMyHotels(prev => {
+      const newList = [...prev];
+      [newList[index - 1], newList[index]] = [newList[index], newList[index - 1]];
+      return newList;
+    });
+  };
+  const handleMoveDown = index => {
+    if (index === myHotels.length - 1) return;
+    setMyHotels(prev => {
+      const newList = [...prev];
+      [newList[index + 1], newList[index]] = [newList[index], newList[index + 1]];
+      return newList;
+    });
   };
 
   return (
@@ -233,7 +248,7 @@ const MapaConductor = () => {
           {searchResults.length > 0 && (
             <ListGroup className="mt-2">
               {searchResults.map(h => (
-                <ListGroup.Item key={h.id} className="d-flex justify-content-between">
+                <ListGroup.Item key={h.id} className="d-flex justify-content-between mb-2">
                   {h.nombre}
                   <Button size="sm" onClick={() => handleAddToMyHotels(h)}>Agregar</Button>
                 </ListGroup.Item>
@@ -246,12 +261,14 @@ const MapaConductor = () => {
             <Alert variant="info">No has agregado ningún hotel aún.</Alert>
           ) : (
             <ListGroup>
-              {myHotels.map(h => (
-                <ListGroup.Item key={h.id} className="d-flex justify-content-between">
+              {myHotels.map((h, idx) => (
+                <ListGroup.Item key={h.id} className="d-flex justify-content-between align-items-center mb-2">
                   {h.nombre}
-                  <Button variant="danger" size="sm" onClick={() => handleRemoveFromMyHotels(h.id)}>
-                    Quitar
-                  </Button>
+                  <div className="d-flex flex-wrap align-items-center">
+                    <Button type='button' size="lg" variant="light" disabled={idx === 0} onClick={() => handleMoveUp(idx)} className="mx-1 my-1 btn btn-primary">↑</Button>
+                    <Button size="lg" variant="light" disabled={idx === myHotels.length - 1} onClick={() => handleMoveDown(idx)} className="mx-1 my-1">↓</Button>
+                    <Button variant="danger" size="sm" onClick={() => handleRemoveFromMyHotels(h.id)} className="mx-1 my-1">Quitar</Button>
+                  </div>
                 </ListGroup.Item>
               ))}
             </ListGroup>

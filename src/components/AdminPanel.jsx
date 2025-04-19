@@ -549,36 +549,7 @@ const AdminPanel = () => {
             </MapContainer>
           </Col>
         </Row>
-        <Row className="mt-4">
-          <Col>
-            <h4>Listado de Usuarios</h4>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Usuario</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {usuarios.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.usuario}</td>
-                    <td>
-                      <Button variant="primary" size="sm" onClick={() => handleEditUser(user.id, user)}>
-                        Editar
-                      </Button>{' '}
-                      <Button variant="warning" size="sm" onClick={() => handleDeactivateUser(user.id)}>
-                        Desactivar
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+        
       </Container>
     </div>
   );
