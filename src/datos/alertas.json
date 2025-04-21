@@ -53,6 +53,15 @@
             "lng": 3.128075
         }
     },
+    "5CXBlBknJG1qxINx8qzk": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "LA CALLE ES SUPER ESTRECHA",
+        "coordenadas": {
+            "lat": 39.83867986534808,
+            "lng": 3.1242370605468754
+        }
+    },
     "66eQOsakzhPFHe4Sd7Tv": {
         "tipo": "puntoRecogida",
         "title": "PUNTO DE RECOJIDA",
@@ -114,15 +123,6 @@
         "coordenadas": {
             "lat": 39.55394434605232,
             "lng": 2.634712457656861
-        }
-    },
-    "Ax0LSP6TEGLx0xqJ4lRC": {
-        "tipo": "alerta",
-        "title": "IMPORTANTE",
-        "description": "AQUI ES DONDE SE PUEDE HACER MANIOBRA PARA DAR LLA VUELTA O ENTRAR AL HOTEL MARCHA ATRAS",
-        "coordenadas": {
-            "lat": 39.8095889,
-            "lng": 3.1139358
         }
     },
     "B2MzzfL5FsMqvpxmeHgA": {
@@ -269,15 +269,6 @@
             "lng": 3.4573207865022675
         }
     },
-    "OQoBPSqrBxlQJQN4fWH8": {
-        "tipo": "alerta",
-        "title": "ALERTA",
-        "description": "CUIDADO QUE SI APARCAN COCHES NO PUEDES GIRAR, MEJOR HACER EL CIRCUITO VERDE",
-        "coordenadas": {
-            "lat": 39.83912641668828,
-            "lng": 3.124822634975262
-        }
-    },
     "PpJ4BqJpj99K5PGtEnRm": {
         "tipo": "alerta",
         "title": "INFORMACION",
@@ -303,15 +294,6 @@
         "coordenadas": {
             "lat": 39.8401985,
             "lng": 3.1234852
-        }
-    },
-    "RqFPxecnQvAgENHmxX9r": {
-        "tipo": "alerta",
-        "title": "IMPORTANTE",
-        "description": "AQUI ES DONDE SE PUEDE HACER MANIOBRA PARA DAR LLA VUELTA O ENTRAR AL HOTEL MARCHA ATRAS",
-        "coordenadas": {
-            "lat": 39.8095889,
-            "lng": 3.1139358
         }
     },
     "RxGpP3mBMfCnwRXIs63g": {
@@ -375,15 +357,6 @@
         "coordenadas": {
             "lat": 39.8220512,
             "lng": 3.115835
-        }
-    },
-    "W9nZgZrIyhn9XWE4ME7T": {
-        "tipo": "alerta",
-        "title": "PRRECAUCION",
-        "description": "SI NO SE PUEDE GIRAR A LA IZQUIERDA HACER MANIOBRA Y SALIR POR LA MISMA QUE VINISTE",
-        "coordenadas": {
-            "lat": 39.8097145,
-            "lng": 3.1144854
         }
     },
     "WXryVpVGqZ3rveTQC3ik": {
@@ -474,15 +447,6 @@
         "coordenadas": {
             "lat": 39.85607869263596,
             "lng": 3.1231217103022324
-        }
-    },
-    "cEKKDtocnUed0zRJ3DDb": {
-        "tipo": "alerta",
-        "title": "PRRECAUCION",
-        "description": "SI NO SE PUEDE GIRAR A LA IZQUIERDA HACER MANIOBRA Y SALIR POR LA MISMA QUE VINISTE",
-        "coordenadas": {
-            "lat": 39.8097145,
-            "lng": 3.1144854
         }
     },
     "ceNUDQmwgBQVVbkdzGlo": {
@@ -627,6 +591,15 @@
         "coordenadas": {
             "lat": 39.562335458973685,
             "lng": 3.2130184708776937
+        }
+    },
+    "pBOXq97Sp7fUrYRbVDci": {
+        "tipo": "alerta",
+        "title": "ENTRAR DE CULO HASTA LIBERAR CALLE",
+        "description": null,
+        "coordenadas": {
+            "lat": 39.63760943640275,
+            "lng": 3.415208458900452
         }
     },
     "qfLAxF9h1ef8t8wn8IbX": {
