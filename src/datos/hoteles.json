@@ -320,7 +320,7 @@
         "nombre": "4U Miranda Hotel"
     },
     "2ZOpgVHL7Fd6b0VdeHTe": {
-        "lat": 39.50772438998823,
+        "lat": 39.50759189840388,
         "lng": 2.532981634140015,
         "nombre": "Sol House The Studio - Calvia Beach - Adults Only"
     },
@@ -390,8 +390,8 @@
         "nombre": "St Regis Mardavall Mallorca Resort"
     },
     "2ym7ClzWU0VqDfEkkNcb": {
-        "lat": 39.539453861649825,
-        "lng": 2.4493396282196045,
+        "lat": 39.539528381303064,
+        "lng": 2.44945764541626,
         "nombre": "Hostal Villa Rosa Paguera"
     },
     "33gGnBr2EEdDloTNyW6q": {
@@ -983,6 +983,11 @@
         "lat": 39.3405562,
         "lng": 3.1812972,
         "nombre": "Ferienhaus Villa Antonia"
+    },
+    "7qFnrnLs8ioN4HOe8IPb": {
+        "lat": 39.910301557269925,
+        "lng": 3.0947488546371464,
+        "nombre": "hotel illa dor"
     },
     "7qjhBUlmJpifyrftWwAT": {
         "lat": 39.5541486,
@@ -2195,8 +2200,8 @@
         "nombre": "Finca Capdesmoro"
     },
     "IAArKGj7ddf33yRAfDX6": {
-        "lat": 39.53838640593663,
-        "lng": 2.4518392541735867,
+        "lat": 39.53816315010493,
+        "lng": 2.4529176950454716,
         "nombre": "HSM Linda Playa"
     },
     "ICUd3cTImXozuaqMlUl4": {
@@ -4185,8 +4190,8 @@
         "nombre": "Iberostar Waves Cristina"
     },
     "ZntiOV5OPeLYkWwHwOUl": {
-        "lat": 39.53928856509449,
-        "lng": 2.449414730072022,
+        "lat": 39.53930907136203,
+        "lng": 2.4496239423751835,
         "nombre": "Hostal Katya"
     },
     "ZqToPDDoUC0eAARcrm7m": {
@@ -4210,8 +4215,8 @@
         "nombre": "Garden Holiday Village"
     },
     "ZzBFf0CKgtWC6Enq254h": {
-        "lat": 39.5380586,
-        "lng": 2.4586011,
+        "lat": 39.53813007413928,
+        "lng": 2.458577156066895,
         "nombre": "Ona Palmira Paradise"
     },
     "a2xzynkFNufx42fTncrC": {
@@ -4650,8 +4655,8 @@
         "nombre": "Apartamentos Morito Beach"
     },
     "dse9ClhLPwhnO7ekFgil": {
-        "lat": 39.910277,
-        "lng": 3.094726,
+        "lat": 39.91032055000338,
+        "lng": 3.09465765953064,
         "nombre": "Hotel illa d´Or"
     },
     "duRntxTzr9U5FPod7nmC": {
@@ -4918,6 +4923,11 @@
         "lat": 39.52619069999999,
         "lng": 2.5420561,
         "nombre": "Naika Studios & Apartments"
+    },
+    "g23w3aW1HCByw4URNQox": {
+        "lat": 39.812519162183435,
+        "lng": 3.1064808368682866,
+        "nombre": "hotel garden saladita"
     },
     "g2LnielHfsAIoIMiXCyF": {
         "lat": 39.76667987174354,
@@ -5230,8 +5240,8 @@
         "nombre": "Paguera Treff Boutique Hotel"
     },
     "jlGmSJ2GB9ZHHysUBAef": {
-        "lat": 39.536504171740184,
-        "lng": 2.4594944849156968,
+        "lat": 39.53806402914664,
+        "lng": 2.458662986755371,
         "nombre": "Ona Palmira Paguera"
     },
     "jolQ9HMz8cEExwFKZ1N1": {
@@ -5565,8 +5575,8 @@
         "nombre": "Hotel Bahía del Sol"
     },
     "mY5ls92aPcAQi0zjAZfl": {
-        "lat": 39.53875931841361,
-        "lng": 2.4498546123504643,
+        "lat": 39.53874232401661,
+        "lng": 2.449940443038941,
         "nombre": "Grupotel Nilo & Spa"
     },
     "mcjqMTreGKiAIyEkIu6l": {
@@ -6140,8 +6150,8 @@
         "nombre": "Son Moll Grand Hotel"
     },
     "rl50RM7AfdnbQKLXASc8": {
-        "lat": 39.536516566207204,
-        "lng": 2.4593603610992436,
+        "lat": 39.536971434044204,
+        "lng": 2.4593335390090947,
         "nombre": "Hotel Oberoy"
     },
     "rlf9hLHXhFK02KBvN9Nq": {

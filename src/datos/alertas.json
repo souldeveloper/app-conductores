@@ -422,6 +422,15 @@
             "lng": 3.122320819431571
         }
     },
+    "bAdAwyM3oCDctkgVzkMA": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "GIRAR CON PRECAUCION",
+        "coordenadas": {
+            "lat": 39.50762224732342,
+            "lng": 2.532305717468262
+        }
+    },
     "bGAxdTQmbYCtzWBqKU8k": {
         "tipo": "alerta",
         "title": "INFORMACION",
@@ -474,6 +483,15 @@
         "coordenadas": {
             "lat": 39.852063494832734,
             "lng": 3.1249676410106813
+        }
+    },
+    "dGZnmKRWmHoHnCQ2mu0g": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "GIRA CON PRECAUCION",
+        "coordenadas": {
+            "lat": 39.50723306446209,
+            "lng": 2.5336414575576787
         }
     },
     "dkIrPnR9LdQGQ1NL6J9r": {
