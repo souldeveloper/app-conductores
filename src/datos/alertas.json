@@ -35,15 +35,6 @@
             "lng": 2.437618780740505
         }
     },
-    "361ehmYt3sl0XKUrsBJL": {
-        "tipo": "alerta",
-        "title": "PRECAUCION",
-        "description": "AQUI ES DONDE PUEDES ENCONTRAR PROBLEMAS AL GIRAR",
-        "coordenadas": {
-            "lat": 39.76674,
-            "lng": 3.153079
-        }
-    },
     "4IhK077l0iHtCXfcoJKO": {
         "tipo": "alerta",
         "title": "PRECAUCION",
@@ -78,6 +69,15 @@
         "coordenadas": {
             "lat": 39.8166495,
             "lng": 3.1140527
+        }
+    },
+    "8JWy003Je41VtxYbnkej": {
+        "tipo": "alerta",
+        "title": "PARTE BAJA DE CAN PICAFORT NO SE PUEDE ENTRAR POR OBRAS",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.77150547370651,
+            "lng": 3.1425189971923833
         }
     },
     "9Nccvdlti96ItvconwSg": {
@@ -224,15 +224,6 @@
             "lng": 2.7603475260130232
         }
     },
-    "MnpTEraDAl92LbXZzN6J": {
-        "tipo": "alerta",
-        "title": "PRECAUCION ",
-        "description": "CUIDADO AL GIRAR SI NO SE PUEDE TIRAR POR CAMINO SEGURO",
-        "coordenadas": {
-            "lat": 39.76456,
-            "lng": 3.160009
-        }
-    },
     "NC7ZFgGLM5mTYZw1FViC": {
         "tipo": "alerta",
         "title": "DIQUE DEL OESTE",
@@ -303,15 +294,6 @@
         "coordenadas": {
             "lat": 39.8401985,
             "lng": 3.1234852
-        }
-    },
-    "S5upjkmsCyG6ad1uRPRz": {
-        "tipo": "alerta",
-        "title": "PRECAUCION",
-        "description": "EN ESTA ESQUINA ES DONDE LOS VEHICULOS APARCAN MAL",
-        "coordenadas": {
-            "lat": 39.764846,
-            "lng": 3.157859
         }
     },
     "T7TKwGJQ8fM4Bh1bhUCl": {
@@ -762,15 +744,6 @@
         "coordenadas": {
             "lat": 39.802075,
             "lng": 3.118311
-        }
-    },
-    "xiihEx14j7Wy9KXDDNGE": {
-        "tipo": "alerta",
-        "title": "IMPORTANTE",
-        "description": "ESTA CALLE SE ESTRECHA IR CON PRECAUCION",
-        "coordenadas": {
-            "lat": 39.76681181737658,
-            "lng": 3.1495849353008025
         }
     },
     "ypQbVQDSJ8KZKzytsP8u": {
