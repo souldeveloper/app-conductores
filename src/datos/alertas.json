@@ -71,15 +71,6 @@
             "lng": 3.1140527
         }
     },
-    "8JWy003Je41VtxYbnkej": {
-        "tipo": "alerta",
-        "title": "PARTE BAJA DE CAN PICAFORT NO SE PUEDE ENTRAR POR OBRAS",
-        "description": "Descripción",
-        "coordenadas": {
-            "lat": 39.77150547370651,
-            "lng": 3.1425189971923833
-        }
-    },
     "9Nccvdlti96ItvconwSg": {
         "tipo": "alerta",
         "title": "INFORMACION",
