@@ -206,6 +206,15 @@
             "lng": 3.2222613660122383
         }
     },
+    "Iu4qcBdvpyBmOjRoA2Vb": {
+        "tipo": "puntoRecogida",
+        "title": "PARADA CARGA Y DESCARGA EN VALDEMOSSA",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.710058766003975,
+            "lng": 2.620228528976441
+        }
+    },
     "LOBcWj8yUAi4FiLd2Qjh": {
         "tipo": "alerta",
         "title": "IMPORTANTE",
@@ -501,6 +510,15 @@
         "coordenadas": {
             "lat": 39.54051294659516,
             "lng": 2.5838684004637544
+        }
+    },
+    "h4TfQF54gXBDCBwdXTUN": {
+        "tipo": "puntoRecogida",
+        "title": "PARKING PARA BUSES MOTOR APAGADO",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.71024865573388,
+            "lng": 2.616333961486817
         }
     },
     "kDrOJTBrbK7hOjmfEM8l": {
