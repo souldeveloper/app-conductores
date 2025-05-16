@@ -125,6 +125,15 @@
             "lng": 3.0689844006977918
         }
     },
+    "BpajVtA49Docm5G7P7cz": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "ESTA ESQUINA TENER PRECAUCION",
+        "coordenadas": {
+            "lat": 39.83711803172745,
+            "lng": 3.1130468845367436
+        }
+    },
     "CeSeeJqqzRguSQ5SIN6e": {
         "tipo": "alerta",
         "title": "INFORMACION",
@@ -303,6 +312,15 @@
         "coordenadas": {
             "lat": 39.757377,
             "lng": 3.164964
+        }
+    },
+    "UHNhE4znponas4tdxPyl": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "EN ESTE PUNTO PUEDE DAR PROBLEMAS SI LOS COCHES APARCAN MAL",
+        "coordenadas": {
+            "lat": 39.52610123829055,
+            "lng": 2.7375590801239014
         }
     },
     "UY28twlXvXOvqJFHi0nx": {

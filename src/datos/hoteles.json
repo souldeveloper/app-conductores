@@ -200,8 +200,8 @@
         "nombre": "Hotel Calimera Fido Gardens"
     },
     "1fHUm1aK9CodXkIjUx9h": {
-        "lat": 39.6100765,
-        "lng": 3.3886966,
+        "lat": 39.61031286837539,
+        "lng": 3.388772606849671,
         "nombre": "Apartamento Rosa Holiday Home"
     },
     "1kXzQRXPaQoAZM5LPHUw": {
@@ -235,8 +235,8 @@
         "nombre": "Hotel Playa Golf - Adults Only +16"
     },
     "1wuzDlR7tMRE6IiKYkdy": {
-        "lat": 39.6127552616874,
-        "lng": 3.3906984329223637,
+        "lat": 39.61275940698553,
+        "lng": 3.3907520771026616,
         "nombre": "Hotel Sur"
     },
     "23KhucMmSPbqqbsfOL5j": {
@@ -250,8 +250,8 @@
         "nombre": "Hipotels Hipocampo"
     },
     "26c1tZPFCbnPJ4aaE54o": {
-        "lat": 39.6103437,
-        "lng": 3.388505399999999,
+        "lat": 39.61040378858672,
+        "lng": 3.3885365724563603,
         "nombre": "Apartamento Serendipia"
     },
     "2DFkvNi39nNQfFTy9bll": {
@@ -507,7 +507,7 @@
     "3u79rgUNgmqtGRCpB8F4": {
         "lat": 39.59948426089586,
         "lng": 3.383976820949828,
-        "nombre": "R2 Verónica Beach Hotel"
+        "nombre": "R2 Veronica Beach Hotel"
     },
     "3x0vXSGxo6FS759GRWBX": {
         "lat": 39.513311607137865,
@@ -672,7 +672,7 @@
     "59SqGAyqqdgL2I2lD36x": {
         "lat": 39.52185716102125,
         "lng": 2.7456163109399205,
-        "nombre": "HR Mix Perú Playa"
+        "nombre": "HR Mix Peru Playa"
     },
     "5AvF4r8YiupjKMMLlDDO": {
         "lat": 39.5898303,
@@ -760,8 +760,8 @@
         "nombre": "Es Turó"
     },
     "5fivHYw7PXjsG0cuQWAx": {
-        "lat": 39.612127121519954,
-        "lng": 3.3910095691680913,
+        "lat": 39.6121229846537,
+        "lng": 3.390939831733704,
         "nombre": "Levante Hotel"
     },
     "5iNQlRXYm0Auh11QKu4q": {
@@ -897,7 +897,7 @@
     "6nkkIlwE38kPizBUFCJi": {
         "lat": 39.586996091718426,
         "lng": 3.3849906921386723,
-        "nombre": "Hipotels Bahía Cala Millor"
+        "nombre": "Hipotels Bahia Cala Millor"
     },
     "6oJppMvMvP6B79HFvDWO": {
         "lat": 39.89701207382182,
@@ -937,7 +937,7 @@
     "7PZFt2w0bEQjbbPorh5C": {
         "lat": 39.5689767,
         "lng": 3.3733958,
-        "nombre": "S’illot"
+        "nombre": "Sillot"
     },
     "7SzynABNNnHpfwfCvhcS": {
         "lat": 39.60366,
@@ -1145,8 +1145,8 @@
         "nombre": "Hostal Cas Bombu"
     },
     "9M0xh3ooQvAvAAdS9OHP": {
-        "lat": 39.61229241386979,
-        "lng": 3.390612602233887,
+        "lat": 39.61229242233948,
+        "lng": 3.3907252550125127,
         "nombre": "Hostal Pebar"
     },
     "9MFlH1uPAVyBSm9K6Ryg": {
@@ -1190,8 +1190,8 @@
         "nombre": "Globales Maioris"
     },
     "9d3Km0KMWY4XzuRc0cat": {
-        "lat": 39.52180743697929,
-        "lng": 2.7455574274063115,
+        "lat": 39.52180334984592,
+        "lng": 2.7454984188079834,
         "nombre": "Apartamentos Ben-Hur"
     },
     "9eTCVbe3lfR2ATKP33W2": {
@@ -2007,22 +2007,17 @@
     "GV55uJnEqzK1dwH5x45e": {
         "lat": 39.57126808518241,
         "lng": 3.3737790737315225,
-        "nombre": "Hipotels Mediterráneo"
+        "nombre": "Hipotels Mediterraneo"
     },
     "GaDO23aunpmpFP24Lz3I": {
         "lat": 39.4147222,
         "lng": 3.2630556,
-        "nombre": "Bahía Azul"
+        "nombre": "Bahia Azul"
     },
     "GeX589DgQgRJiBlWXQuv": {
         "lat": 39.3782196,
         "lng": 3.2390072,
         "nombre": "Cabot Cala Ferrera"
-    },
-    "GhTQk827gHIgPadkfZmT": {
-        "lat": 39.52060999999999,
-        "lng": 2.744916699999999,
-        "nombre": "Villa Pedro - ETV 12222"
     },
     "Gj3NnlVK313c88ygXqKT": {
         "lat": 39.52487781436404,
@@ -2317,7 +2312,7 @@
     "JgVcONsq7m3t6RlbDLC2": {
         "lat": 39.5875914548755,
         "lng": 3.383724689483643,
-        "nombre": "Hipotels Bahía Grande"
+        "nombre": "Hipotels Bahia Grande"
     },
     "Jga8ZFznF3XgyCC7tPMo": {
         "lat": 39.84246729671089,
@@ -2377,7 +2372,7 @@
     "KNzefkx64oZMqtOmqCtc": {
         "lat": 39.57926495181956,
         "lng": 3.3747178564336577,
-        "nombre": "Protur Badía Park Aparthotel"
+        "nombre": "Protur Badia Park Aparthotel"
     },
     "KRBVLCfqgbxa2VLe5dga": {
         "lat": 39.59399894953064,
@@ -2525,8 +2520,8 @@
         "nombre": "Hotel Europe Playa Marina - Adults Only"
     },
     "LOX8tcDoT6t9krrpopq6": {
-        "lat": 39.6102163,
-        "lng": 3.3886706,
+        "lat": 39.61035419575897,
+        "lng": 3.388643860816956,
         "nombre": "CarpeDiem Apartment"
     },
     "LS2i7jPXTszzH7h5VX0n": {
@@ -2655,8 +2650,8 @@
         "nombre": "Hotel Villas Bon Sol"
     },
     "MflTS0wR5ehTTJBy4VFA": {
-        "lat": 39.6138049156145,
-        "lng": 3.3910095691680913,
+        "lat": 39.61372229458581,
+        "lng": 3.390939831733704,
         "nombre": "Hotel Cala Bona"
     },
     "MfwbT3AApMQQDHmflxAg": {
@@ -2713,6 +2708,11 @@
         "lat": 39.60532269999999,
         "lng": 3.3884665,
         "nombre": "La Perla Holiday Home"
+    },
+    "N7XSUmVxbuDi4ObEKlMR": {
+        "lat": 39.566175615373815,
+        "lng": 3.3719658851623535,
+        "nombre": "Hotel Club SiIllot"
     },
     "N8eSlFxm4P145apxbnQD": {
         "lat": 39.4698601,
@@ -3327,7 +3327,7 @@
     "S9ydbJR6qSBbochVV8G2": {
         "lat": 39.58040591831731,
         "lng": 3.376729461641426,
-        "nombre": "Protur Vista Badía Aparthotel"
+        "nombre": "Protur Vista Badia Aparthotel"
     },
     "SCvpUwMhmvYdUyd7aNjL": {
         "lat": 39.3658206,
@@ -3642,7 +3642,7 @@
     "UQ5foVyN4J2OOSHDKot5": {
         "lat": 39.59128318224402,
         "lng": 3.377963325522893,
-        "nombre": "Hotel Garbí Cala Millor"
+        "nombre": "Hotel Garbi Cala Millor"
     },
     "USZK2zvkp1u9nuUbvvYE": {
         "lat": 39.3708094,
@@ -3837,12 +3837,17 @@
     "WP8DWGh81DOLgQKrfFQS": {
         "lat": 39.59611131892399,
         "lng": 3.3809995450759494,
-        "nombre": "La Santa María Playa"
+        "nombre": "La Santa Maria Playa"
     },
     "WQiOHlmZf1CuqeyEEHqp": {
         "lat": 39.5385845,
         "lng": 2.440089399999999,
         "nombre": "Casa Flora Paguera (ETV/8960)"
+    },
+    "WRFfNP5VwVFWyrZkBrb8": {
+        "lat": 39.52055158810474,
+        "lng": 2.7444899082183842,
+        "nombre": "allsun Hotel Cristobal Colon"
     },
     "WSpI2EWsefrmHGjksqpn": {
         "lat": 39.54067843099983,
@@ -3967,7 +3972,7 @@
     "XGAf0grdys84J7Bb1pIG": {
         "lat": 39.59492090547343,
         "lng": 3.382764597086738,
-        "nombre": "allsun Hotel Bahía del Este"
+        "nombre": "allsun Hotel Bahia del Este"
     },
     "XQBIWh8sCxB5YbYCRAKS": {
         "lat": 39.83284907152768,
@@ -3977,7 +3982,7 @@
     "Xa7pcTuF3X2PtMzjm0iB": {
         "lat": 39.52446818234488,
         "lng": 2.7372372093139767,
-        "nombre": "Iberostar Waves Bahía de Palma"
+        "nombre": "Iberostar Waves Bahia de Palma"
     },
     "XbeFsfQPrxld4MxkcWLD": {
         "lat": 39.536930308778665,
@@ -4025,8 +4030,8 @@
         "nombre": "Copaiba by Honne Hotels"
     },
     "YH3JY9wf6JZxJDgBQwME": {
-        "lat": 39.6109369050066,
-        "lng": 3.389990329742432,
+        "lat": 39.61096170545114,
+        "lng": 3.389845490455628,
         "nombre": "Aparthotel & Suites Cap De Mar"
     },
     "YI27PLylxwA2tny8oBzw": {
@@ -4140,8 +4145,8 @@
         "nombre": "Villa Mallorca"
     },
     "ZOoTXPNfx6xCTvhmeGnx": {
-        "lat": 39.613656229029104,
-        "lng": 3.3901083469390874,
+        "lat": 39.613718162049615,
+        "lng": 3.39004397392273,
         "nombre": "Piso del Sol ☼"
     },
     "ZSYZYe3tnVPtS4CCbL5Y": {
@@ -4525,8 +4530,8 @@
         "nombre": "Hotel THB Felip"
     },
     "cmrmZcelUMOz5riZmyx4": {
-        "lat": 39.60786991456471,
-        "lng": 3.3881127834320073,
+        "lat": 39.607936502327554,
+        "lng": 3.387994766235352,
         "nombre": "Marins Playa"
     },
     "cnGpEorbidXJvB1Y4fmG": {
@@ -4547,7 +4552,7 @@
     "d0wqo439Rt6NtV9VoD0I": {
         "lat": 39.53942079134804,
         "lng": 2.41828502752028,
-        "nombre": "Bahía Suites Camp de Mar"
+        "nombre": "Bahia Suites Camp de Mar"
     },
     "d1rrRtOTMwGcUXgtYN8f": {
         "lat": 39.38172909999999,
@@ -4772,7 +4777,7 @@
     "eLFLntBgOcSYAtQbsUtQ": {
         "lat": 39.57420400275005,
         "lng": 3.3747231960296635,
-        "nombre": "Hipotels Mediterráneo Club"
+        "nombre": "Hipotels Mediterraneo Club"
     },
     "eMzXJsTKFqpX1uBgXb2Z": {
         "lat": 39.58135690957017,
@@ -4954,11 +4959,6 @@
         "lng": 2.714900499999999,
         "nombre": "Hostal Cafeteria Maracaibo"
     },
-    "gJGTjY2YtxcTFdjED4vn": {
-        "lat": 39.520491736272014,
-        "lng": 2.744672348075406,
-        "nombre": "allsun Hotel Cristóbal Colón"
-    },
     "gL0XnyRFwWiaGs5WoVi5": {
         "lat": 39.88536819999999,
         "lng": 3.0777002,
@@ -5055,8 +5055,8 @@
         "nombre": "Cap Vermell Grand Hotel"
     },
     "hJyjpynTOtgY7OwoYwbu": {
-        "lat": 39.61278007841984,
-        "lng": 3.3910846710205083,
+        "lat": 39.61279246772601,
+        "lng": 3.390988111495972,
         "nombre": "Hotel Ilusion Moreyo"
     },
     "hL0L05cMtf7pZIjVYtAd": {
@@ -5117,7 +5117,12 @@
     "hmyP19efPEQkEBCSWIV3": {
         "lat": 39.5237647257447,
         "lng": 2.742236852645874,
-        "nombre": "Hotel THB María Isabel"
+        "nombre": "Hotel THB Maria Isabel"
+    },
+    "hxSIVFaHnQEjwmBXanFJ": {
+        "lat": 39.52643984429822,
+        "lng": 2.734705209732056,
+        "nombre": "hotel pil.lari"
     },
     "hzOoJmhzvSdcLziXE49j": {
         "lat": 39.539470468862916,
@@ -5272,7 +5277,7 @@
     "jymDYCKx0FIDTCMR31Pj": {
         "lat": 39.60112179999999,
         "lng": 3.383437899999999,
-        "nombre": "Hotel Kyrat Amàrac Suites"
+        "nombre": "Hotel Kyrat Amarac Suites"
     },
     "jzDpdoam5TC37UncMwG1": {
         "lat": 39.91787892745452,
@@ -5582,7 +5587,7 @@
     "mV8X0yKMMz3Mqw4N2Bdd": {
         "lat": 39.51282744055676,
         "lng": 2.47692883014679,
-        "nombre": "Hotel Bahía del Sol"
+        "nombre": "Hotel Bahia del Sol"
     },
     "mY5ls92aPcAQi0zjAZfl": {
         "lat": 39.53874232401661,
@@ -6577,7 +6582,7 @@
     "weNIlRRIwyQJBgmgQEDJ": {
         "lat": 39.522854449361766,
         "lng": 2.7464103698730473,
-        "nombre": "Hotel Vista Odín"
+        "nombre": "Hotel Vista Odin"
     },
     "wfR1dMCvcYODwdSLOwmX": {
         "lat": 39.537720506274106,
@@ -6692,7 +6697,7 @@
     "xQeU44sS97PLbVH61iwg": {
         "lat": 39.59005129999999,
         "lng": 3.3829975,
-        "nombre": "Aqua Ritual's Experience Spa"
+        "nombre": "Aqua Rituals Experience Spa"
     },
     "xZyBSK1r0rbeWuWbZLc8": {
         "lat": 39.51730931897348,
@@ -6875,8 +6880,8 @@
         "nombre": "Hotel d'Or"
     },
     "z50cMEDiyYAwZ29SSm5Z": {
-        "lat": 39.61149901376722,
-        "lng": 3.3907306194305424,
+        "lat": 39.61165186305506,
+        "lng": 3.3907735347747807,
         "nombre": "Levahotel Gran Sol"
     },
     "z5Cm49HTPplVgc11ZFwc": {
@@ -6892,7 +6897,7 @@
     "zAk4amjzLiOVeuzrvE7N": {
         "lat": 39.4192324,
         "lng": 3.2528635,
-        "nombre": "Apartamentos Ca'n Gregori"
+        "nombre": "Apartamentos Can Gregori"
     },
     "zITXvFzIwtKKUGqaQJXK": {
         "lat": 39.759409948302455,
