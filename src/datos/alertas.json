@@ -395,6 +395,15 @@
             "lng": 3.118311
         }
     },
+    "Y9qV9CErCiWMOlZPoPxS": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "EN ESTE CRUCE ENTRAR MARCHA ATRAS EN LA CALLE LIBRANDO LA CARRETERA PRINCIPAL PARA NO CORTAR LA CALLE Y DEJAR RECOGER LA GENTE AQUI",
+        "coordenadas": {
+            "lat": 39.493639463676956,
+            "lng": 2.5341832499939536
+        }
+    },
     "Yv0JCeElQXbkdo1zNBqj": {
         "tipo": "alerta",
         "title": "PRECAUCION",
@@ -519,6 +528,15 @@
         "coordenadas": {
             "lat": 39.565145779457055,
             "lng": 3.368848941571803
+        }
+    },
+    "gn3CcGxrLMLIWgo4fxgO": {
+        "tipo": "alerta",
+        "title": "INFORMACION",
+        "description": "POR CULPA DE QUE HAY TANTOS COCHES MAL APARCADOS NO RECOMENDAMOS ENTRAR DEJAR EN EL PUNTO DONDE HEMOS PUESTO. EN CASO DE SALIDAS LLAMAR A LA RECESION DEL HOTEL Y QUE OS MANDEN A LOS CLIENTES A LA ESQUINA. TLF 971131166",
+        "coordenadas": {
+            "lat": 39.49409482870127,
+            "lng": 2.535181031747493
         }
     },
     "gslpPf17eFFAuqx9B1wk": {
