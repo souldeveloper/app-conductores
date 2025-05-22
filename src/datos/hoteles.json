@@ -695,8 +695,8 @@
         "nombre": "Apartments Arcadia Cala Millor Mallorca"
     },
     "5KtVzixKHeY8Bk41TtR4": {
-        "lat": 39.51170581371897,
-        "lng": 2.5393977339612532,
+        "lat": 39.51174309945448,
+        "lng": 2.5396388769149785,
         "nombre": "Cook’s Club Calviá Beach"
     },
     "5OFRQg5RmRv7BTnmSRK3": {
@@ -1479,6 +1479,11 @@
         "lng": 3.386192321777344,
         "nombre": "BLUESEA Don Jaime"
     },
+    "C9NQp1LaKCwWab3JSF54": {
+        "lat": 39.6175819756664,
+        "lng": 3.3907842636108403,
+        "nombre": "Hipotels Apartamentos Cala Bona"
+    },
     "CAeS9KGgawHNSHX3Gdxb": {
         "lat": 39.3302804,
         "lng": 3.1486063,
@@ -1910,8 +1915,8 @@
         "nombre": "Iberostar Waves Cala Domingos"
     },
     "FgWbMAwbdSgRpZ4Jxq1Y": {
-        "lat": 39.51168923803355,
-        "lng": 2.539515764523617,
+        "lat": 39.51166860430146,
+        "lng": 2.5380188226699834,
         "nombre": "Apartaments Vistasol"
     },
     "FgzYOuqeGXbOLrT4AY30": {
@@ -3399,6 +3404,11 @@
         "lng": 3.3839643,
         "nombre": "Sol y Luna Cala Millor"
     },
+    "Sl6Z4aU47VAtGUltnFVs": {
+        "lat": 39.837180505714,
+        "lng": 3.122676014900208,
+        "nombre": "NUEVAS PALMERA"
+    },
     "Sm5kTFDJ6aEO5rbQKvqC": {
         "lat": 39.58914593362906,
         "lng": 3.3840679835967795,
@@ -3485,8 +3495,8 @@
         "nombre": "Can Coramet"
     },
     "TczusTg0UBTzb32kwNf0": {
-        "lat": 39.51164791543023,
-        "lng": 2.5395372317426594,
+        "lat": 39.51161066357168,
+        "lng": 2.5380617380142216,
         "nombre": "ANTIC HOTEL TEIX"
     },
     "TdIQJplLHNadJbAXdmNf": {
@@ -4135,9 +4145,9 @@
         "nombre": "Capri Hotel"
     },
     "ZTIrHvIl5naCJTvKHho1": {
-        "lat": 39.61763157178544,
-        "lng": 3.3907842636108403,
-        "nombre": "Hipotels Apartamentos Cala Bona"
+        "lat": 39.61764396022332,
+        "lng": 3.390762805938721,
+        "nombre": "SUNWING MIMOSA CALA BONA"
     },
     "ZTWytjRR87gV4dIhmK7R": {
         "lat": 39.6000778,
@@ -5380,7 +5390,7 @@
         "nombre": "HOTEL CALA GAT"
     },
     "kx0b3XN4j4mNNHdZWWli": {
-        "lat": 39.617639760168885,
+        "lat": 39.61752412336317,
         "lng": 3.389990329742432,
         "nombre": "Protur Bonaire Aparthotel"
     },
@@ -5542,7 +5552,7 @@
     "mK8IOTuhX8j66533DjOM": {
         "lat": 39.76905076826805,
         "lng": 3.148693442344666,
-        "nombre": "Hotel Sultán"
+        "nombre": "Hotel Sultan"
     },
     "mLX1GpnoKhOifKK6mp5O": {
         "lat": 39.51818250472291,
@@ -6327,7 +6337,7 @@
     "tu3yEXPzYxgXxXt0ibsa": {
         "lat": 39.8340271809838,
         "lng": 3.1145167350769047,
-        "nombre": "Seaclub Alcudia Mediterranean Resort - Hotel & Apartaments"
+        "nombre": "Sea club Alcudia Mediterranean Resort - Hotel & Apartaments"
     },
     "u2xjA4OXyKDkQoyrKVMX": {
         "lat": 39.8432498268924,
@@ -6337,7 +6347,7 @@
     "u7T6t5r8y7IRZk2bcfCp": {
         "lat": 39.837454429632224,
         "lng": 3.1193554399469647,
-        "nombre": "BQ Delfín Azul Hotel"
+        "nombre": "BQ Delfin Azul Hotel"
     },
     "u86FwWNzt31B4NXDzWNL": {
         "lat": 39.3177063,
