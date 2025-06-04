@@ -1040,8 +1040,8 @@
         "nombre": "Hotel & Apartamentos Vista Park"
     },
     "8SyPSHzscmFAyprzMpnQ": {
-        "lat": 39.50023679047796,
-        "lng": 2.753362655639649,
+        "lat": 39.50020367604827,
+        "lng": 2.753196358680725,
         "nombre": "tent Bahia de Palma"
     },
     "8Ui58AHDdx21BPbMPiPZ": {
@@ -1525,8 +1525,8 @@
         "nombre": "PICAFORT vacation rental"
     },
     "COv0JFaien2u3sNSteKg": {
-        "lat": 39.49928892186593,
-        "lng": 2.7525687217712407,
+        "lat": 39.499371670824395,
+        "lng": 2.7526062726974487,
         "nombre": "JS Paradise Sport"
     },
     "CQvyCrmZeNHeIisRUduE": {
@@ -1675,8 +1675,8 @@
         "nombre": "Hotel Teide"
     },
     "DhTPbuCP0s1MJ9PGNSyh": {
-        "lat": 39.500125046181346,
-        "lng": 2.7520910498934286,
+        "lat": 39.50016642229602,
+        "lng": 2.753196358680725,
         "nombre": "whala!fun"
     },
     "DitJZ0WjRUykxit19z4F": {
@@ -3217,7 +3217,7 @@
     "Rh38IkoD34b1eIynh6nL": {
         "lat": 39.76331101271462,
         "lng": 3.1462526235397137,
-        "nombre": "Zafiro Ca'n Picafort"
+        "nombre": "Zafiro Can Picafort"
     },
     "Rlu2XUf0BKRVkDFfh82O": {
         "lat": 39.5600141,
@@ -4534,6 +4534,11 @@
         "lng": 3.464346530917353,
         "nombre": "Hotel LLITERAS"
     },
+    "cqZfOnhDylJKAc8O5voK": {
+        "lat": 39.832894380962216,
+        "lng": 3.1132292747497563,
+        "nombre": "Sol Alcudia apartamentos"
+    },
     "cvsBf3mgd2x982ERkAGJ": {
         "lat": 39.52240332806907,
         "lng": 2.470116019248963,
@@ -5154,6 +5159,11 @@
         "lng": 3.0689728260040283,
         "nombre": "Apartments Leo"
     },
+    "iCfNvL0bhHeTKSwCkoKf": {
+        "lat": 39.84367612145078,
+        "lng": 3.133378028869629,
+        "nombre": "alcudia htl"
+    },
     "iL25pSR7GGNYPwBJ4SWx": {
         "lat": 39.38880269999999,
         "lng": 3.2146594,
@@ -5172,7 +5182,7 @@
     "iZEnmL3oEwVsTU0kx8dO": {
         "lat": 39.83157616147904,
         "lng": 3.1160402297973633,
-        "nombre": "Alua Boccaccio"
+        "nombre": "Alua Bocaccio"
     },
     "ihGQcyiImfLgaYWbnmKF": {
         "lat": 39.7026716,
