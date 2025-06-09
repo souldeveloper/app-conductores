@@ -38,7 +38,8 @@ const getColor = tipo => {
   switch (tipo) {
     case 'segura':      return 'green';
     case 'advertencia': return 'yellow';
-    case 'prohibida':   return 'red';
+    case 'prohibida':   return 'red';  
+    case 'informativa': return 'blue'; 
     default:            return 'blue';
   }
 };
