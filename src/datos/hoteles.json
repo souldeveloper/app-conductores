@@ -1,7 +1,7 @@
 {
     "00Sps0cv5lvxOZV5Pk13": {
-        "lat": 39.49692940891379,
-        "lng": 2.755476236343384,
+        "lat": 39.49719019901079,
+        "lng": 2.755336704616292,
         "nombre": "Hotel Costa Mediterraneo"
     },
     "0490myqmChonjFAscAHq": {
@@ -1009,6 +1009,11 @@
         "lng": 2.6622873,
         "nombre": "The Boc Hostels - City"
     },
+    "846bq4YXYJN7DdNEYp6I": {
+        "lat": 39.497148802577456,
+        "lng": 2.75538507108748,
+        "nombre": "Arenal pins"
+    },
     "84HNqI4gVEAWLn8ueajk": {
         "lat": 39.3528495,
         "lng": 3.1894185,
@@ -1080,8 +1085,8 @@
         "nombre": "Hotel Rosella by Intelier"
     },
     "8iDf7OPRhhB9TR0b1JE1": {
-        "lat": 39.497003919868234,
-        "lng": 2.7555298805236816,
+        "lat": 39.497103261365496,
+        "lng": 2.7552992716710683,
         "nombre": "azuLine Hotel Bahamas & Bahamas II"
     },
     "8jsMWiXwAOs8RWsF0M03": {
@@ -1402,7 +1407,7 @@
     "BjuTGRq1mTocJHWLZAul": {
         "lat": 39.56628918124586,
         "lng": 3.3719980019779614,
-        "nombre": "Moreia beach"
+        "nombre": "Moreia beach / Playa moreya"
     },
     "BkJC6S4Gzae8Bd2I01g3": {
         "lat": 39.506271631833904,
@@ -2827,7 +2832,7 @@
     "OOlltw0bTlGPv8ffgCSQ": {
         "lat": 39.56625215999085,
         "lng": 3.3719766760534546,
-        "nombre": "Apartamentos Playa Moreia"
+        "nombre": "Apartamentos Playa Moreia moreya"
     },
     "OPjmWlQKrtatEbTOpk7F": {
         "lat": 39.712369885095775,
@@ -4185,8 +4190,8 @@
         "nombre": "allsun Hotel Eden Alcudia"
     },
     "ZbLz5EZBd0mvlwvhCJgU": {
-        "lat": 39.49705359379347,
-        "lng": 2.755379676818848,
+        "lat": 39.497210884319536,
+        "lng": 2.75524023890799,
         "nombre": "Welikehotel Fenix (Arenal)"
     },
     "ZbW4VpydVjPetD5QtAU3": {
@@ -4440,8 +4445,8 @@
         "nombre": "Pure Salt Port Adriano"
     },
     "c26WVRaNrTQMbURutTmn": {
-        "lat": 39.49710326768322,
-        "lng": 2.75533676147461,
+        "lat": 39.49726055809691,
+        "lng": 2.7551973235637517,
         "nombre": "Hotel Cassandra"
     },
     "c2YpPw1nrxerBNxUVp8Q": {
@@ -4985,8 +4990,8 @@
         "nombre": "Saturno"
     },
     "gVzkJf1InpZPdfg1vPoF": {
-        "lat": 39.49706187277758,
-        "lng": 2.755460143089295,
+        "lat": 39.49715293574623,
+        "lng": 2.7552724382092557,
         "nombre": "Hotel Selva Arenal"
     },
     "gfKoso75Xbxj7pBaWSOQ": {
@@ -5145,8 +5150,8 @@
         "nombre": "Mallorca Urlaub | Ferienwohnung Mallorca | Ferienhaus Mallorca"
     },
     "i35SKLfE92yzrp5A6vo0": {
-        "lat": 39.49695424590746,
-        "lng": 2.7554494142532353,
+        "lat": 39.49723986569552,
+        "lng": 2.7553259899948213,
         "nombre": "Palma Maza II"
     },
     "i4IqEWu1hxdAgfEDBFK1": {
@@ -6105,8 +6110,8 @@
         "nombre": "Hostal Residencia S L"
     },
     "rGtSPOGXJThQzl36wUgd": {
-        "lat": 39.49699978037286,
-        "lng": 2.7554172277450566,
+        "lat": 39.497053590371365,
+        "lng": 2.7553260568033404,
         "nombre": "Hostal Juan Palma"
     },
     "rMkPvuPHAqw4l7UBJAfB": {
@@ -6513,6 +6518,11 @@
         "lat": 39.65755139999999,
         "lng": 3.439284899999999,
         "nombre": "Canyamel Park Hotel & Spa"
+    },
+    "voZup4AJdngWs8QSnMOp": {
+        "lat": 39.550103076374135,
+        "lng": 3.3158969879150395,
+        "nombre": "Castell dels Hams"
     },
     "vrlHrUA2RZDuCvrdIZER": {
         "lat": 39.3696625,
