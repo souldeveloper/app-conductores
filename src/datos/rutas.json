@@ -5010,19 +5010,6 @@
             }
         ]
     },
-    "5YlCl7muIgwe8KdzWbVI": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.899718270236555,
-                "lng": 3.0793697060609126
-            },
-            {
-                "lat": 39.89964822370377,
-                "lng": 3.0794072672449158
-            }
-        ]
-    },
     "5Z95EUpG6lftY8ULZLZn": {
         "tipo": "segura",
         "coordenadas": [
@@ -6506,19 +6493,6 @@
             {
                 "lat": 39.54730540084112,
                 "lng": 2.6327759027481084
-            }
-        ]
-    },
-    "6vMsCV0P9RHEhDp8HPXA": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.8974705175174,
-                "lng": 3.0785158447879857
-            },
-            {
-                "lat": 39.89743755337085,
-                "lng": 3.0785802353891567
             }
         ]
     },
@@ -10234,19 +10208,6 @@
             }
         ]
     },
-    "9iuAEuk6vlv8ysQ4wq5l": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89827361105206,
-                "lng": 3.0756883158348907
-            },
-            {
-                "lat": 39.898327177128664,
-                "lng": 3.075736608785769
-            }
-        ]
-    },
     "9m7aHKyH0OV7DTlCYiDx": {
         "tipo": "segura",
         "coordenadas": [
@@ -13586,6 +13547,19 @@
             {
                 "lat": 39.51028629085918,
                 "lng": 2.540578561801681
+            }
+        ]
+    },
+    "DoLHTZ82AbFiQSXBBKSo": {
+        "tipo": "segura",
+        "coordenadas": [
+            {
+                "lat": 39.91330152915388,
+                "lng": 3.088307790383747
+            },
+            {
+                "lat": 39.91335086975451,
+                "lng": 3.088318525785194
             }
         ]
     },
@@ -17289,6 +17263,19 @@
             }
         ]
     },
+    "HgrlQ98UdYl8Wm91oMRV": {
+        "tipo": "segura",
+        "coordenadas": [
+            {
+                "lat": 39.91330920436913,
+                "lng": 3.0883131580844707
+            },
+            {
+                "lat": 39.91335032153418,
+                "lng": 3.088238010274296
+            }
+        ]
+    },
     "Hhg3H6bcymJem1a0ZWDl": {
         "tipo": "segura",
         "coordenadas": [
@@ -20514,6 +20501,19 @@
             }
         ]
     },
+    "KqgWzqdwP7tB2LRxAJqt": {
+        "tipo": "segura",
+        "coordenadas": [
+            {
+                "lat": 39.90576386310761,
+                "lng": 3.079980790580019
+            },
+            {
+                "lat": 39.90582978337406,
+                "lng": 3.079953961162852
+            }
+        ]
+    },
     "Kqvx8j1StEtJjNARap95": {
         "tipo": "segura",
         "coordenadas": [
@@ -22709,6 +22709,19 @@
             }
         ]
     },
+    "NIcmMomhgywWO18weZRA": {
+        "tipo": "segura",
+        "coordenadas": [
+            {
+                "lat": 39.906483833745256,
+                "lng": 3.0826419463733457
+            },
+            {
+                "lat": 39.906463233865466,
+                "lng": 3.0827009710911
+            }
+        ]
+    },
     "NJRncHLN7hJ9EYSRIBO3": {
         "tipo": "segura",
         "coordenadas": [
@@ -23265,19 +23278,6 @@
             {
                 "lat": 39.8180006,
                 "lng": 3.1142244
-            }
-        ]
-    },
-    "O2Y7r7vQHFGQh0OtbeEy": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89746639699996,
-                "lng": 3.078510478904568
-            },
-            {
-                "lat": 39.89749112010094,
-                "lng": 3.0785856012725743
             }
         ]
     },
@@ -24128,19 +24128,6 @@
             }
         ]
     },
-    "P2WoJbEVaW7zGeDf81AU": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89955440383964,
-                "lng": 3.074078758892683
-            },
-            {
-                "lat": 39.899616209692184,
-                "lng": 3.074051929475514
-            }
-        ]
-    },
     "P5zNYibw2WxjjQVyro5N": {
         "tipo": "segura",
         "coordenadas": [
@@ -24202,19 +24189,6 @@
             {
                 "lat": 39.91043856972468,
                 "lng": 3.086268796299572
-            }
-        ]
-    },
-    "PPdjQfAq5YFCj6T2zaqS": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89996641695039,
-                "lng": 3.074395678660991
-            },
-            {
-                "lat": 39.89993345400444,
-                "lng": 3.0743151904095267
             }
         ]
     },
@@ -26037,19 +26011,6 @@
             }
         ]
     },
-    "Qzn7xsJA5cF1eoqF01qP": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.898265370113485,
-                "lng": 3.0756883158348907
-            },
-            {
-                "lat": 39.8983189361965,
-                "lng": 3.0756400228840124
-            }
-        ]
-    },
     "R0ixrf6KcjoRMA7lJaws": {
         "tipo": "segura",
         "coordenadas": [
@@ -26236,19 +26197,6 @@
             {
                 "lat": 39.483845,
                 "lng": 2.7439502
-            }
-        ]
-    },
-    "RBhYGG9iQ5FSVJs1uVZD": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.901284250759865,
-                "lng": 3.07718550868243
-            },
-            {
-                "lat": 39.90132133334195,
-                "lng": 3.0772445334001435
             }
         ]
     },
@@ -30655,19 +30603,6 @@
             }
         ]
     },
-    "WI3v0UZTW0KtPdexVUMC": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89998176542047,
-                "lng": 3.076150590711029
-            },
-            {
-                "lat": 39.899932321006666,
-                "lng": 3.076204249545365
-            }
-        ]
-    },
     "WIn1uSjA3pOuPZYgXN3T": {
         "tipo": "segura",
         "coordenadas": [
@@ -33335,19 +33270,6 @@
             }
         ]
     },
-    "YbVaSNiLzeL3iMKLMpwZ": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89996641695039,
-                "lng": 3.0744010445444485
-            },
-            {
-                "lat": 39.9000241020677,
-                "lng": 3.0743151904095267
-            }
-        ]
-    },
     "YhOOABbCzietup4vTIfQ": {
         "tipo": "advertencia",
         "coordenadas": [
@@ -35924,19 +35846,6 @@
             }
         ]
     },
-    "axBsz6ll417R1bTruBw5": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.89740877932154,
-                "lng": 3.0758439249889733
-            },
-            {
-                "lat": 39.89740877932154,
-                "lng": 3.0757795343878014
-            }
-        ]
-    },
     "azAHCzGLWUUEyG59bgnT": {
         "tipo": "segura",
         "coordenadas": [
@@ -37488,19 +37397,6 @@
             }
         ]
     },
-    "c9jpsNw72Uo3HnlgLgHx": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.897404658800376,
-                "lng": 3.0758439249889733
-            },
-            {
-                "lat": 39.897355212527096,
-                "lng": 3.0758224614552625
-            }
-        ]
-    },
     "cEbvUOJyaVGqWmC7aMS4": {
         "tipo": "segura",
         "coordenadas": [
@@ -37981,19 +37877,6 @@
             {
                 "lat": 39.71566881018999,
                 "lng": 3.4634665724349527
-            }
-        ]
-    },
-    "cvBw8QmScNaTqjqIUpZ1": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.90127601018334,
-                "lng": 3.07718550868243
-            },
-            {
-                "lat": 39.901325453627614,
-                "lng": 3.077147947498427
             }
         ]
     },
@@ -40336,16 +40219,16 @@
             }
         ]
     },
-    "f2zwqpIuJZCw86ax6xMY": {
+    "f5cHcQ7Y1IiwEiNkNBw3": {
         "tipo": "segura",
         "coordenadas": [
             {
-                "lat": 39.89955028344748,
-                "lng": 3.074078758892683
+                "lat": 39.906483833745256,
+                "lng": 3.0826419463733457
             },
             {
-                "lat": 39.89955028344748,
-                "lng": 3.074009002408054
+                "lat": 39.90643851400155,
+                "lng": 3.0826473122568037
             }
         ]
     },
@@ -51713,19 +51596,6 @@
             }
         ]
     },
-    "pTWYmMEe44wtF8ezovDS": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.899715633194425,
-                "lng": 3.079358974294038
-            },
-            {
-                "lat": 39.89965382743154,
-                "lng": 3.079305315459742
-            }
-        ]
-    },
     "pat8fTZyNKcVllWHvWzI": {
         "tipo": "segura",
         "coordenadas": [
@@ -53589,19 +53459,6 @@
             }
         ]
     },
-    "rNAQFMvFJrEj8OD2uYxU": {
-        "tipo": "segura",
-        "coordenadas": [
-            {
-                "lat": 39.899977645054015,
-                "lng": 3.0761398589441935
-            },
-            {
-                "lat": 39.899928200637255,
-                "lng": 3.076086200109898
-            }
-        ]
-    },
     "rNJTvpS5md8y7T27cJDG": {
         "tipo": "segura",
         "coordenadas": [
@@ -54161,6 +54018,19 @@
             {
                 "lat": 39.579885071850036,
                 "lng": 2.3802548445276854
+            }
+        ]
+    },
+    "s8Kxsa19lQOAZWhDoqHJ": {
+        "tipo": "segura",
+        "coordenadas": [
+            {
+                "lat": 39.90577210314436,
+                "lng": 3.079980790580019
+            },
+            {
+                "lat": 39.905792703231974,
+                "lng": 3.0798895705617206
             }
         ]
     },

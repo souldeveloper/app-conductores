@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/LogPrueba';
-import MapaConductor from './components/NuevaBusqueda copy 2';
-import AdminPanel from './components/AdminPanel copy';
+import MapaConductor from './components/NuevaBusqueda copy 3';
+import AdminPanel from './components/AdminPanel copy 2';
 import UserAdmin from './components/UserAdmin';
 
 function App() {
