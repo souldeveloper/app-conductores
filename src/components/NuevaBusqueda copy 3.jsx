@@ -269,7 +269,7 @@ const MapaConductor = () => {
             style={{ height: '80vh' }}
             scrollWheelZoom={true}
             zoomControl={true}
-            maxZoom={24}
+            maxZoom={18}
             zoomDelta={0.5}
             zoomSnap={0}
           >
