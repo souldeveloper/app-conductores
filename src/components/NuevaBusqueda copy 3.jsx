@@ -1,4 +1,3 @@
-// src/components/MapaConductor.jsx
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -102,6 +101,9 @@ const MapaConductor = () => {
   // inputs de posición para cada hotel
   const [positionInputs, setPositionInputs] = useState({});
 
+  // mostrar/ocultar botones de zoom rápidos
+  const [showZoomButtons, setShowZoomButtons] = useState(true);
+
   // sincronizar myHotels con localStorage
   useEffect(() => {
     localStorage.setItem(MY_HOTELS_KEY, JSON.stringify(myHotels));
@@ -163,9 +165,12 @@ const MapaConductor = () => {
     setDirecciones(dirsArray);
   }, []);
 
-  // centrar mapa en conductor
+  // centrar mapa en conductor y alternar visibilidad de botones de zoom
   const handleCenterMap = () => {
-    if (mapInstance && conductorPos) mapInstance.panTo(conductorPos);
+    if (mapInstance && conductorPos) {
+      mapInstance.panTo(conductorPos);
+    }
+    setShowZoomButtons(prev => !prev);
   };
 
   // toggle tracking
@@ -255,7 +260,7 @@ const MapaConductor = () => {
             {tracking ? 'Detener Ruta' : 'Iniciar Ruta'}
           </Button>{' '}
           <Button variant="info" onClick={handleCenterMap}>
-            Centrar en mi ubicación
+            Mostrar / Ocultar Zooms
           </Button>
         </Col>
       </Row>
@@ -280,33 +285,35 @@ const MapaConductor = () => {
             />
 
             {/* Botones de zoom rápidos */}
-            <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '10px',
-              transform: 'translateY(-50%)',
-              zIndex: 1000,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.5rem'
-            }}>
-              {zoomLevels.map((z, i) => (
-                <Button
-                  key={i}
-                  onClick={() => mapInstance && mapInstance.setZoom(z)}
-                  style={{
-                    borderRadius: '50%',
-                    width: '36px',
-                    height: '36px',
-                    padding: 0,
-                    textAlign: 'center'
-                  }}
-                  title={`Zoom nivel ${z}`}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-            </div>
+            {showZoomButtons && (
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '10px',
+                transform: 'translateY(-50%)',
+                zIndex: 1000,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem'
+              }}>
+                {zoomLevels.map((z, i) => (
+                  <Button
+                    key={i}
+                    onClick={() => mapInstance && mapInstance.setZoom(z)}
+                    style={{
+                      borderRadius: '50%',
+                      width: '36px',
+                      height: '36px',
+                      padding: 0,
+                      textAlign: 'center'
+                    }}
+                    title={`Zoom nivel ${z}`}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+              </div>
+            )}
 
             {conductorPos && (
               <Marker position={conductorPos} icon={conductorIcon}>
@@ -450,6 +457,14 @@ const MapaConductor = () => {
               ))}
             </ListGroup>
           )}
+        </Col>
+      </Row>
+
+      <Row className="mt-3">
+        <Col>
+          <Button variant="outline-secondary" onClick={handleLogout}>
+            Cerrar Sesión
+          </Button>
         </Col>
       </Row>
     </Container>
