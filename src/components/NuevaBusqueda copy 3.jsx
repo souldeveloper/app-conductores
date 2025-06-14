@@ -82,7 +82,7 @@ const getColor = tipo => {
 const MY_HOTELS_KEY = 'myHotels';
 
 // niveles de zoom para los botones (ajústalos aquí)
-const zoomLevels = [13, 15, 17, 19, 20];
+const zoomLevels = [13, 14, 15, 16, 16];
 
 const MapaConductor = () => {
   const navigate = useNavigate();
