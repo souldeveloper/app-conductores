@@ -960,8 +960,8 @@
         "nombre": "Ferrera Park Apartments"
     },
     "7efnBqhW1M3p1sQntVbK": {
-        "lat": 39.567248727900896,
-        "lng": 3.3724164953221796,
+        "lat": 39.5681994881846,
+        "lng": 3.37206789421284,
         "nombre": "Hotel Mix Peymar"
     },
     "7ggNyGLMB1OmOMuWeg3S": {
@@ -1073,6 +1073,11 @@
         "lat": 39.58123709040628,
         "lng": 3.3789718151092534,
         "nombre": "Protur Biomar Sensatori Resort"
+    },
+    "8ZQ3EGZbTNLrDAY427Fc": {
+        "lat": 39.568216401404705,
+        "lng": 3.371998035008659,
+        "nombre": "Playa Mar sillot"
     },
     "8bVjfmOmnG6lafn8HEJk": {
         "lat": 39.32061849999999,
@@ -2570,8 +2575,8 @@
         "nombre": "Grupotel Playa de Palma Suites & Spa"
     },
     "LsBKAQzv9XA18HrYeYd3": {
-        "lat": 39.56756711630355,
-        "lng": 3.3728885707916154,
+        "lat": 39.568178941247986,
+        "lng": 3.3721216405226433,
         "nombre": "Amena Mar"
     },
     "LserPxtaZzPdTF1rmLfw": {
@@ -3943,11 +3948,6 @@
         "lat": 39.53879191210442,
         "lng": 2.4476015567779545,
         "nombre": "Aparthotel Peguera Beach"
-    },
-    "WuUfRU47XbOq0cSBxXOp": {
-        "lat": 39.567857673392695,
-        "lng": 3.371682303272184,
-        "nombre": "Playa Mar"
     },
     "WuowMZXppXXp6ktGx77r": {
         "lat": 39.842574319136666,
@@ -5873,6 +5873,11 @@
         "lat": 39.60911021588587,
         "lng": 3.3894431199609847,
         "nombre": "Protur Alicia Hotel"
+    },
+    "oUVQiuoG30q8kYwI6mrc": {
+        "lat": 39.568126617938645,
+        "lng": 3.3721901026474925,
+        "nombre": "Hotel Meli Sillot"
     },
     "obIy74U8cBZhZTxY1JSM": {
         "lat": 39.830937627694254,
