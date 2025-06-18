@@ -23,7 +23,7 @@ import Cookies from 'js-cookie';
 import L from 'leaflet';
 import 'leaflet-polylinedecorator';
 
-// importamos los JSON estáticos
+// JSON estáticos
 import rutasData       from '../datos/rutas.json';
 import alertasData     from '../datos/alertas.json';
 import hotelesData     from '../datos/hoteles.json';
@@ -36,43 +36,33 @@ const conductorIcon     = L.icon({ iconUrl: '/iconos/bus.png',         iconSize:
 const hotelIcon         = L.icon({ iconUrl: '/iconos/hotel_negro.png', iconSize: [25,25], iconAnchor: [12,12] });
 const hotelAzulIcon     = L.icon({ iconUrl: '/iconos/hotel_azul.png',  iconSize: [25,25], iconAnchor: [12,12] });
 
-// utilidad para normalizar texto
-const normalizeString = str =>
-  str
-    .replace(/['´`’]/g, '')
-    .toLowerCase();
-
-// componente que dibuja flechas al final de polylines
+// Polyline con flecha al final
 const ArrowedLine = ({ positions }) => {
   const map = useMap();
-  const decoratorRef = useRef(null);
+  const decoRef = useRef(null);
   const polyRef = useRef(null);
 
   useEffect(() => {
-    const updateArrows = () => {
-      if (decoratorRef.current) map.removeLayer(decoratorRef.current);
+    const update = () => {
+      if (decoRef.current) map.removeLayer(decoRef.current);
       if (polyRef.current) map.removeLayer(polyRef.current);
-
       const poly = L.polyline(positions, { opacity: 0 }).addTo(map);
-      const zoom = map.getZoom();
-      const pixelSize = zoom * 0.8;
-      const decorator = L.polylineDecorator(poly, {
+      const size = map.getZoom() * 0.8;
+      const deco = L.polylineDecorator(poly, {
         patterns: [{
           offset: '100%',
           repeat: 0,
-          symbol: L.Symbol.arrowHead({ pixelSize, polygon: false, pathOptions: { stroke: true } })
+          symbol: L.Symbol.arrowHead({ pixelSize: size, polygon: false, pathOptions: { stroke: true } })
         }]
       }).addTo(map);
-
       polyRef.current = poly;
-      decoratorRef.current = decorator;
+      decoRef.current = deco;
     };
-
-    map.on('zoomend', updateArrows);
-    updateArrows();
+    map.on('zoomend', update);
+    update();
     return () => {
-      map.off('zoomend', updateArrows);
-      if (decoratorRef.current) map.removeLayer(decoratorRef.current);
+      map.off('zoomend', update);
+      if (decoRef.current) map.removeLayer(decoRef.current);
       if (polyRef.current) map.removeLayer(polyRef.current);
     };
   }, [map, positions]);
@@ -80,14 +70,14 @@ const ArrowedLine = ({ positions }) => {
   return null;
 };
 
-// hook para obtener instancia de mapa
+// Capturar instancia de mapa
 const SetMapInstance = ({ setMapInstance }) => {
   const map = useMap();
   useEffect(() => setMapInstance(map), [map, setMapInstance]);
   return null;
 };
 
-// color según tipo de ruta
+// Color de ruta
 const getColor = tipo => {
   switch (tipo) {
     case 'segura':      return 'green';
@@ -100,79 +90,62 @@ const getColor = tipo => {
 
 const MY_HOTELS_KEY = 'myHotels';
 const zoomLevels = [14, 15, 16, 17, 18];
+const SUGGESTIONS_LIMIT = 20;
 
 const MapaConductor = () => {
   const navigate = useNavigate();
 
-  // estados de datos
+  // datos
   const [rutas, setRutas]             = useState([]);
   const [alertas, setAlertas]         = useState([]);
   const [allHotels, setAllHotels]     = useState([]);
   const [direcciones, setDirecciones] = useState([]);
 
-  // lista personal (persistida)
+  // hoteles usuario
   const [myHotels, setMyHotels] = useState(() => {
     try { return JSON.parse(localStorage.getItem(MY_HOTELS_KEY)) || []; }
     catch { return []; }
   });
   const [positionInputs, setPositionInputs] = useState({});
 
-  // búsqueda
+  // búsqueda y autocompletado
   const [searchQuery, setSearchQuery]     = useState('');
+  const [suggestions, setSuggestions]     = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
 
-  // mapa y geolocalización
+  // mapa & geolocalización
   const center = [39.6908, 2.9271];
   const [mapInstance, setMapInstance]   = useState(null);
   const [conductorPos, setConductorPos] = useState(null);
-  const [prevPos, setPrevPos]           = useState(null);
-  const [heading, setHeading]           = useState(0);
   const [tracking, setTracking]         = useState(false);
-  const watchIdRef = useRef(null);
-  const [autoCenter, setAutoCenter] = useState(true);
+  const watchId = useRef(null);
+
+  // orientación dispositivo (Chrome)
+  const [heading, setHeading] = useState(0);
+
+  // controles UI
+  const [autoCenter, setAutoCenter]         = useState(true);
   const [showZoomButtons, setShowZoomButtons] = useState(true);
 
-  // validar sesión
-  useEffect(() => {
-    const cur    = Cookies.get('currentUser');
-    const devUid = Cookies.get('deviceUid');
-    if (!cur || !devUid) navigate('/');
-  }, [navigate]);
+  // util para normalizar texto
+  const normalize = s => s.replace(/['´`’]/g,'').toLowerCase();
 
-  // cargar datos JSON
+  // cargar JSON al inicio
   useEffect(() => {
-    setRutas(
-      Object.entries(rutasData).map(([id, v]) => ({
-        id,
-        tipo: v.tipo,
-        coordenadas: v.coordenadas.map(c => [c.lat, c.lng])
-      }))
-    );
-    setAlertas(
-      Object.entries(alertasData).map(([id, v]) => ({
-        id,
-        tipo: v.tipo,
-        title: v.title,
-        description: v.description,
-        coordenadas: [v.coordenadas.lat, v.coordenadas.lng]
-      }))
-    );
-    setAllHotels(
-      Object.entries(hotelesData).map(([id, v]) => ({
-        id,
-        nombre: v.nombre,
-        lat: v.lat,
-        lng: v.lng,
-        tipo: v.tipo
-      }))
-    );
-    setDirecciones(
-      Object.entries(direccionesData).map(([id, v]) => ({
-        id,
-        coords: v.coords.map(c => [c.lat, c.lng])
-      }))
-    );
+    setRutas(Object.entries(rutasData).map(([id,v]) => ({
+      id, tipo: v.tipo, coordenadas: v.coordenadas.map(c=>[c.lat,c.lng])
+    })));
+    setAlertas(Object.entries(alertasData).map(([id,v]) => ({
+      id, tipo: v.tipo, title: v.title, description: v.description,
+      coordenadas: [v.coordenadas.lat, v.coordenadas.lng]
+    })));
+    setAllHotels(Object.entries(hotelesData).map(([id,v]) => ({
+      id, nombre: v.nombre, lat: v.lat, lng: v.lng, tipo: v.tipo
+    })));
+    setDirecciones(Object.entries(direccionesData).map(([id,v]) => ({
+      id, coords: v.coords.map(c=>[c.lat,c.lng])
+    })));
   }, []);
 
   // persistir hoteles
@@ -180,27 +153,32 @@ const MapaConductor = () => {
     localStorage.setItem(MY_HOTELS_KEY, JSON.stringify(myHotels));
   }, [myHotels]);
 
-  // toggle tracking y cálculo de heading
+  // validar sesión
+  useEffect(() => {
+    if (!Cookies.get('currentUser') || !Cookies.get('deviceUid')) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  // sensor orientación Chrome
+  useEffect(() => {
+    const onOrient = e => setHeading(360 - e.alpha);
+    window.addEventListener('deviceorientation', onOrient, true);
+    return () => window.removeEventListener('deviceorientation', onOrient, true);
+  }, []);
+
+  // iniciar/detener tracking
   const handleToggleTracking = () => {
     if (!tracking && navigator.geolocation) {
       setTracking(true);
-      watchIdRef.current = navigator.geolocation.watchPosition(
-        pos => {
-          const newPos = [pos.coords.latitude, pos.coords.longitude];
-          setConductorPos(newPos);
-          if (prevPos) {
-            const dy = newPos[0] - prevPos[0];
-            const dx = newPos[1] - prevPos[1];
-            setHeading(Math.atan2(dy, dx) * 180 / Math.PI);
-          }
-          setPrevPos(newPos);
-        },
+      watchId.current = navigator.geolocation.watchPosition(
+        pos => setConductorPos([pos.coords.latitude, pos.coords.longitude]),
         err => console.error(err),
         { enableHighAccuracy: true, maximumAge: 0 }
       );
     } else {
       setTracking(false);
-      if (watchIdRef.current != null) navigator.geolocation.clearWatch(watchIdRef.current);
+      if (watchId.current) navigator.geolocation.clearWatch(watchId.current);
     }
   };
 
@@ -211,36 +189,34 @@ const MapaConductor = () => {
     }
   }, [conductorPos, mapInstance, autoCenter]);
 
-  // centro y toggle zoom buttons
+  // toggles de UI
   const handleCenterMap = () => {
     if (mapInstance && conductorPos) mapInstance.panTo(conductorPos);
-    setShowZoomButtons(prev => !prev);
+    setShowZoomButtons(v => !v);
   };
 
-  // icono triángulo rotado
- const createArrowIcon = () => L.divIcon({
-  html: `
-    <svg width="35" height="45" viewBox="0 0 40 45">
-      <polygon
-        points="20,0 30,45 10,45"
-        fill="#007bff"
-        transform="rotate(${heading},20,22.5)"
-      />
-    </svg>
-  `,
-  iconSize: [35, 45],
-  iconAnchor: [17, 22],
-  className: ''
-});
+  // icono flecha según orientación
+  const createArrowIcon = () => L.divIcon({
+    html: `
+      <svg width="35" height="35" viewBox="0 0 40 40">
+        <polygon points="20,0 40,40 0,40"
+          fill="#007bff"
+          transform="rotate(${heading},20,20)" />
+      </svg>
+    `,
+    iconSize: [35,35],
+    iconAnchor: [17,17],
+    className: ''
+  });
 
   // búsqueda de hoteles
   const handleSearchHotels = e => {
     e.preventDefault();
-    if (!searchQuery.trim()) return;
+    const q = normalize(searchQuery);
+    if (!q) return;
     setLoadingSearch(true);
-    const q = normalizeString(searchQuery);
     const results = allHotels
-      .filter(h => normalizeString(h.nombre).includes(q))
+      .filter(h => normalize(h.nombre).includes(q))
       .slice(0, 1000);
     setSearchResults(results);
     setLoadingSearch(false);
@@ -249,11 +225,12 @@ const MapaConductor = () => {
   const handleClearSearch = () => {
     setSearchQuery('');
     setSearchResults([]);
+    setSuggestions([]);
   };
 
-  const handleAddToMyHotels = hotel => {
-    if (!myHotels.some(h => h.id === hotel.id)) {
-      setMyHotels(prev => [...prev, hotel]);
+  const handleAddToMyHotels = h => {
+    if (!myHotels.some(x => x.id === h.id)) {
+      setMyHotels(prev => [...prev, h]);
     }
   };
 
@@ -267,51 +244,41 @@ const MapaConductor = () => {
   };
 
   const handleSetPosition = id => {
-    const input = parseInt(positionInputs[id], 10);
-    if (isNaN(input) || input < 1 || input > myHotels.length) {
-      alert(`Introduce un número válido entre 1 y ${myHotels.length}`);
+    const pos = parseInt(positionInputs[id],10);
+    if (isNaN(pos) || pos<1 || pos>myHotels.length) {
+      alert(`Introduce posición válida 1–${myHotels.length}`);
       return;
     }
     setMyHotels(prev => {
-      const idxOld = prev.findIndex(h => h.id === id);
-      if (idxOld === -1) return prev;
-      const hotel = prev[idxOld];
-      const without = prev.filter(h => h.id !== id);
-      without.splice(input - 1, 0, hotel);
-      return without;
+      const idx = prev.findIndex(h=>h.id===id);
+      const hotel = prev[idx];
+      const rest = prev.filter(h=>h.id!==id);
+      rest.splice(pos-1,0,hotel);
+      return rest;
     });
-    setPositionInputs(prev => ({ ...prev, [id]: '' }));
-  };
-
-  // logout
-  const handleLogout = () => {
-    Cookies.remove('currentUser');
-    Cookies.remove('deviceUid');
-    navigate('/');
+    setPositionInputs(prev => ({...prev, [id]: ''}));
   };
 
   return (
     <Container fluid style={{ padding: '2rem' }}>
-      <Row className="mt-3">
+      <Row className="mb-3">
         <Col>
-          <h2>Mapa del Conductor</h2>
-          <Button variant={tracking ? 'danger' : 'success'} onClick={handleToggleTracking}>
+          <Button
+            variant={tracking ? 'danger' : 'success'}
+            onClick={handleToggleTracking}
+          >
             {tracking ? 'Detener Ruta' : 'Iniciar Ruta'}
           </Button>{' '}
-          <Button variant="info" onClick={handleCenterMap}>
-            Zooms
-          </Button>{' '}
+          <Button variant="info" onClick={handleCenterMap}>Zooms</Button>{' '}
           <Button
             variant={autoCenter ? 'primary' : 'secondary'}
-            onClick={() => setAutoCenter(prev => !prev)}
+            onClick={() => setAutoCenter(v => !v)}
           >
             Centrado: {autoCenter ? 'On' : 'Off'}
           </Button>
         </Col>
       </Row>
-      <br />
       <Row>
-        {/* Mapa */}
         <Col md={9} style={{ position: 'relative' }}>
           <MapContainer
             center={center}
@@ -329,38 +296,36 @@ const MapaConductor = () => {
               attribution="© OpenStreetMap contributors"
             />
 
-            {/* Zoom Rápido */}
             {showZoomButtons && (
               <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '10px',
-                transform: 'translateY(-50%)',
-                zIndex: 1000,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.5rem'
+                position:'absolute',
+                top:'50%',
+                left:'10px',
+                transform:'translateY(-50%)',
+                zIndex:1000,
+                display:'flex',
+                flexDirection:'column',
+                gap:'0.5rem'
               }}>
-                {zoomLevels.map((z, i) => (
+                {zoomLevels.map((z,i) => (
                   <Button
                     key={i}
-                    onClick={() => mapInstance && mapInstance.setZoom(z)}
+                    onClick={()=>mapInstance&&mapInstance.setZoom(z)}
                     style={{
-                      borderRadius: '50%',
-                      width: '36px',
-                      height: '36px',
-                      padding: 0,
-                      textAlign: 'center'
+                      borderRadius:'50%',
+                      width:'36px',
+                      height:'36px',
+                      padding:0,
+                      textAlign:'center'
                     }}
                     title={`Zoom nivel ${z}`}
                   >
-                    {i + 1}
+                    {i+1}
                   </Button>
                 ))}
               </div>
             )}
 
-            {/* marcador conductor: triángulo si ruta iniciada */}
             {conductorPos && (
               <Marker
                 position={conductorPos}
@@ -373,6 +338,7 @@ const MapaConductor = () => {
             {rutas.map(r => (
               <Fragment key={r.id}>
                 <Polyline positions={r.coordenadas} color={getColor(r.tipo)} />
+                <ArrowedLine positions={r.coordenadas} />
               </Fragment>
             ))}
 
@@ -380,7 +346,7 @@ const MapaConductor = () => {
               <Marker
                 key={a.id}
                 position={a.coordenadas}
-                icon={a.tipo === 'puntoRecogida' ? puntoRecogidaIcon : alertaIcon}
+                icon={a.tipo==='puntoRecogida' ? puntoRecogidaIcon : alertaIcon}
               >
                 <Popup>
                   <h5>{a.title}</h5>
@@ -389,97 +355,123 @@ const MapaConductor = () => {
               </Marker>
             ))}
 
-            {/* Hoteles numerados */}
-            {myHotels.map((h, idx) => {
-              const number = idx + 1;
-              const imgName = h.tipo === 'hotel_vial' ? 'hotel_azul' : 'hotel';
-              const hotelWithNumberIcon = L.divIcon({
+            {myHotels.map((h,idx)=> {
+              const num = idx+1;
+              const img = h.tipo==='hotel_vial' ? 'hotel_azul' : 'hotel';
+              const icon = L.divIcon({
                 html: `
-                  <div style="position: relative; display: inline-block;">
-                    <img src="/iconos/${imgName}.png" style="width:32px; height:32px;" />
+                  <div style="position:relative; display:inline-block;">
+                    <img src="/iconos/${img}.png" style="width:32px; height:32px;" />
                     <span style="
-                      position: absolute;
-                      top: -6px;
-                      right: -6px;
-                      font-size: 14px;
-                      background: white;
-                      border: 1px solid rgba(0,0,0,0.3);
-                      border-radius: 50%;
-                      padding: 2px 5px;
-                    ">${number}</span>
+                      position:absolute; top:-6px; right:-6px;
+                      font-size:14px; background:white;
+                      border:1px solid rgba(0,0,0,0.3);
+                      border-radius:50%; padding:2px 5px;
+                    ">${num}</span>
                   </div>
                 `,
-                iconSize: [25, 25],
-                iconAnchor: [12, 12],
-                className: ''
+                iconSize:[25,25], iconAnchor:[12,12], className:''
               });
               return (
-                <Marker
-                  key={h.id}
-                  position={[h.lat, h.lng]}
-                  icon={hotelWithNumberIcon}
-                >
+                <Marker key={h.id} position={[h.lat,h.lng]} icon={icon}>
                   <Popup>
-                    <div>
-                      <h5>{h.nombre}</h5>
-                      <Form onSubmit={e => { e.preventDefault(); handleSetPosition(h.id); }}>
-                        <FormControl
-                          type="number"
-                          min="1"
-                          max={myHotels.length}
-                          placeholder="Posición"
-                          value={positionInputs[h.id] || ''}
-                          onChange={e =>
-                            setPositionInputs(prev => ({ ...prev, [h.id]: e.target.value }))
-                          }
-                          style={{ width: '80px', marginRight: '1rem' }}
-                        />
-                        <Button size="sm" onClick={() => handleSetPosition(h.id)}>
-                          Asignar
-                        </Button>
-                      </Form>
-                    </div>
+                    <h5>{h.nombre}</h5>
+                    <Form onSubmit={e=>{e.preventDefault();handleSetPosition(h.id);}}>
+                      <FormControl
+                        type="number"
+                        min="1"
+                        max={myHotels.length}
+                        placeholder="Posición"
+                        value={positionInputs[h.id]||''}
+                        onChange={e=>setPositionInputs(p=>({...p,[h.id]:e.target.value}))}
+                        style={{width:'80px', marginRight:'1rem'}}
+                      />
+                      <Button size="sm" onClick={()=>handleSetPosition(h.id)}>Asignar</Button>
+                    </Form>
                   </Popup>
                 </Marker>
               );
             })}
 
-            {/* Flechas de direcciones */}
-            {direcciones.map(d => (
+            {direcciones.map(d=>(
               <Fragment key={d.id}>
-                <Polyline
-                  positions={d.coords}
-                  pathOptions={{ color: 'black', dashArray: '5,10' }}
-                />
+                <Polyline positions={d.coords} pathOptions={{color:'black', dashArray:'5,10'}}/>
                 <ArrowedLine positions={d.coords} />
               </Fragment>
             ))}
+
           </MapContainer>
         </Col>
-
-        {/* Panel lateral */}
         <Col md={3}>
           <h4>Buscar Hoteles</h4>
-          <Form onSubmit={handleSearchHotels} className="d-flex">
-            <FormControl
-              type="text"
-              placeholder="Nombre del hotel"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            <Button variant="primary" type="submit" className="ms-2">
-              Buscar
-            </Button>
-            <Button variant="secondary" type="button" className="ms-2" onClick={handleClearSearch}>
-              Limpiar
-            </Button>
-          </Form>
+          {/* Autocompletado dinámico */}
+          <div style={{ position: 'relative' }}>
+            <Form onSubmit={handleSearchHotels} className="d-flex mb-2">
+              <FormControl
+                type="text"
+                placeholder="Nombre del hotel"
+                value={searchQuery}
+                onChange={e => {
+                  const q = e.target.value;
+                  setSearchQuery(q);
+                  if (q.trim() === '') {
+                    setSuggestions([]);
+                  } else {
+                    const norm = normalize(q);
+                    setSuggestions(
+                      allHotels
+                        .filter(h => normalize(h.nombre).includes(norm))
+                        .slice(0, SUGGESTIONS_LIMIT)
+                    );
+                  }
+                }}
+                autoComplete="off"
+              />
+              <Button variant="primary" type="submit" className="ms-2">
+                Buscar
+              </Button>
+              <Button
+                variant="secondary"
+                type="button"
+                className="ms-2"
+                onClick={() => { handleClearSearch(); setSuggestions([]); }}
+              >
+                Limpiar
+              </Button>
+            </Form>
+            {suggestions.length > 0 && (
+              <ListGroup style={{
+                position: 'absolute',
+                top: '100%',
+                width: '100%',
+                zIndex: 1000,
+                maxHeight: '200px',
+                overflowY: 'auto'
+              }}>
+                {suggestions.map(h => (
+                  <ListGroup.Item
+                    key={h.id}
+                    action
+                    onClick={() => {
+                      setSearchQuery(h.nombre);
+                      setSuggestions([]);
+                      setSearchResults([h]);
+                    }}
+                  >
+                    {h.nombre}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            )}
+          </div>
           {loadingSearch && <Spinner animation="border" className="my-2" />}
-
           {searchResults.length > 0 && (
-            <ListGroup className="mt-2">
+            <ListGroup className="mb-3">
               {searchResults.map(h => (
-                <ListGroup.Item key={h.id} className="d-flex justify-content-between mb-2">
+                <ListGroup.Item
+                  key={h.id}
+                  className="d-flex justify-content-between"
+                >
                   {h.nombre}
                   <Button size="sm" onClick={() => handleAddToMyHotels(h)}>
                     Agregar
@@ -489,29 +481,21 @@ const MapaConductor = () => {
             </ListGroup>
           )}
 
-          <h4 className="mt-4">Mis Hoteles</h4>
+          <h4>Mis Hoteles</h4>
           {myHotels.length === 0 ? (
             <Alert variant="info">No has agregado ningún hotel aún.</Alert>
           ) : (
             <ListGroup>
-              {myHotels.map((h, idx) => (
+              {myHotels.map((h,idx)=>(
                 <ListGroup.Item key={h.id} className="d-flex justify-content-between align-items-center">
-                  <span>{idx + 1}. {h.nombre}</span>
-                  <Button variant="danger" size="sm" onClick={() => handleRemoveFromMyHotels(h.id)}>
+                  <span>{idx+1}. {h.nombre}</span>
+                  <Button variant="danger" size="sm" onClick={()=>handleRemoveFromMyHotels(h.id)}>
                     Quitar
                   </Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
           )}
-        </Col>
-      </Row>
-
-      <Row className="mt-3">
-        <Col>
-          <Button variant="outline-secondary" onClick={handleLogout}>
-            Cerrar Sesión
-          </Button>
         </Col>
       </Row>
     </Container>

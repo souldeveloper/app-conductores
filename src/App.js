@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/LogPrueba';
-//import MapaConductor from './components/NuevaBusqueda copy 4';
-import MapaConductor from './components/RotacionMapa';
+import MapaConductor from './components/NuevaBusqueda copy 4';
+//import MapaConductor from './components/RotacionMapa';
 import AdminPanel from './components/AdminPanel copy 3';
 import UserAdmin from './components/UserAdmin';
 
