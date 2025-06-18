@@ -224,15 +224,6 @@
             "lng": 2.620228528976441
         }
     },
-    "LKDOnYuIYNDlRhUyiHQe": {
-        "tipo": "alerta",
-        "title": "Información",
-        "description": "Hotel ses Fotges y Alcudia park entrar por la via de servicio",
-        "coordenadas": {
-            "lat": 39.808558495515626,
-            "lng": 3.1166294869603877
-        }
-    },
     "LOBcWj8yUAi4FiLd2Qjh": {
         "tipo": "alerta",
         "title": "IMPORTANTE",
@@ -539,6 +530,15 @@
             "lng": 3.368848941571803
         }
     },
+    "gMQKAKyGq9usKcwJfKjL": {
+        "tipo": "alerta",
+        "description": "EN LA CURVA DEL HOTEL SUELE HANER PROBLEMAS",
+        "title": "CUIDADO",
+        "coordenadas": {
+            "lat": 39.53564268863798,
+            "lng": 2.722350955009461
+        }
+    },
     "gn3CcGxrLMLIWgo4fxgO": {
         "tipo": "alerta",
         "title": "INFORMACION",
@@ -726,15 +726,6 @@
         "coordenadas": {
             "lat": 39.53024138654863,
             "lng": 2.7300763368367913
-        }
-    },
-    "tbAw1xAO5C9A9Kj2zgLl": {
-        "tipo": "puntoRecogida",
-        "title": "PREGUNTAR",
-        "description": "NO SSE SABE DONDE VA",
-        "coordenadas": {
-            "lat": 39.53984000710786,
-            "lng": 2.4440397825302544
         }
     },
     "tlwfJ5gniXCZnXkiVuOE": {
