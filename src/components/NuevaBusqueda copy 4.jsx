@@ -21,6 +21,7 @@ import {
 } from 'react-leaflet';
 import Cookies from 'js-cookie';
 import L from 'leaflet';
+import 'leaflet-polylinedecorator';
 
 // importamos los JSON estáticos
 import rutasData       from '../datos/rutas.json';
@@ -28,35 +29,53 @@ import alertasData     from '../datos/alertas.json';
 import hotelesData     from '../datos/hoteles.json';
 import direccionesData from '../datos/direcciones.json';
 
-import 'leaflet-polylinedecorator';
-
 // íconos
 const alertaIcon        = L.icon({ iconUrl: '/iconos/alerta.png',      iconSize: [25,25], iconAnchor: [12,12] });
 const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/recogida.png',   iconSize: [25,25], iconAnchor: [12,12] });
 const conductorIcon     = L.icon({ iconUrl: '/iconos/bus.png',         iconSize: [35,35], iconAnchor: [17,17] });
-const hotelIcon         = L.icon({ iconUrl: '/iconos/hotel_negro.png',       iconSize: [25,25], iconAnchor: [12,12] });
+const hotelIcon         = L.icon({ iconUrl: '/iconos/hotel_negro.png', iconSize: [25,25], iconAnchor: [12,12] });
+const hotelAzulIcon     = L.icon({ iconUrl: '/iconos/hotel_azul.png',  iconSize: [25,25], iconAnchor: [12,12] });
 
-// componente que dibuja una flecha al final de una polyline
+// componente que dibuja una flecha al final de una polyline, escalando con el zoom
 const ArrowedLine = ({ positions }) => {
   const map = useMap();
+  const decoratorRef = useRef(null);
+  const polyRef = useRef(null);
+
   useEffect(() => {
-    const poly = L.polyline(positions, { opacity: 0 }).addTo(map);
-    const decorator = L.polylineDecorator(poly, {
-      patterns: [{
-        offset: '100%',
-        repeat: 0,
-        symbol: L.Symbol.arrowHead({
-          pixelSize: 15,
-          polygon: false,
-          pathOptions: { stroke: true }
-        })
-      }]
-    }).addTo(map);
+    const updateArrows = () => {
+      if (decoratorRef.current) map.removeLayer(decoratorRef.current);
+      if (polyRef.current) map.removeLayer(polyRef.current);
+
+      const poly = L.polyline(positions, { opacity: 0 }).addTo(map);
+      const zoom = map.getZoom();
+      const pixelSize = zoom * 0.8; // tamaño de flecha reducido
+      const decorator = L.polylineDecorator(poly, {
+        patterns: [{
+          offset: '100%',
+          repeat: 0,
+          symbol: L.Symbol.arrowHead({
+            pixelSize,
+            polygon: false,
+            pathOptions: { stroke: true }
+          })
+        }]
+      }).addTo(map);
+
+      polyRef.current = poly;
+      decoratorRef.current = decorator;
+    };
+
+    map.on('zoomend', updateArrows);
+    updateArrows();
+
     return () => {
-      map.removeLayer(decorator);
-      map.removeLayer(poly);
+      map.off('zoomend', updateArrows);
+      if (decoratorRef.current) map.removeLayer(decoratorRef.current);
+      if (polyRef.current) map.removeLayer(polyRef.current);
     };
   }, [map, positions]);
+
   return null;
 };
 
@@ -72,15 +91,13 @@ const getColor = tipo => {
   switch (tipo) {
     case 'segura':      return 'green';
     case 'advertencia': return 'yellow';
-    case 'prohibida':   return 'red';  
-    case 'informativa': return 'blue'; 
+    case 'prohibida':   return 'red';
+    case 'informativa': return 'blue';
     default:            return 'blue';
   }
 };
 
 const MY_HOTELS_KEY = 'myHotels';
-
-// niveles de zoom para los botones (ajústalos aquí)
 const zoomLevels = [14, 15, 16, 17, 18];
 
 const MapaConductor = () => {
@@ -104,6 +121,9 @@ const MapaConductor = () => {
   // mostrar/ocultar botones de zoom rápidos
   const [showZoomButtons, setShowZoomButtons] = useState(true);
 
+  // control de centrado automático
+  const [autoCenter, setAutoCenter] = useState(true);
+
   // sincronizar myHotels con localStorage
   useEffect(() => {
     localStorage.setItem(MY_HOTELS_KEY, JSON.stringify(myHotels));
@@ -121,16 +141,15 @@ const MapaConductor = () => {
   const [tracking, setTracking]         = useState(false);
   const watchIdRef = useRef(null);
 
-  // validar sesión solo con cookies
+  // validar sesión
   useEffect(() => {
     const cur    = Cookies.get('currentUser');
     const devUid = Cookies.get('deviceUid');
     if (!cur || !devUid) navigate('/');
   }, [navigate]);
 
-  // cargar datos de JSON estáticos
+  // cargar datos de JSON
   useEffect(() => {
-    // rutas
     const rutasArray = Object.entries(rutasData).map(([id, val]) => ({
       id,
       tipo: val.tipo,
@@ -138,7 +157,6 @@ const MapaConductor = () => {
     }));
     setRutas(rutasArray);
 
-    // alertas
     const alertasArray = Object.entries(alertasData).map(([id, val]) => ({
       id,
       tipo: val.tipo,
@@ -148,16 +166,15 @@ const MapaConductor = () => {
     }));
     setAlertas(alertasArray);
 
-    // hoteles estáticos
     const hotelesArray = Object.entries(hotelesData).map(([id, val]) => ({
       id,
       nombre: val.nombre,
       lat: val.lat,
-      lng: val.lng
+      lng: val.lng,
+      tipo: val.tipo
     }));
     setAllHotels(hotelesArray);
 
-    // direcciones estáticas (flechas)
     const dirsArray = Object.entries(direccionesData).map(([id, val]) => ({
       id,
       coords: val.coords.map(c => [c.lat, c.lng])
@@ -165,7 +182,7 @@ const MapaConductor = () => {
     setDirecciones(dirsArray);
   }, []);
 
-  // centrar mapa en conductor y alternar visibilidad de botones de zoom
+  // centrar mapa y alternar zoom
   const handleCenterMap = () => {
     if (mapInstance && conductorPos) {
       mapInstance.panTo(conductorPos);
@@ -189,9 +206,13 @@ const MapaConductor = () => {
       }
     }
   };
+
+  // auto-centrado condicional
   useEffect(() => {
-    if (conductorPos && mapInstance) mapInstance.panTo(conductorPos);
-  }, [conductorPos, mapInstance]);
+    if (autoCenter && conductorPos && mapInstance) {
+      mapInstance.panTo(conductorPos);
+    }
+  }, [conductorPos, mapInstance, autoCenter]);
 
   // búsqueda client-side de hoteles
   const normalizeString = str =>
@@ -260,11 +281,17 @@ const MapaConductor = () => {
             {tracking ? 'Detener Ruta' : 'Iniciar Ruta'}
           </Button>{' '}
           <Button variant="info" onClick={handleCenterMap}>
-            Mostrar / Ocultar Zooms
+            Zooms
+          </Button>{' '}
+          <Button
+            variant={autoCenter ? 'primary' : 'secondary'}
+            onClick={() => setAutoCenter(prev => !prev)}
+          >
+            Centrado: {autoCenter ? 'On' : 'Off'}
           </Button>
         </Col>
       </Row>
-
+    <br />
       <Row>
         {/* Mapa */}
         <Col md={9} style={{ position: 'relative' }}>
@@ -284,7 +311,7 @@ const MapaConductor = () => {
               attribution="© OpenStreetMap contributors"
             />
 
-            {/* Botones de zoom rápidos */}
+            {/* Zoom Rápido */}
             {showZoomButtons && (
               <div style={{
                 position: 'absolute',
@@ -338,12 +365,14 @@ const MapaConductor = () => {
               </Marker>
             ))}
 
+            {/* Hoteles numerados, con icono azul si tipo === 'hotel_vial' */}
             {myHotels.map((h, idx) => {
               const number = idx + 1;
+              const imgName = h.tipo === 'hotel_vial' ? 'hotel_azul' : 'hotel';
               const hotelWithNumberIcon = L.divIcon({
                 html: `
                   <div style="position: relative; display: inline-block;">
-                    <img src="/iconos/hotel.png" style="width:32px; height:32px;" />
+                    <img src="/iconos/${imgName}.png" style="width:32px; height:32px;" />
                     <span style="
                       position: absolute;
                       top: -6px;
@@ -392,17 +421,13 @@ const MapaConductor = () => {
               );
             })}
 
-            {/* Flechas (cargadas desde JSON) */}
+            {/* Flechas de direcciones */}
             {direcciones.map(d => (
               <Fragment key={d.id}>
                 <Polyline
                   positions={d.coords}
                   pathOptions={{ color: 'black', dashArray: '5,10' }}
-                >
-                  <Popup>
-                    <h5>Flecha ID: {d.id}</h5>
-                  </Popup>
-                </Polyline>
+                />
                 <ArrowedLine positions={d.coords} />
               </Fragment>
             ))}

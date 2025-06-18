@@ -530,8 +530,8 @@
         "nombre": "Iberostar Selection Jardín del Sol Suites"
     },
     "4DpXPxaSu9IF1GNNpK8r": {
-        "lat": 39.52008186635752,
-        "lng": 2.747890949249268,
+        "lat": 39.51999512736174,
+        "lng": 2.7479553222656254,
         "nombre": "Pabisa Chico"
     },
     "4EUZ8avAvQ9ozrgX7GUR": {
@@ -5060,8 +5060,8 @@
         "nombre": "LEVEL Mallorca Living"
     },
     "hCDM8I3QXs8xCirDkl85": {
-        "lat": 39.518066572379716,
-        "lng": 2.7454554910527533,
+        "lat": 39.5180955483887,
+        "lng": 2.7454340457916264,
         "nombre": "Hotel Riu Concordia"
     },
     "hCHY1bV6VVJWMNQeaGwf": {
@@ -5298,6 +5298,12 @@
         "lat": 39.375515,
         "lng": 3.2343971,
         "nombre": "Apartments Osa Menor"
+    },
+    "jrCwnfOodzmT0lsiSTeq": {
+        "tipo": "hotel_vial",
+        "lat": 39.80510118626719,
+        "lng": 3.117751981385837,
+        "nombre": "Playa de Muro Village"
     },
     "js6qZJAw7izvfUNy1cuf": {
         "lat": 39.712746,
@@ -6895,8 +6901,8 @@
         "nombre": "Sol de Alcudia apartamentos"
     },
     "yvJOBYmllGLjbSiw8xj3": {
-        "lat": 39.51865841460734,
-        "lng": 2.7466356754302983,
+        "lat": 39.51876231619607,
+        "lng": 2.7464693784713745,
         "nombre": "Hotel Obelisco"
     },
     "ywMOQVGMU57oI4PPxPP3": {
