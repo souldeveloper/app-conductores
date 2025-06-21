@@ -125,6 +125,15 @@
             "lng": 3.0689844006977918
         }
     },
+    "BoGWMh8ctF5PMGIlzn7Y": {
+        "tipo": "puntoRecogida",
+        "title": "SA FORADA",
+        "description": "( PARADA QUE SE SUELE HACER EN LAS EXCURCIONES )",
+        "coordenadas": {
+            "lat": 39.751202108126584,
+            "lng": 2.6299810409545903
+        }
+    },
     "BpajVtA49Docm5G7P7cz": {
         "tipo": "alerta",
         "title": "CUIDADO",
@@ -132,6 +141,15 @@
         "coordenadas": {
             "lat": 39.83711803172745,
             "lng": 3.1130468845367436
+        }
+    },
+    "CAttr4asYXlM1cf6PMhv": {
+        "tipo": "alerta",
+        "title": "IMPORTANTE",
+        "description": "LEVANTAR BUS A TOPE CUIDADO CON CALLE YA QUE TIENE INCLINACION PARA UN LADO",
+        "coordenadas": {
+            "lat": 39.74018336512097,
+            "lng": 3.051522374153137
         }
     },
     "CeSeeJqqzRguSQ5SIN6e": {
@@ -566,6 +584,15 @@
             "lng": 2.616333961486817
         }
     },
+    "hor8mCbm27Jgls3gw6RC": {
+        "tipo": "puntoRecogida",
+        "title": "DISCOTECA SALA FONICA",
+        "description": "DEJADA Y RECOGIDA DE LA DISCOTECA",
+        "coordenadas": {
+            "lat": 39.739717241185,
+            "lng": 3.0511468648910527
+        }
+    },
     "kDrOJTBrbK7hOjmfEM8l": {
         "tipo": "alerta",
         "title": "PRECAUCION",
@@ -663,6 +690,15 @@
         "coordenadas": {
             "lat": 39.63760943640275,
             "lng": 3.415208458900452
+        }
+    },
+    "q2CKVGkJMYS6SqlkUidK": {
+        "tipo": "puntoRecogida",
+        "title": "MUJERES DE CONDESA BAHIA",
+        "description": "DEJADA DE CAMARERAS DE PISO",
+        "coordenadas": {
+            "lat": 39.73932811464822,
+            "lng": 3.052268028259278
         }
     },
     "qfLAxF9h1ef8t8wn8IbX": {
