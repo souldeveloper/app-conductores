@@ -17,6 +17,15 @@
             "lng": 3.1297889
         }
     },
+    "1yb30UuMQ5YzRhtbmTPv": {
+        "tipo": "alerta",
+        "title": "CUIDADO",
+        "description": "SUBIR EL COCHE A TOPE EN ESTE SITIO",
+        "coordenadas": {
+            "lat": 39.536852281943275,
+            "lng": 2.4550253710674235
+        }
+    },
     "21XM6HBFGHJ2QPBNtEtg": {
         "tipo": "puntoRecogida",
         "title": "CUEVAS DEL DRAC",
