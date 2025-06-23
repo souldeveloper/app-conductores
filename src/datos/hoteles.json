@@ -150,8 +150,8 @@
         "nombre": "Portocolom"
     },
     "13o0tqzMorrQJuLJIlmu": {
-        "lat": 39.9205120799708,
-        "lng": 3.0546766519546513,
+        "lat": 39.920586099145915,
+        "lng": 3.0546659259120768,
         "nombre": "Hotel Hoposa Niu"
     },
     "160USjXylOrCjoMEbUYj": {
@@ -175,8 +175,8 @@
         "nombre": "Sullastre Verd"
     },
     "1HQN9ch5AI2isEf3GKPT": {
-        "lat": 39.92001007442887,
-        "lng": 3.0559265613555913,
+        "lat": 39.919948455563144,
+        "lng": 3.0557763967596334,
         "nombre": "Globales Simar"
     },
     "1JcCCY8j2OtWnrCSJwZ9": {
@@ -557,8 +557,8 @@
         "nombre": "Q Royal"
     },
     "4HBvBmOWz4TJ2qv8eSSi": {
-        "lat": 39.54551834251881,
-        "lng": 2.38978385925293,
+        "lat": 39.545555633479715,
+        "lng": 2.3900788254235783,
         "nombre": "VILLA ITALIA"
     },
     "4JNFfwU3cgIJWNtJHiz2": {
@@ -567,8 +567,8 @@
         "nombre": "HOTEL TENT MOJITO SUITES"
     },
     "4Jp8hbnUlZsbQr4qAKYa": {
-        "lat": 39.54561570496641,
-        "lng": 2.390009164810181,
+        "lat": 39.54561769726186,
+        "lng": 2.3901003361720012,
         "nombre": "Villa Mathilda"
     },
     "4QDiwNKLOcovsHshopE0": {
@@ -610,11 +610,6 @@
         "lat": 39.50713253731114,
         "lng": 2.753008561088528,
         "nombre": "Hotel Arcadia"
-    },
-    "4jvhGJhikj9iKs2nGlCC": {
-        "lat": 39.52766252351228,
-        "lng": 2.5414413213729863,
-        "nombre": "fergus club palmanova"
     },
     "4k4b99fz2rmFHV6zW1xT": {
         "lat": 39.53451820281589,
@@ -715,8 +710,8 @@
         "nombre": "Villa Spa Bendinat"
     },
     "5JqrinzotI8dLM6g1rWK": {
-        "lat": 39.9178305,
-        "lng": 3.0539226,
+        "lat": 39.917809023751694,
+        "lng": 3.0539792622465893,
         "nombre": "Ca'n Melsion"
     },
     "5JvYuzIat0oOvJtDfweK": {
@@ -922,8 +917,8 @@
         "nombre": "Can 66 Palmeras"
     },
     "6l3K0vn3I9H6wDDG6BTE": {
-        "lat": 39.55017558772789,
-        "lng": 2.380943298339844,
+        "lat": 39.550229830305526,
+        "lng": 2.3810666478293867,
         "nombre": "Mon Port Hotel & Spa"
     },
     "6nkkIlwE38kPizBUFCJi": {
@@ -1503,6 +1498,12 @@
         "lng": 2.8533899,
         "nombre": "Villa Vallgornera Nou"
     },
+    "BrAcoo9FFM2EDvsfoSb9": {
+        "tipo": "hotel",
+        "lat": 39.53892343003926,
+        "lng": 2.4205745334729034,
+        "nombre": "DOLSMAR APARTMENTS"
+    },
     "BtFdzGggNNYSS0sdHos9": {
         "lat": 39.3812009,
         "lng": 3.2384129,
@@ -1921,8 +1922,8 @@
         "nombre": "HSM Lago Park"
     },
     "FLieJavWMslBm0NLCtbT": {
-        "lat": 39.548447191843195,
-        "lng": 2.382026910781861,
+        "lat": 39.548331298974375,
+        "lng": 2.3821341712075617,
         "nombre": "Aparthotel La Pérgola Mallorca"
     },
     "FOkWlGilVykv1BiAucyO": {
@@ -2147,8 +2148,8 @@
         "nombre": "Azuline Hotel Palmanova Garden"
     },
     "HDplMv0BNqoC1a1xE0Wg": {
-        "lat": 39.545277104956384,
-        "lng": 2.3899233341217045,
+        "lat": 39.5453239800702,
+        "lng": 2.390121765909226,
         "nombre": "Hostal Catalina Vera"
     },
     "HGD5u95yLJYAI2M6ISTa": {
@@ -2466,11 +2467,6 @@
         "lat": 39.80260960833454,
         "lng": 3.118582963943482,
         "nombre": "Playa Esperanza Resort"
-    },
-    "KcOJfPvC7P4KBRwPBkb0": {
-        "lat": 39.510244785054695,
-        "lng": 2.5404381971593324,
-        "nombre": "FALMBOYAN"
     },
     "Kduxa9V1sLQdWcAImz5H": {
         "lat": 39.33066729999999,
@@ -2930,8 +2926,8 @@
         "nombre": "Apartamentos Julia"
     },
     "OfQDL65ilq4M6o8JayKq": {
-        "lat": 39.5390488,
-        "lng": 2.4205611,
+        "lat": 39.5389574897179,
+        "lng": 2.42050053225567,
         "nombre": "DOLS MAR APARTMENTS"
     },
     "OfroqNSqIoJbnUxGeUfB": {
@@ -3361,8 +3357,8 @@
         "nombre": "Club Santa Ponsa"
     },
     "S70UwRZDzPM2qyjbZTYI": {
-        "lat": 39.92047917931135,
-        "lng": 3.054789304733277,
+        "lat": 39.919981349535696,
+        "lng": 3.0557388123115197,
         "nombre": "Globales Don Pedro"
     },
     "S7pOp7S7o2hL1vBTDbgT": {
@@ -3760,11 +3756,6 @@
         "lng": 3.2670265,
         "nombre": "Finca la marash"
     },
-    "VI2SWqxd2RWVt5XMMEyj": {
-        "lat": 39.5390255,
-        "lng": 2.4210809,
-        "nombre": "Bar Bagari"
-    },
     "VO1HnQheiNqQNJHQB9w9": {
         "lat": 39.37408229999999,
         "lng": 3.219733599999999,
@@ -4027,8 +4018,8 @@
         "nombre": "Bon Aire Apartamentos"
     },
     "XggwNvyAmOx4ihQLUlfP": {
-        "lat": 39.54532737597057,
-        "lng": 2.389987707138062,
+        "lat": 39.54537361944817,
+        "lng": 2.390105693606337,
         "nombre": "Brismar"
     },
     "XoYsmlodgRh7S22JzXXO": {
@@ -4152,8 +4143,8 @@
         "nombre": "Apartamentos Martinez"
     },
     "ZBect5LEUV8jZqryjX71": {
-        "lat": 39.54806660531774,
-        "lng": 2.3813402652740483,
+        "lat": 39.547975554629495,
+        "lng": 2.3815226079977285,
         "nombre": "PORT HOUSE"
     },
     "ZDElcrgCnP11beAuNuvh": {
@@ -4781,6 +4772,12 @@
         "lng": 3.460323188754244,
         "nombre": "Apartamentos El Paraiso"
     },
+    "eFVv9Pnt6hoNHiISEO5p": {
+        "tipo": "hotel",
+        "lat": 39.52767022203916,
+        "lng": 2.5415478987902773,
+        "nombre": "Hotel fergus club palmanova park"
+    },
     "eGRSR6AlVx9kGyhzHyrJ": {
         "lat": 39.49778628006772,
         "lng": 2.753561139106751,
@@ -5341,6 +5338,12 @@
         "lng": 2.4681028578921853,
         "nombre": "Apartamentos Vista Club"
     },
+    "kDbAVJlQoWMB60CAfVxW": {
+        "tipo": "hotel",
+        "lat": 39.51031938406256,
+        "lng": 2.540384529624356,
+        "nombre": "Flamboyan Caribe"
+    },
     "kEDGkvgcEOuLqMz0Sja3": {
         "lat": 39.49774488556881,
         "lng": 2.753630876541138,
@@ -5418,8 +5421,8 @@
         "nombre": "BJ Playamar Hotel & Apartamentos"
     },
     "knjlbeBNqTIITqI41SMs": {
-        "lat": 39.54547657799934,
-        "lng": 2.3899555206298833,
+        "lat": 39.545472917794136,
+        "lng": 2.390089596162,
         "nombre": "Adriana Restrepo Pineda"
     },
     "koFkRlL4ynItYQN6YHjK": {
@@ -5639,8 +5642,8 @@
         "nombre": "Hotel Bahia del Sol"
     },
     "mY5ls92aPcAQi0zjAZfl": {
-        "lat": 39.53874232401661,
-        "lng": 2.449940443038941,
+        "lat": 39.538912043679126,
+        "lng": 2.4499565362930302,
         "nombre": "Grupotel Nilo & Spa"
     },
     "mcjqMTreGKiAIyEkIu6l": {

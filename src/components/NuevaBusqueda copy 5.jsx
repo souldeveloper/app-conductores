@@ -30,7 +30,7 @@ import hotelesData     from '../datos/hoteles.json';
 import direccionesData from '../datos/direcciones.json';
 
 const alertaIcon        = L.icon({ iconUrl: '/iconos/alerta.png',      iconSize: [25,25], iconAnchor: [12,12] });
-const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/recogida.png',   iconSize: [25,25], iconAnchor: [12,12] });
+const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/guia.png',   iconSize: [25,25], iconAnchor: [12,12] });
 const conductorIcon     = L.icon({ iconUrl: '/iconos/bus.png',         iconSize: [35,35], iconAnchor: [17,17] });
 
 const ArrowedLine = ({ positions }) => {
@@ -520,13 +520,12 @@ const MapaConductor = () => {
           ) : (
             <ListGroup>
               {myHotels.map((h, idx) => (
-                <ListGroup.Item key={h.id} className="d-flex align-items-center" style={{ border: '2px solid transparent', padding: 0, marginBottom: '0.5rem' }}>
+                <ListGroup.Item key={h.id} className="d-flex align-items-stretch mb-2 border-0 p-0" style={{ alignItems:'stretch', border: '2px solid transparent', padding: 0, marginBottom: '0.5rem' }}>
                   <div
                     onClick={() => toggleSide(h.id, 'left')}
                     style={{
                       flex: 1,
                       padding: '1rem',
-                      minHeight: '2.5rem',
                       borderLeft: h.loadedSides.left ? '4px solid green' : '4px solid transparent',
                       backgroundColor: h.loadedSides.left ? '#eaffea' : 'transparent',
                       transition: 'background-color 0.2s',
@@ -542,7 +541,6 @@ const MapaConductor = () => {
                     style={{
                       flex: 1,
                       padding: '1rem',
-                      minHeight: '2.5rem',
                       borderRight: h.loadedSides.right ? '4px solid green' : '4px solid transparent',
                       backgroundColor: h.loadedSides.right ? '#eaffea' : 'transparent',
                       transition: 'background-color 0.2s',
@@ -551,7 +549,7 @@ const MapaConductor = () => {
                     onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f7f7f7'}
                     onMouseLeave={e => e.currentTarget.style.backgroundColor = h.loadedSides.right ? '#eaffea' : 'transparent'}
                   />
-                  <Button variant="danger" size="sm" onClick={() => handleRemoveFromMyHotels(h.id)}>Quitar</Button>
+                  <Button className="align-self-center mx-2" variant="danger" size="sm" onClick={() => handleRemoveFromMyHotels(h.id)}>Quitar</Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
