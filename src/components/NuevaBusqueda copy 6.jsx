@@ -241,7 +241,6 @@ const MapaConductor = () => {
           <Button variant={tracking?'danger':'success'} onClick={toggleTracking} className="me-2">
             {tracking?'Detener Ruta':'Iniciar Ruta'}
           </Button>
-          <Button variant="secondary" onClick={logout}>Cerrar Sesión</Button>
         </Col>
       </Row>
 
