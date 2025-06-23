@@ -261,11 +261,11 @@ const MapaConductor = () => {
 
       <Row>
         {/* Mapa con ancho 80vw */}
-        <Col style={{ position:'relative', width:'80vw', height:'80vh' }}>
+        <Col style={{ position:'relative', width:'75vw', height:'80vh' }}>
           <MapContainer
             center={[39.6908,2.9271]}
             zoom={10}
-            style={{ width:'100%', height:'100%' }}
+            style={{ width:'80%', height:'100%' }}
             scrollWheelZoom
             zoomControl={false}
             maxZoom={18}
