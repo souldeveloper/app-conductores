@@ -41,15 +41,35 @@ const Login = () => {
       const deviceUid = getDeviceUid();
 
       // Si el usuario ya tiene asignado un deviceUid en Firestore, se compara con la cookie
-      if (userData.deviceUid) {
-        if (userData.deviceUid !== deviceUid) {
-          setError("Este usuario ya se ha registrado en otro dispositivo.");
-          return;
-        }
-      } else {
-        // Si es el primer login, se actualiza Firestore con el nuevo deviceUid
-        await updateDoc(doc(db, "usuarios", usuarioDoc.id), { deviceUid });
-      }
+      // if (userData.deviceUid) {
+      //   if (userData.deviceUid !== deviceUid) {
+      //     setError("Este usuario ya se ha registrado en otro dispositivo.");
+      //     return;
+      //   }
+      // } else {
+      //   // Si es el primer login, se actualiza Firestore con el nuevo deviceUid
+      //   await updateDoc(doc(db, "usuarios", usuarioDoc.id), { deviceUid });
+      // }
+      // lista de usuarios exentos:
+const exempt = ['adminjose','admimanuel'];
+
+if (!exempt.includes(userData.usuario)) {
+  // sólo para usuarios NO exentos hacemos esta comprobación
+  if (userData.deviceUid) {
+    if (userData.deviceUid !== deviceUid) {
+      setError("Este usuario ya se ha registrado en otro dispositivo.");
+      return;
+    }
+  } else {
+    await updateDoc(doc(db, "usuarios", usuarioDoc.id), { deviceUid });
+  }
+} else {
+  // para adminjose/admimanuel, siempre actualizamos el deviceUid
+  if (!userData.deviceUid) {
+    await updateDoc(doc(db, "usuarios", usuarioDoc.id), { deviceUid });
+  }
+}
+
 
       // Guarda la información del usuario en una cookie "currentUser"
 
