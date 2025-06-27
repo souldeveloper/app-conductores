@@ -593,6 +593,15 @@
             "lng": 2.616333961486817
         }
     },
+    "h53O1lpRS3GgAtbrci0u": {
+        "tipo": "alerta",
+        "title": "AVISO CON BUS 55 ALGUNOS COMPAÑEROS HAN TENIDO QUE SALIR MARCHA ATRAS RECOMENDAMOS NO ENTRAR",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.52900274557749,
+            "lng": 2.551735639572144
+        }
+    },
     "hor8mCbm27Jgls3gw6RC": {
         "tipo": "puntoRecogida",
         "title": "DISCOTECA SALA FONICA",

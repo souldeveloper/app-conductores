@@ -65,8 +65,8 @@
         "nombre": "Apartamentos BellaVista Puerto"
     },
     "0ZBpUrBuxTHLwzLoLfF1": {
-        "lat": 39.4148574,
-        "lng": 3.263586199999999,
+        "lat": 39.41456249859298,
+        "lng": 3.26370120048523,
         "nombre": "Smy Vistamar Portocolom"
     },
     "0ZTbfJZTSl9V2nQasYwL": {
@@ -380,8 +380,8 @@
         "nombre": "Appartements Pinos Altos"
     },
     "2viMyHceAK8aRLQYbmMp": {
-        "lat": 39.528159,
-        "lng": 2.550929,
+        "lat": 39.52890391326673,
+        "lng": 2.5517249107360844,
         "nombre": "St Regis Mardavall Mallorca Resort"
     },
     "2ym7ClzWU0VqDfEkkNcb": {
@@ -799,6 +799,12 @@
         "lng": 2.4836880006831046,
         "nombre": "Zafiro Rey Don Jaime"
     },
+    "5vBiyjYl6ToiZDPqKr3e": {
+        "tipo": "hotel",
+        "lat": 39.55561100027567,
+        "lng": 2.6211404800415044,
+        "nombre": "Hotel amic horizonte"
+    },
     "5vHcI3bGtpfLvK9SZqDT": {
         "lat": 39.3293539,
         "lng": 3.1653884,
@@ -850,8 +856,8 @@
         "nombre": "Sentido Punta del Mar Hotel & Spa"
     },
     "6KavFM6KeP5s9gdQIUp6": {
-        "lat": 39.4132316,
-        "lng": 3.2637008,
+        "lat": 39.41348925064272,
+        "lng": 3.2634919881820683,
         "nombre": "BelleVue Belsana"
     },
     "6ROaqMFHHZKc3khdDS7e": {
@@ -1012,7 +1018,7 @@
         "nombre": "Ferienhaus Villa Antonia"
     },
     "7qFnrnLs8ioN4HOe8IPb": {
-        "lat": 39.910301557269925,
+        "lat": 39.910324649809276,
         "lng": 3.0947488546371464,
         "nombre": "hotel illa dor"
     },
@@ -1212,8 +1218,8 @@
         "nombre": "Villas Cala del Sol S.L."
     },
     "9UT969F9SiLY7GHGcaCn": {
-        "lat": 39.91105294836365,
-        "lng": 3.093681335449219,
+        "lat": 39.91101181369394,
+        "lng": 3.093611598014832,
         "nombre": "Hoposa Pollensamar Appartments"
     },
     "9WG2VhqyEgPpuIjTwlBW": {
@@ -1237,13 +1243,13 @@
         "nombre": "Apartamentos Ben-Hur"
     },
     "9eTCVbe3lfR2ATKP33W2": {
-        "lat": 39.414364,
-        "lng": 3.2589632,
+        "lat": 39.41426830627815,
+        "lng": 3.258921504020691,
         "nombre": "Hotel JS PortoColom Suites"
     },
     "9i3tYtMSlJVUaarAOskF": {
-        "lat": 39.41172,
-        "lng": 3.2634361,
+        "lat": 39.411864570227024,
+        "lng": 3.263373970985413,
         "nombre": "Hotel JS Cape Colom"
     },
     "9jmIQUo6yzhROqfzQByb": {
@@ -1379,8 +1385,8 @@
         "nombre": "Villa Estrel"
     },
     "B19WsSL3cGocJrsxdJfi": {
-        "lat": 39.5558972,
-        "lng": 2.6209251,
+        "lat": 39.55561100027567,
+        "lng": 2.6210546493530273,
         "nombre": "Hotel Hesperia Ciudad de Mallorca"
     },
     "B5RJkpZD5gf43CSa8iie": {
@@ -2071,14 +2077,20 @@
         "lng": 2.7232656,
         "nombre": "Apartaments Delfin"
     },
+    "GTyASTcsrOwkoSwqMgUt": {
+        "tipo": "hotel",
+        "lat": 39.55562754428577,
+        "lng": 2.621172666549683,
+        "nombre": "Hotel augusta"
+    },
     "GV55uJnEqzK1dwH5x45e": {
         "lat": 39.57126808518241,
         "lng": 3.3737790737315225,
         "nombre": "Hipotels Mediterraneo"
     },
     "GaDO23aunpmpFP24Lz3I": {
-        "lat": 39.4147222,
-        "lng": 3.2630556,
+        "lat": 39.414873420192365,
+        "lng": 3.262987732887268,
         "nombre": "Bahia Azul"
     },
     "GeX589DgQgRJiBlWXQuv": {
@@ -3507,8 +3519,8 @@
         "nombre": "Hotel Flor los Almendros"
     },
     "TSJJPAs23y0KIwdIC5fS": {
-        "lat": 39.52657021272289,
-        "lng": 2.5530821084976196,
+        "lat": 39.52661984982525,
+        "lng": 2.55307137966156,
         "nombre": "HOTEL PUNTA NEGRA"
     },
     "TSu65QPqfU6UKI0FEihm": {
@@ -3550,11 +3562,6 @@
         "lat": 39.51161066357168,
         "lng": 2.5380617380142216,
         "nombre": "ANTIC HOTEL TEIX"
-    },
-    "TdIQJplLHNadJbAXdmNf": {
-        "lat": 39.81429267306678,
-        "lng": 3.108696341514588,
-        "nombre": "Hotel Rei del Mediterrani Palace - Adults Only"
     },
     "Thd4nP46rzbCZNOk6v6z": {
         "lat": 39.4747182,
@@ -4352,11 +4359,6 @@
         "lng": 3.461492665298969,
         "nombre": "Diamant Hotel & Aparthotel"
     },
-    "b1RhXyIrFNRptpZu1LtJ": {
-        "lat": 39.5560812,
-        "lng": 2.6223717,
-        "nombre": "Hotel Catalonia Majórica"
-    },
     "b4jN8Kz0qmqsZDjr4b8b": {
         "lat": 39.578324288130716,
         "lng": 3.3625884491200746,
@@ -4688,8 +4690,8 @@
         "nombre": "Apartamentos Morito Beach"
     },
     "dse9ClhLPwhnO7ekFgil": {
-        "lat": 39.91032055000338,
-        "lng": 3.09465765953064,
+        "lat": 39.91034522367836,
+        "lng": 3.0946415662765507,
         "nombre": "Hotel illa d´Or"
     },
     "duRntxTzr9U5FPod7nmC": {
@@ -4708,8 +4710,8 @@
         "nombre": "Villa Cala Pi Family"
     },
     "dxP5bxppwPQd0dI12M9J": {
-        "lat": 39.4103281,
-        "lng": 3.2547455,
+        "lat": 39.41002423483156,
+        "lng": 3.254855275154114,
         "nombre": "Grupotel Club Cala Marsal"
     },
     "dxRxmWo1Am06P4vLaPjp": {
@@ -4934,8 +4936,8 @@
         "nombre": "CLUB MARMARA DEL MAR"
     },
     "fSmOLM3yP0DYLZmh35FO": {
-        "lat": 39.5560812,
-        "lng": 2.6223717,
+        "lat": 39.55560272826911,
+        "lng": 2.6209902763366704,
         "nombre": "Hotel Catalonia Majórica"
     },
     "fWHraZ6noiyCsiGqiIl2": {
@@ -5267,6 +5269,12 @@
         "lat": 39.9043542,
         "lng": 3.067242,
         "nombre": "Duvabitat Apartments"
+    },
+    "jSEgq2RuCXCzrX9KwUhL": {
+        "tipo": "hotel",
+        "lat": 39.40835404358098,
+        "lng": 3.2578486204147343,
+        "nombre": "HOTEL CECILIA"
     },
     "jcpnp879tIGZZlDXtuN7": {
         "lat": 39.50250509135692,
@@ -5683,8 +5691,8 @@
         "nombre": "Villa Concha"
     },
     "mvlfbkHFN9AcyZo9HshZ": {
-        "lat": 39.3634063,
-        "lng": 2.8369584,
+        "lat": 39.363314808004056,
+        "lng": 2.8369510173797607,
         "nombre": "Ona Cala Pi"
     },
     "mwW1U3oX4LUrNAlEXypH": {
@@ -5866,6 +5874,12 @@
         "lat": 39.491820858021605,
         "lng": 2.4984884262084965,
         "nombre": "Finca Can Vairet"
+    },
+    "oHrvymRQ13As8e64Y50N": {
+        "tipo": "hotel_vial",
+        "lat": 39.81433799896191,
+        "lng": 3.1086587905883794,
+        "nombre": "Hotel Rei del Mediterrani Palace - Adults Only"
     },
     "oI2L9KhKbbdlxl090mq6": {
         "lat": 39.37793299999999,
@@ -6135,8 +6149,8 @@
         "nombre": "Hotel Rocamar"
     },
     "r9b0ThDN89VaGiMvXKBy": {
-        "lat": 39.4123939,
-        "lng": 3.2615942,
+        "lat": 39.412652063855404,
+        "lng": 3.261775374412537,
         "nombre": "Portomar Apartments"
     },
     "rA1eQ5Aw66matIseNHWZ": {
@@ -6783,8 +6797,8 @@
         "nombre": "Globales Pionero"
     },
     "xdmrI2M260IeLoQ4RlL1": {
-        "lat": 39.55558606134186,
-        "lng": 2.6198316460551934,
+        "lat": 39.55567300582942,
+        "lng": 2.6198691031912262,
         "nombre": "GPRO Valparaíso Palace and Spa"
     },
     "xgSEGxgqkG3W3G92YaBr": {
@@ -6968,8 +6982,8 @@
         "nombre": "Casa Padrino"
     },
     "zAk4amjzLiOVeuzrvE7N": {
-        "lat": 39.4192324,
-        "lng": 3.2528635,
+        "lat": 39.41921701636176,
+        "lng": 3.2528060674667363,
         "nombre": "Apartamentos Can Gregori"
     },
     "zITXvFzIwtKKUGqaQJXK": {
