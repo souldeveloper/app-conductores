@@ -235,8 +235,8 @@
         "nombre": "Blu Hostal Diana"
     },
     "1rzgj0R1rlIKMgc4ZsBd": {
-        "lat": 39.51611748879955,
-        "lng": 2.746152877807617,
+        "lat": 39.51617541728918,
+        "lng": 2.7461796998977666,
         "nombre": "Hotel Playa Golf - Adults Only +16"
     },
     "1wuzDlR7tMRE6IiKYkdy": {
@@ -290,13 +290,13 @@
         "nombre": "Casa Sposa"
     },
     "2WzCNLthpM9VzucGzGqe": {
-        "lat": 39.53419163829157,
-        "lng": 2.5761705636978154,
+        "lat": 39.53582981664706,
+        "lng": 2.5781929492950444,
         "nombre": "The Donna Portals"
     },
     "2X4uNCOG6Fr5cFmOVi3L": {
-        "lat": 39.76674996661417,
-        "lng": 3.1538003683090214,
+        "lat": 39.76699736933041,
+        "lng": 3.1520515680313115,
         "nombre": "Galaxia Boutique Hotel"
     },
     "2XqmVkRtGZfsuj4wBWZf": {
@@ -420,8 +420,8 @@
         "nombre": "Finca Tres Halcones"
     },
     "3BPwuPjXnFM7yQB4pvHs": {
-        "lat": 39.76905133762688,
-        "lng": 3.1489402055740356,
+        "lat": 39.76903840781795,
+        "lng": 3.148634433746338,
         "nombre": "Blue Beach"
     },
     "3FvWX3cijUyLfZQlB8Ot": {
@@ -552,8 +552,8 @@
         "nombre": "Iberostar Playa de Muro"
     },
     "4FOKftbBRhQcnyahDJJA": {
-        "lat": 39.50945438937614,
-        "lng": 2.7508199214935303,
+        "lat": 39.50952890386777,
+        "lng": 2.7509433031082158,
         "nombre": "Q Royal"
     },
     "4HBvBmOWz4TJ2qv8eSSi": {
@@ -1339,8 +1339,8 @@
         "nombre": "Barceló Illetas Albatros"
     },
     "AJZATAogW2x21VsSZs3Y": {
-        "lat": 39.51274046515918,
-        "lng": 2.7515065670013428,
+        "lat": 39.512620480801615,
+        "lng": 2.7515548467636113,
         "nombre": "Hotel Timor"
     },
     "AQ27E6bLoLq6dW6aSuag": {
@@ -1367,6 +1367,12 @@
         "lat": 39.52706499999999,
         "lng": 2.7426575,
         "nombre": "Villa Playa Felostal"
+    },
+    "AeeEL5EooWrybAIZAaoK": {
+        "tipo": "hotel",
+        "lat": 39.51006693919184,
+        "lng": 2.750658988952637,
+        "nombre": "cabot playa grande"
     },
     "ApVdwDviMvlLcb59mWDq": {
         "lat": 39.519444601339714,
@@ -1706,8 +1712,8 @@
         "nombre": "Apartamentos Quijote Park"
     },
     "DHeBa9ss18H6eqrgnvTw": {
-        "lat": 39.53590432595036,
-        "lng": 2.5782358646392827,
+        "lat": 39.53589600686737,
+        "lng": 2.57829487323761,
         "nombre": "Tacande Portals Wellness & Relax Mallorca"
     },
     "DNUQwSdqswhurJq4U94j": {
@@ -1872,8 +1878,8 @@
         "nombre": "Bahia Pollensa Aparthotel"
     },
     "Eq0Yd7FZrycwOanLvSs2": {
-        "lat": 39.50928059119027,
-        "lng": 2.750852108001709,
+        "lat": 39.50944612883275,
+        "lng": 2.7509969472885136,
         "nombre": "HM Dunas Blancas"
     },
     "Et6qkJJUvGSempZbrRGC": {
@@ -1953,8 +1959,8 @@
         "nombre": "Universal Hotel Castell Royal"
     },
     "FZf58bAHJ09OXm4VdQPV": {
-        "lat": 39.50915644936279,
-        "lng": 2.7509593963623047,
+        "lat": 39.509379908733706,
+        "lng": 2.7510452270507817,
         "nombre": "Hostal Playa de Palma"
     },
     "FZiv8vWgNYWGj54A7tYI": {
@@ -2305,8 +2311,8 @@
         "nombre": "Apartamentos Rosamar Holidays"
     },
     "IqL2zD5XKbN5E7fvvjgy": {
-        "lat": 39.50986833137372,
-        "lng": 2.7505946159362797,
+        "lat": 39.5100917714908,
+        "lng": 2.750658988952637,
         "nombre": "HOTEL BQ CARMEN PLAYA"
     },
     "Ir4gxZsWqu3oBKympUSm": {
@@ -2470,8 +2476,8 @@
         "nombre": "Bassa Seca by dracmallorca"
     },
     "KX2QyYpOSJnTZ0Mh8W3W": {
-        "lat": 39.83231763414685,
-        "lng": 3.11513900756836,
+        "lat": 39.83235061511902,
+        "lng": 3.115085363388062,
         "nombre": "INNSiDE by Meliá Alcudia"
     },
     "KZK8YrPTEJXjdup3rCSX": {
@@ -2706,6 +2712,12 @@
         "lng": 3.457453260683053,
         "nombre": "Hotel Bella Playa & Spa"
     },
+    "MVOL5wcJSGRKtylD3zo3": {
+        "tipo": "hotel",
+        "lat": 39.771961729258045,
+        "lng": 3.1441819667816167,
+        "nombre": "DAURADA CAN PICAFORT"
+    },
     "MWrqlUwHDsfsRnEY8Whu": {
         "lat": 39.32342560000001,
         "lng": 2.9854994,
@@ -2887,11 +2899,6 @@
         "lng": 2.995673899999999,
         "nombre": "Bluewater Hotel"
     },
-    "OHR7RLqYQjiwprjY6P0v": {
-        "lat": 39.761525172107135,
-        "lng": 3.152056839745177,
-        "nombre": "Zafiro Alzinar Mar"
-    },
     "OIbYWMutV5qSFkTe4Q7V": {
         "lat": 39.34219239999999,
         "lng": 3.183791,
@@ -2979,8 +2986,8 @@
         "nombre": "Hotel The Sky - Adults Only"
     },
     "Oz1QQyvgO6eHTboC4X6I": {
-        "lat": 39.76909671309515,
-        "lng": 3.1488972902297974,
+        "lat": 39.76908788678765,
+        "lng": 3.1486773490905766,
         "nombre": "Grupotel Farrutx"
     },
     "P2eOayU9LggLgJJk3fpv": {
@@ -2994,8 +3001,8 @@
         "nombre": "Secrets Mallorca Villamil Resort & Spa"
     },
     "P8cNAIJlezcv3tSpyj91": {
-        "lat": 39.76895232033951,
-        "lng": 3.149020671844483,
+        "lat": 39.769017791570086,
+        "lng": 3.1487524509429936,
         "nombre": "Hotel THB Gran Playa"
     },
     "PAm8NNHD6eBxSRwvD1UG": {
@@ -3154,8 +3161,8 @@
         "nombre": "Grupotel Taurus Park"
     },
     "QpdpFPwp5nwRu2eVFBi2": {
-        "lat": 39.51003384641042,
-        "lng": 2.750508785247803,
+        "lat": 39.51013315863607,
+        "lng": 2.7506214380264282,
         "nombre": "HM Ayron Park - Adults Only"
     },
     "QqIYRZXLje9pn483Xw6P": {
@@ -3354,8 +3361,8 @@
         "nombre": "Apartamentos Don Miguel"
     },
     "S5MfyYFmOE26moOhfvt9": {
-        "lat": 39.53577192341688,
-        "lng": 2.5761115550994877,
+        "lat": 39.535788447144405,
+        "lng": 2.5761222839355473,
         "nombre": "Exe Portals Nous"
     },
     "S6XqNPkJztoEQfIA45ze": {
@@ -3434,8 +3441,8 @@
         "nombre": "Es Port Nou"
     },
     "STDLQ9IIs5AiOTms6dzo": {
-        "lat": 39.51107680854633,
-        "lng": 2.749961614608765,
+        "lat": 39.51110988810788,
+        "lng": 2.749993801116944,
         "nombre": "AYA Seahotel"
     },
     "SUcCLWkf0iQxrUTwTE7Y": {
@@ -3769,8 +3776,8 @@
         "nombre": "Això Villas"
     },
     "VPGDoB1Y2ygWFiGIuwsA": {
-        "lat": 39.77207360871527,
-        "lng": 3.14410150051117,
+        "lat": 39.771961729258045,
+        "lng": 3.1440800428390507,
         "nombre": "Playa Dorada  ( Can Picafort )"
     },
     "VSqPX8qXTwmCJrZiBP9N": {
@@ -3837,11 +3844,6 @@
         "lat": 39.5725264,
         "lng": 2.6487592,
         "nombre": "Nobis Hotel Palma"
-    },
-    "W6ID41UsIH3zTgJX7Gl2": {
-        "lat": 39.833565862445816,
-        "lng": 3.1150370836257935,
-        "nombre": "Trendhotel Alcudia"
     },
     "W6qfzpnTkwxGeBKxsqJR": {
         "lat": 39.3652849,
@@ -4010,8 +4012,8 @@
         "nombre": "Aparthotel Ses Fotges"
     },
     "XQBIWh8sCxB5YbYCRAKS": {
-        "lat": 39.83289438095891,
-        "lng": 3.1148600574211383,
+        "lat": 39.8328243507542,
+        "lng": 3.114860057830811,
         "nombre": "Hotel JS Sol de Alcúdia"
     },
     "Xa7pcTuF3X2PtMzjm0iB": {
@@ -4340,8 +4342,8 @@
         "nombre": "Urban Hostel Palma"
     },
     "as1LTrdRMqG8UanwhC7J": {
-        "lat": 39.9204303,
-        "lng": 3.0534336,
+        "lat": 39.92040921950919,
+        "lng": 3.053662776947022,
         "nombre": "El Pinar"
     },
     "atWmk2WlHka0782MBmlD": {
@@ -4415,8 +4417,8 @@
         "nombre": "llevant"
     },
     "bbxWrqQaqebR4B3m7Wrg": {
-        "lat": 39.51455321472278,
-        "lng": 2.7473759651184086,
+        "lat": 39.51459454832054,
+        "lng": 2.747451066970825,
         "nombre": "Universal Hotel Neptuno – Adults Only"
     },
     "bcl5994y2jdyReUpSFnC": {
@@ -4430,8 +4432,8 @@
         "nombre": "Las Gaviotas Suites Hotel"
     },
     "bfR1uzBVkPJSC3aCQGpu": {
-        "lat": 39.50900749160051,
-        "lng": 2.7510237693786626,
+        "lat": 39.50933024361803,
+        "lng": 2.7510505914688115,
         "nombre": "Das Hostal El Arenal"
     },
     "bjN3UDeti7i41RMlkw1Y": {
@@ -4500,8 +4502,8 @@
         "nombre": "Catalina Apartments"
     },
     "cHOkleSwQ6qYCBzEfaLB": {
-        "lat": 39.76899771214049,
-        "lng": 3.1489777565002446,
+        "lat": 39.76907551704855,
+        "lng": 3.148634433746338,
         "nombre": "APARTAMENTOS VENT I MAR"
     },
     "cIPgfNjpy6SDkJyazSWq": {
@@ -4568,11 +4570,6 @@
         "lat": 39.52240332806907,
         "lng": 2.470116019248963,
         "nombre": "FERGUS Style Cala Blanca Suites"
-    },
-    "czqV7CEBhRsZkuWZXo9E": {
-        "lat": 39.89662931382637,
-        "lng": 3.073430700347935,
-        "nombre": "Cabot Las Velas Apartments"
     },
     "d0wqo439Rt6NtV9VoD0I": {
         "lat": 39.53942079134804,
@@ -4930,6 +4927,12 @@
         "lng": 3.019469,
         "nombre": "Hostal Borras Pollença"
     },
+    "fPpJNGtf7ZKXtPC9UCRw": {
+        "tipo": "hotel",
+        "lat": 39.83365235040983,
+        "lng": 3.1150424480438237,
+        "nombre": "Trend Alcudia"
+    },
     "fPuZAJ27LU6G7lxAjJRY": {
         "lat": 39.518393713324926,
         "lng": 3.299825185759393,
@@ -4976,8 +4979,8 @@
         "nombre": "hotel garden saladina"
     },
     "g2LnielHfsAIoIMiXCyF": {
-        "lat": 39.76671285613005,
-        "lng": 3.1538808345794678,
+        "lat": 39.76672110290601,
+        "lng": 3.153848648071289,
         "nombre": "Hostal Blanca"
     },
     "g8THZ916mH93QBwgqBSj": {
@@ -5216,8 +5219,8 @@
         "nombre": "Ferienwohnung \"Es Puig\""
     },
     "iiL0ep6ZrYDTcCbj4N9V": {
-        "lat": 39.51552162647516,
-        "lng": 2.7465498447418217,
+        "lat": 39.51561259895324,
+        "lng": 2.7466624975204468,
         "nombre": "Hotel MySeaHouse Flamingo"
     },
     "ilHivs291tC3iOQwoqKc": {
@@ -6370,8 +6373,8 @@
         "nombre": "Apartamentos Binicanella"
     },
     "tRohEFwjrZJpvfxTuHeh": {
-        "lat": 39.51014971772836,
-        "lng": 2.7504444122314458,
+        "lat": 39.51017454575668,
+        "lng": 2.7506053447723393,
         "nombre": "Hotel Hispania"
     },
     "tSqkNvOqRCr5cuQMPpep": {
@@ -6566,8 +6569,8 @@
         "nombre": "Sunwing Cala Bona Seafront"
     },
     "vMmPTnZm3zD6YDUhEWJY": {
-        "lat": 39.83350821851718,
-        "lng": 3.116362094879151,
+        "lat": 39.833582320974585,
+        "lng": 3.116163611412049,
         "nombre": "Hotel Astoria Playa Adults Only"
     },
     "vSD1kngQp6fMAoIuqAcd": {
@@ -6921,6 +6924,12 @@
         "lng": 3.224353999999999,
         "nombre": "ONA Village Cala D'Or"
     },
+    "yikdqS9i2spe5ikKufyR": {
+        "tipo": "hotel_vial",
+        "lat": 39.76157079899955,
+        "lng": 3.151912093162537,
+        "nombre": "Zafiro Alzinar Mar"
+    },
     "yn3GEFxIf590WwZ0s3FE": {
         "lat": 39.722721,
         "lng": 3.4191133,
@@ -6930,6 +6939,12 @@
         "lat": 39.832931455743335,
         "lng": 3.11337947845459,
         "nombre": "Sol de Alcudia apartamentos"
+    },
+    "ysgIFcq70uLGVtdkISEe": {
+        "tipo": "hotel_vial",
+        "lat": 39.89664165850755,
+        "lng": 3.07344138622284,
+        "nombre": "Cabot Las Velas Apartments"
     },
     "yvJOBYmllGLjbSiw8xj3": {
         "lat": 39.51876231619607,
