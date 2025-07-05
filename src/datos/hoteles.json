@@ -104,6 +104,12 @@
         "lng": 3.459883800000001,
         "nombre": "Guya Wave Hotel"
     },
+    "0puuRV1XnqQG6QfZH9rS": {
+        "tipo": "hotel",
+        "lat": 39.38098484691603,
+        "lng": 3.2385474443435673,
+        "nombre": "CASA BLANCA"
+    },
     "0re4ndC5dC9CXUtSFpHj": {
         "lat": 39.565205774620686,
         "lng": 3.371719119068915,
@@ -145,8 +151,8 @@
         "nombre": "Mar Hotels Playa Mar & Spa"
     },
     "11KvkGfP6aP7Wu2SVJxJ": {
-        "lat": 39.4212847,
-        "lng": 3.2611901,
+        "lat": 39.42132177972221,
+        "lng": 3.261571526527405,
         "nombre": "Portocolom"
     },
     "13o0tqzMorrQJuLJIlmu": {
@@ -190,13 +196,13 @@
         "nombre": "Mar Brava"
     },
     "1ZzqWoL3VXz6XdSoY2xN": {
-        "lat": 39.3186743,
-        "lng": 2.9932909,
+        "lat": 39.31870311027363,
+        "lng": 2.9933667182922368,
         "nombre": "Lavendel Mallorca Apartments"
     },
     "1a216M3wwp5SkM1kHiat": {
-        "lat": 39.3613889,
-        "lng": 3.223333299999999,
+        "lat": 39.36123700927605,
+        "lng": 3.2231569290161137,
         "nombre": "Hotel Calimera Fido Gardens"
     },
     "1dAzVLP7EDOm5qN8mnc1": {
@@ -365,8 +371,8 @@
         "nombre": "Apartaments Marina Sol i Pins"
     },
     "2peMcuYumPCBcOVzPBX8": {
-        "lat": 39.464214,
-        "lng": 3.281059,
+        "lat": 39.465076774159,
+        "lng": 3.280749320983887,
         "nombre": "Alua Calas de Mallorca Resort"
     },
     "2uHW5JI6Z2X3grfNLtkF": {
@@ -405,13 +411,13 @@
         "nombre": "Sunwing Cala Bona Beach"
     },
     "37sOaTsR63DhRwBq85ln": {
-        "lat": 39.4654846,
-        "lng": 3.279937599999999,
+        "lat": 39.46572701483371,
+        "lng": 3.279488682746887,
         "nombre": "AluaSun Cala Antena"
     },
     "392T2f743cYRgPFaiTRW": {
-        "lat": 39.3733825,
-        "lng": 3.231559,
+        "lat": 39.373848550004304,
+        "lng": 3.2306778430938725,
         "nombre": "Grupotel Rocador"
     },
     "39exQpvmm34Msn1WJAer": {
@@ -436,8 +442,8 @@
         "nombre": "Pierre & Vacances Mallorca Portofino Apartamentos"
     },
     "3KbX6LZI6aRsZXLuwuey": {
-        "lat": 39.5039331531423,
-        "lng": 2.5281000137329106,
+        "lat": 39.504048983736034,
+        "lng": 2.5282770395278935,
         "nombre": "HSM Atlantic Park"
     },
     "3MueFJbwxBqCcXsBrWmr": {
@@ -446,8 +452,8 @@
         "nombre": "VILLA PRIMERA MALLORCA"
     },
     "3PgBe7cUlLVUSvgIEQN3": {
-        "lat": 39.37893820000001,
-        "lng": 3.2388368,
+        "lat": 39.3788452888089,
+        "lng": 3.237758874893189,
         "nombre": "Valla Ferara"
     },
     "3QhBP4tKEuIbAfxHtd2g": {
@@ -461,8 +467,8 @@
         "nombre": "TRH Jardín del Mar Beach Hotel"
     },
     "3Ul0vYMLiCXRy6MUFC0T": {
-        "lat": 39.3577551,
-        "lng": 3.192759499999999,
+        "lat": 39.35708936007987,
+        "lng": 3.1917750835418706,
         "nombre": "Agroturismo Na Martina"
     },
     "3WQj26ACaYAZ8NRZM9mH": {
@@ -491,8 +497,8 @@
         "nombre": "Hotel Mix Colombo"
     },
     "3i5YJSISuA7Hf857XIdF": {
-        "lat": 39.4125889,
-        "lng": 3.264038899999999,
+        "lat": 39.41255668454508,
+        "lng": 3.2639104127883916,
         "nombre": "ORANGE Colom Seaside Apartments."
     },
     "3iVJQuLdDRxEaOioBDOG": {
@@ -633,8 +639,8 @@
         "nombre": "Hotel JS Sol de Can Picafort"
     },
     "4pM9365j1xv4xfkP5Nhy": {
-        "lat": 39.46063689999999,
-        "lng": 3.2782148,
+        "lat": 39.46078210961675,
+        "lng": 3.2786250114440922,
         "nombre": "Globales Samoa"
     },
     "4rp1WVRn9tPORQPhud4J": {
@@ -643,8 +649,8 @@
         "nombre": "Apartamentos Marina"
     },
     "4sy07tVdIOR0GzFwoNGp": {
-        "lat": 39.318414,
-        "lng": 2.9862497,
+        "lat": 39.31820521216241,
+        "lng": 2.9865485429763794,
         "nombre": "Iberostar Selection Es Trenc"
     },
     "4w5eR0A86bJyW7FQ1oTI": {
@@ -760,8 +766,8 @@
         "nombre": "Iberostar Waves Pinos Park"
     },
     "5cJtm4XfIYpvBX2AcOG8": {
-        "lat": 39.32920170000001,
-        "lng": 3.1694551,
+        "lat": 39.32887027785189,
+        "lng": 3.169963359832764,
         "nombre": "Can Somni - Bohemian"
     },
     "5eXd2ofbxLSieRFz88vT": {
@@ -877,8 +883,8 @@
         "nombre": "Suneo Club Haiti"
     },
     "6YCSbiwc5wyUG6UkOVy0": {
-        "lat": 39.3175726,
-        "lng": 2.994199499999999,
+        "lat": 39.31764894893188,
+        "lng": 2.9942250251770024,
         "nombre": "Hotel Martorell"
     },
     "6bbJ45C1xA6rFYFpJuv4": {
@@ -953,8 +959,8 @@
         "nombre": "Apartamentos Sa Rapita (Green Village)"
     },
     "7Elq7miukBwmJRvbDo1P": {
-        "lat": 39.3750641,
-        "lng": 3.2356833,
+        "lat": 39.37486461539936,
+        "lng": 3.2351732254028325,
         "nombre": "Cinque Puntes Residence Club"
     },
     "7HsyHYCk7tRWQ1roHgw3": {
@@ -993,8 +999,8 @@
         "nombre": "Hostal Vista Alegre"
     },
     "7eDWtsaYhbztqzc2lxHC": {
-        "lat": 39.3775689,
-        "lng": 3.2391288,
+        "lat": 39.378936512251066,
+        "lng": 3.23772668838501,
         "nombre": "Ferrera Park Apartments"
     },
     "7efnBqhW1M3p1sQntVbK": {
@@ -1133,8 +1139,8 @@
         "nombre": "azuLine Hotel Bahamas & Bahamas II"
     },
     "8jsMWiXwAOs8RWsF0M03": {
-        "lat": 39.3815387,
-        "lng": 3.2393509,
+        "lat": 39.38188861299019,
+        "lng": 3.238692283630371,
         "nombre": "Ferrera Suites"
     },
     "8kAWGbHaOelbaV19HNgv": {
@@ -1158,8 +1164,8 @@
         "nombre": "HOTEL FERGUS BERMUDAS"
     },
     "8pvPQlihy4JWmGZetSgL": {
-        "lat": 39.3194963,
-        "lng": 2.9980455,
+        "lat": 39.319657552862935,
+        "lng": 2.9982912540435795,
         "nombre": "Aparthotel & Hotel Isla de Cabrera"
     },
     "8yCEzOluvgznTjVjboXb": {
@@ -1263,8 +1269,8 @@
         "nombre": "Es Garrover"
     },
     "9sQ0hzown8XSafztTcL6": {
-        "lat": 39.3763046,
-        "lng": 3.231616,
+        "lat": 39.376290992526215,
+        "lng": 3.231965303421021,
         "nombre": "OLA Apartamentos Cala d'Or"
     },
     "9tbCUx2y6Fy9KaPhe5ht": {
@@ -1421,8 +1427,8 @@
         "nombre": "S'Aigua5"
     },
     "BUfFqHklEfCrhYKQhpjf": {
-        "lat": 39.37266049999999,
-        "lng": 3.2264226,
+        "lat": 39.372608639933,
+        "lng": 3.2268154621124268,
         "nombre": "Eques Petit Resort"
     },
     "BVn4vni5goKMITHyXQ3T": {
@@ -1466,8 +1472,8 @@
         "nombre": "Hotel Nets"
     },
     "BjTBaSRf7jeUVx9wZUIz": {
-        "lat": 39.3806068,
-        "lng": 3.2389595,
+        "lat": 39.38077336766736,
+        "lng": 3.2389497756958012,
         "nombre": "Apartamentos El Pino"
     },
     "BjuTGRq1mTocJHWLZAul": {
@@ -1517,8 +1523,8 @@
         "nombre": "DOLSMAR APARTMENTS"
     },
     "BtFdzGggNNYSS0sdHos9": {
-        "lat": 39.3812009,
-        "lng": 3.2384129,
+        "lat": 39.381113444550216,
+        "lng": 3.2383918762207036,
         "nombre": "MarSenses Natura Olea Hotel"
     },
     "BtSS2gYnPnGYogZgcl9R": {
@@ -1582,8 +1588,8 @@
         "nombre": "Hotel Riu Bravo"
     },
     "CFdMyQkmHF96SkqZ0uXj": {
-        "lat": 39.41235959999999,
-        "lng": 3.2643149,
+        "lat": 39.41239501199341,
+        "lng": 3.2639425992965703,
         "nombre": "Apartamentos Delta"
     },
     "CHU0kJmvQsvi6PTFXIO1": {
@@ -1868,8 +1874,8 @@
         "nombre": "Beach Club Font de Sa Cala"
     },
     "Ep6tm5FPJTZYemlPBMCA": {
-        "lat": 39.3714132,
-        "lng": 3.2293412,
+        "lat": 39.37137285480926,
+        "lng": 3.2290792465209965,
         "nombre": "Hotel Cala d'Or"
     },
     "EpEkSx7CNDfCtC7aPShD": {
@@ -1994,8 +2000,8 @@
         "nombre": "Chevy Hotel & Suites"
     },
     "FfoWHg1Z0iBMOWftgCiY": {
-        "lat": 39.46004130000001,
-        "lng": 3.2697935,
+        "lat": 39.459987009857926,
+        "lng": 3.269607424736023,
         "nombre": "Iberostar Waves Cala Domingos"
     },
     "FgWbMAwbdSgRpZ4Jxq1Y": {
@@ -2100,8 +2106,8 @@
         "nombre": "Bahia Azul"
     },
     "GeX589DgQgRJiBlWXQuv": {
-        "lat": 39.3782196,
-        "lng": 3.2390072,
+        "lat": 39.37882870271569,
+        "lng": 3.237587213516236,
         "nombre": "Cabot Cala Ferrera"
     },
     "GmnPty0vYpGTlaY5Vgwu": {
@@ -2140,8 +2146,8 @@
         "nombre": "Casa Ceiba María"
     },
     "H2JM4JB1t7n8qGg3Lhug": {
-        "lat": 39.3299882,
-        "lng": 3.1712802,
+        "lat": 39.330073406936634,
+        "lng": 3.1712722778320317,
         "nombre": "Casa Palma"
     },
     "H3dD5u6w23tkcvGTnSE4": {
@@ -2341,8 +2347,8 @@
         "nombre": "Mondrago duri"
     },
     "J845h4R9im2mv31OwCXx": {
-        "lat": 39.37464959999999,
-        "lng": 3.2314181,
+        "lat": 39.37463644128339,
+        "lng": 3.2312035560607915,
         "nombre": "Gavimar Cala Gran Costa Hotel & Resort"
     },
     "J89yf02Ks20yS6varhcI": {
@@ -2416,8 +2422,8 @@
         "nombre": "Casa del Diamante – Meer- und Buchtblick VILLA"
     },
     "JvWF7TibP4090YV5lA3q": {
-        "lat": 39.375576,
-        "lng": 3.2305391,
+        "lat": 39.375569458930485,
+        "lng": 3.230516910552979,
         "nombre": "Gavimar Ariel Chico Hotel & Resort"
     },
     "K4d9PcF7grht1Uv6N8kC": {
@@ -2542,13 +2548,13 @@
         "nombre": "Hilton Mallorca Galatzo"
     },
     "L8JF479qM8zpw17NRFkW": {
-        "lat": 39.3303635,
-        "lng": 3.172302299999999,
+        "lat": 39.32949297493807,
+        "lng": 3.1721305847167973,
         "nombre": "Hotel Villa Sirena"
     },
     "L9MqpZAv3Ywi3LQD0xHK": {
-        "lat": 39.3193831,
-        "lng": 3.1331468,
+        "lat": 39.31933346227694,
+        "lng": 3.133399486541748,
         "nombre": "Casa Elements"
     },
     "L9kej2zEIeX6w2UcBaHp": {
@@ -2557,8 +2563,8 @@
         "nombre": "Magallanes "
     },
     "LBLs6oU7CXthTb1N2GP5": {
-        "lat": 39.363387,
-        "lng": 3.2278082,
+        "lat": 39.36350142600062,
+        "lng": 3.2277971506118774,
         "nombre": "BLUESEA Club Marthas"
     },
     "LBhfrMEAeWyXVJK45bj3": {
@@ -2804,8 +2810,8 @@
         "nombre": "Hotel Club SiIllot"
     },
     "N8eSlFxm4P145apxbnQD": {
-        "lat": 39.4698601,
-        "lng": 3.2755053,
+        "lat": 39.47007117988654,
+        "lng": 3.275905251502991,
         "nombre": "HSM Canarios Park"
     },
     "NA9KLSDw9CeCRqrgOg4t": {
@@ -2961,8 +2967,8 @@
         "nombre": "HOTEL GLOBALES PALMANOVA"
     },
     "Oh5M9PUR8cMENrp3c40k": {
-        "lat": 39.37434,
-        "lng": 3.2354867,
+        "lat": 39.374963716866645,
+        "lng": 3.235108852386475,
         "nombre": "Hotel Cala d'Or Playa"
     },
     "OnXc3dnwgyEyBoYBK4VH": {
@@ -3031,8 +3037,8 @@
         "nombre": "Finca Sa Font - Son Macia"
     },
     "PPP5aA8Rso6dus8XusPy": {
-        "lat": 39.36376,
-        "lng": 3.2273802,
+        "lat": 39.36361355963239,
+        "lng": 3.227668404579163,
         "nombre": "BLUESEA Cases Dor"
     },
     "PPUGeV67nJ8Z7PbCUqrI": {
@@ -3046,8 +3052,8 @@
         "nombre": "Hotel Creta Paguera"
     },
     "PTpH8IFtiSioQeM3KZQf": {
-        "lat": 39.3536972,
-        "lng": 3.1999328,
+        "lat": 39.35371282969768,
+        "lng": 3.200073838233948,
         "nombre": "Iberostar Waves Club Cala Barca"
     },
     "PhdrrAj63CKbu5OTEgL4": {
@@ -3096,8 +3102,8 @@
         "nombre": "Siesta 3"
     },
     "Q9da41F4AFfh6EjWTxfe": {
-        "lat": 39.3299354,
-        "lng": 3.172078299999999,
+        "lat": 39.32970841449066,
+        "lng": 3.1718194484710693,
         "nombre": "Apartamentos Villa Sirena"
     },
     "QAXEIggduOF9B8GSqDo1": {
@@ -3106,8 +3112,8 @@
         "nombre": "LAS PALMERAS"
     },
     "QAogwMpvIkX3P1Wxf69o": {
-        "lat": 39.37432510000001,
-        "lng": 3.2300576,
+        "lat": 39.37432957942128,
+        "lng": 3.2300823926925664,
         "nombre": "Hotel Antares"
     },
     "QAopp2wmmrMTYxLz7PH3": {
@@ -3136,8 +3142,8 @@
         "nombre": "Villa Chiquita Hotel Resort & Spa - Adults Only (+12)"
     },
     "QOLFgKNjL8d8YDALH3h4": {
-        "lat": 39.3772222,
-        "lng": 3.2359333,
+        "lat": 39.37763034705341,
+        "lng": 3.237066864967346,
         "nombre": "Inturotel Esmeralda Park"
     },
     "QWi4FaVAwhfNWZHSAHzv": {
@@ -3391,8 +3397,8 @@
         "nombre": "Prinsotel La Dorada"
     },
     "S9Y6KvsBeJNWnTNS8GUW": {
-        "lat": 39.31658929999999,
-        "lng": 2.9968169,
+        "lat": 39.316304468479615,
+        "lng": 2.996746301651001,
         "nombre": "Hotel Honucai"
     },
     "S9ydbJR6qSBbochVV8G2": {
@@ -3426,8 +3432,8 @@
         "nombre": "Apartamentos Coral"
     },
     "SMGoGIiXkhaQt8G2yJRg": {
-        "lat": 39.3736034,
-        "lng": 3.2366647,
+        "lat": 39.37397710129369,
+        "lng": 3.2366001605987553,
         "nombre": "Marta"
     },
     "SOGyJMEWfWdPL7I0Icyf": {
@@ -3656,8 +3662,8 @@
         "nombre": "Finca El Olivar"
     },
     "UAW190gLQ1zGc5Y7q9p5": {
-        "lat": 39.3745415,
-        "lng": 3.230491799999999,
+        "lat": 39.37444161492859,
+        "lng": 3.230345249176026,
         "nombre": "SENTIDO Fido Tucan - Beach Hotel"
     },
     "UCQCY96byBYBpTAbspWj": {
@@ -3706,8 +3712,8 @@
         "nombre": "Hotel Garbi Cala Millor"
     },
     "USZK2zvkp1u9nuUbvvYE": {
-        "lat": 39.3708094,
-        "lng": 3.221496299999999,
+        "lat": 39.37071767775081,
+        "lng": 3.2213437557220463,
         "nombre": "APARTMENT MARINA CALADOR"
     },
     "UTis5uHwjhZlIdbIQ1bF": {
@@ -3856,13 +3862,13 @@
         "nombre": "Mar y Paz"
     },
     "WKNb9wmnYoVlaFMo9p93": {
-        "lat": 39.45899939999999,
-        "lng": 3.279535999999999,
+        "lat": 39.45935725871369,
+        "lng": 3.2795959711074834,
         "nombre": "Globales América"
     },
     "WLv0UneY3ww8IPnnmUww": {
-        "lat": 39.3640957,
-        "lng": 3.2267636,
+        "lat": 39.36443459881432,
+        "lng": 3.2264989614486694,
         "nombre": "BLUESEA Es Bolero"
     },
     "WOC38n6u5HEvjAdGA4pX": {
@@ -3946,8 +3952,8 @@
         "nombre": "Blau Punta Reina Resort"
     },
     "WsPAgUMalv0xaytNQYo0": {
-        "lat": 39.3396752,
-        "lng": 3.098558999999999,
+        "lat": 39.356458463144165,
+        "lng": 3.1307601928710938,
         "nombre": "Finca Serral Petit"
     },
     "WsxSmXOyF0LpW7Q1qtJs": {
@@ -4082,8 +4088,8 @@
         "nombre": "We Street Hostel - El Arenal - Albergue Juvenil"
     },
     "YgD1AUy3VdnIoUxlMXdQ": {
-        "lat": 39.3772354,
-        "lng": 3.223344,
+        "lat": 39.37600134934809,
+        "lng": 3.2225131988525395,
         "nombre": "El Puerto 2"
     },
     "YjIltY6iASZPkLKmCqei": {
@@ -4247,8 +4253,8 @@
         "nombre": "luxus Feriendomizile Mallorca"
     },
     "ZtBBawlXSxL62fGpqq45": {
-        "lat": 39.39426849999999,
-        "lng": 3.2357204,
+        "lat": 39.39438465825749,
+        "lng": 3.236074447631836,
         "nombre": "Hotel s'Antigor"
     },
     "ZyKDxNa5ntTYSWvoyB1z": {
@@ -4267,8 +4273,8 @@
         "nombre": "VIVA Cala Mesquida Suites & Spa"
     },
     "a3CLX9BKEeeEa0LYu4pJ": {
-        "lat": 39.3700133,
-        "lng": 3.2222049,
+        "lat": 39.37028620085799,
+        "lng": 3.221515417098999,
         "nombre": "Hotel Palia Puerto del Sol"
     },
     "a8I6PMF5zFZVGEPRtvYb": {
@@ -4392,8 +4398,8 @@
         "nombre": "INMOOD AUCANADA"
     },
     "bK2njAK7kSXqi7oBJ8YN": {
-        "lat": 39.4566166,
-        "lng": 3.2669086,
+        "lat": 39.45664040074461,
+        "lng": 3.267574310302735,
         "nombre": "Casa Isa"
     },
     "bKygNjfJ5a8IJP89VJ0A": {
@@ -4492,8 +4498,8 @@
         "nombre": "Hostal Oasis d'Or"
     },
     "cDtCJiU6lZKQ7NYz0bRt": {
-        "lat": 39.50353577887092,
-        "lng": 2.5290977954864506,
+        "lat": 39.503672326828074,
+        "lng": 2.5291728973388676,
         "nombre": "HSM Don Juan"
     },
     "cFBZEB8ByTP4j2xAzxlf": {
@@ -4587,8 +4593,8 @@
         "nombre": "Apartaments Andreas"
     },
     "d93dcGEEx2P2yG1mzwT3": {
-        "lat": 39.3219194,
-        "lng": 3.136974699999999,
+        "lat": 39.327091450175956,
+        "lng": 3.1439781188964844,
         "nombre": "Ferienhaus casa buena vista cala llombards"
     },
     "dBQvujL5c5o8qdEYfVrH": {
@@ -4612,8 +4618,8 @@
         "nombre": "Hotel Illot Suites"
     },
     "dHl56mdKbZ6Lb0xeXzCp": {
-        "lat": 39.377642,
-        "lng": 3.237479,
+        "lat": 39.37768010617542,
+        "lng": 3.237426280975342,
         "nombre": "Inturotel Cala Azul"
     },
     "dLLGM89sriMMyRTNFHST": {
@@ -4747,8 +4753,8 @@
         "nombre": "Aptos. Bahamas"
     },
     "eB1p1uugpQNWUY6tIxPc": {
-        "lat": 39.33058550000001,
-        "lng": 3.1708141,
+        "lat": 39.33001565096807,
+        "lng": 3.1714010238647465,
         "nombre": "Villa Cala Figuera"
     },
     "eD2OLPanmNGBOFK3tY3Q": {
@@ -4788,8 +4794,8 @@
         "nombre": "Finca Mar des Teix"
     },
     "eHskRgc7GN7A8RNm5A5W": {
-        "lat": 39.37793,
-        "lng": 3.23691,
+        "lat": 39.37791646152044,
+        "lng": 3.23698103427887,
         "nombre": "Treffen"
     },
     "eIgp7lIU3vDjpI7GUIKh": {
@@ -4873,8 +4879,8 @@
         "nombre": "MLL Mediterranean Bay"
     },
     "ejGmnzFD7r46PwDjNwdG": {
-        "lat": 39.50446292400334,
-        "lng": 2.5321877002716064,
+        "lat": 39.504520836762126,
+        "lng": 2.5320965051651005,
         "nombre": "HOTEL ALFA"
     },
     "ekooCop3mdJwVKUlHQAF": {
@@ -4918,8 +4924,8 @@
         "nombre": "Finca Na Gat"
     },
     "fMZXd4kjwNcpma6MmYOe": {
-        "lat": 39.504620152625925,
-        "lng": 2.5322949886322026,
+        "lat": 39.50464914711869,
+        "lng": 2.532214522361756,
         "nombre": "Magaluf beach"
     },
     "fNMurLFAdWHPWCnX088w": {
@@ -5119,8 +5125,8 @@
         "nombre": "Bauló Mar Suites"
     },
     "hWH1rm6yKnjpPvBqCiMe": {
-        "lat": 39.3790903,
-        "lng": 3.2384991,
+        "lat": 39.37904432161996,
+        "lng": 3.2377159595489506,
         "nombre": "Barceló Ponent Beach"
     },
     "hbcKfndcdzE8mRH0BHZd": {
@@ -5244,8 +5250,8 @@
         "nombre": "allsun Hotel Paguera Park"
     },
     "iyS0YpyFUMW0ZmWhqtDC": {
-        "lat": 39.3317917,
-        "lng": 3.053578399999999,
+        "lat": 39.32367475355144,
+        "lng": 3.071365356445313,
         "nombre": "Finca Es Torrent den Cosme"
     },
     "j03BeW0kcxevFmA8G2i7": {
@@ -5264,8 +5270,8 @@
         "nombre": "BQ Apolo Hotel"
     },
     "jKstQgZtMZ8ePAcGVqwR": {
-        "lat": 39.375279,
-        "lng": 3.236653,
+        "lat": 39.375328948907615,
+        "lng": 3.2369488477706914,
         "nombre": "Inturotel Cala Esmeralda"
     },
     "jOaW4eo5MQxKUM0MNZT1": {
@@ -5305,8 +5311,8 @@
         "nombre": "Hotel Cosmopolitan"
     },
     "jp8zDmEq5riquv3Yuf8E": {
-        "lat": 39.375515,
-        "lng": 3.2343971,
+        "lat": 39.375569458930485,
+        "lng": 3.234432935714722,
         "nombre": "Apartments Osa Menor"
     },
     "js6qZJAw7izvfUNy1cuf": {
@@ -5472,8 +5478,8 @@
         "nombre": "Apartamentos Bressol"
     },
     "l3xBfjrTRlgti6WOk3N3": {
-        "lat": 39.37394189999999,
-        "lng": 3.2325255,
+        "lat": 39.37408077151592,
+        "lng": 3.2325714826583867,
         "nombre": "Beach Suite Playa Cala d'Or"
     },
     "lEuNuuWZsCr2PJ0rN64i": {
@@ -5532,8 +5538,8 @@
         "nombre": "BJ Cala Morlanda Estudios"
     },
     "lh3PeRK5KIelPiIlp1aR": {
-        "lat": 39.3626666,
-        "lng": 3.225071499999999,
+        "lat": 39.36239008757126,
+        "lng": 3.2248306274414062,
         "nombre": "Hotel Palia Dolce Farniente"
     },
     "lhCCS7A9nUQIbzTTye2z": {
@@ -5572,8 +5578,8 @@
         "nombre": "HOTEL LEDA 2"
     },
     "m6VYncghFiQzR0q197Q3": {
-        "lat": 39.50366824286915,
-        "lng": 2.52985954284668,
+        "lat": 39.5037551087411,
+        "lng": 2.5297522544860844,
         "nombre": "HM Martinique"
     },
     "m7h104GqTx2wyhrRtOhS": {
@@ -5593,8 +5599,8 @@
         "nombre": "Hotel Marbel"
     },
     "mBCM07ZosaQnH8UxL6Bk": {
-        "lat": 39.3808966,
-        "lng": 3.2361893,
+        "lat": 39.38043756090147,
+        "lng": 3.2364821434021,
         "nombre": "MarSenses Ferrera Blanca Hotel Family"
     },
     "mCTvigOSk4lkWHfjPkq1": {
@@ -5824,8 +5830,8 @@
         "nombre": "Hostal Cala Ratjada"
     },
     "nvrug9Fd3biyoxmyTr2S": {
-        "lat": 39.3736061,
-        "lng": 3.232804599999999,
+        "lat": 39.37400612897142,
+        "lng": 3.2326573133468632,
         "nombre": "Eco del Mar House"
     },
     "nvseXBVcK4emOie9QLaI": {
@@ -5854,8 +5860,8 @@
         "nombre": "Finca Es Pinyar"
     },
     "o7LKtd7gLjigZ9cEFLVU": {
-        "lat": 39.3646531,
-        "lng": 3.2275376,
+        "lat": 39.364832782157976,
+        "lng": 3.227389454841614,
         "nombre": "Gavimar La Mirada Club Resort"
     },
     "o7NQJa6KSRcjGI2UXbaK": {
@@ -5955,8 +5961,8 @@
         "nombre": "Hotel Petit Cala Fornells"
     },
     "p1A65s8uxz2YOmTJ79Br": {
-        "lat": 39.51472287839384,
-        "lng": 2.53710687160492,
+        "lat": 39.514722840075535,
+        "lng": 2.5370907783508305,
         "nombre": "Son Matias Beach"
     },
     "p5zJoKg2nIOvXBHu5Icq": {
@@ -6077,8 +6083,8 @@
         "nombre": "Hotel Amic Can Pastilla"
     },
     "qdXJpJU96iECIaXWYRjr": {
-        "lat": 39.37256699999999,
-        "lng": 3.227403,
+        "lat": 39.372492526825525,
+        "lng": 3.227405548095703,
         "nombre": "Cala d'Or"
     },
     "qdoXuIw0NrtVI9bzHP7B": {
@@ -6102,8 +6108,8 @@
         "nombre": "Mar Hotels Paguera & Spa"
     },
     "qg1K0Jteg4hH95SX0agz": {
-        "lat": 39.4553081,
-        "lng": 3.265492099999999,
+        "lat": 39.455215632715884,
+        "lng": 3.2654285430908208,
         "nombre": "Casa Hermosa"
     },
     "qghXmrNk3gGcPKFQqAs3": {
@@ -6162,8 +6168,8 @@
         "nombre": "HOTEL LAS PALOMAS"
     },
     "rBAMY8JGvcL2GBTbx1Iw": {
-        "lat": 39.3589855,
-        "lng": 3.2102877,
+        "lat": 39.35913400735154,
+        "lng": 3.209971189498902,
         "nombre": "Ikos Porto Petro"
     },
     "rBsn57DI4MwgtEmtRoUq": {
@@ -6328,8 +6334,8 @@
         "nombre": "Hostal San Francisco - Mallorca"
     },
     "sXlXHUKV3UbjMH5FyQwK": {
-        "lat": 39.3788388,
-        "lng": 3.2408139,
+        "lat": 39.38191353777592,
+        "lng": 3.2414603233337407,
         "nombre": "Robinson Cala Serena"
     },
     "saINmiAGHJWP6XN35KaI": {
@@ -6384,8 +6390,8 @@
         "nombre": "Apartamentos Yourhouse Acapulco"
     },
     "tbsuLGCJlBuDsKEUoWgV": {
-        "lat": 39.3811572,
-        "lng": 3.2411522,
+        "lat": 39.38201730243513,
+        "lng": 3.2418626546859746,
         "nombre": "Robinson Club Cala Serena"
     },
     "te2plCImNXaUM9s5jlT6": {
@@ -6394,8 +6400,8 @@
         "nombre": "Hotel Manaus"
     },
     "tehai3F92ON2Urnigjsl": {
-        "lat": 39.3302204,
-        "lng": 3.1726134,
+        "lat": 39.32957584913927,
+        "lng": 3.172087669372559,
         "nombre": "Cala Figuera"
     },
     "tikm6UK1q6zEhGA2vS55": {
@@ -6409,8 +6415,8 @@
         "nombre": "Serenity by sea club"
     },
     "tm1jq54SyKh2IxNigMEM": {
-        "lat": 39.37228820000001,
-        "lng": 3.2375659,
+        "lat": 39.37381122861789,
+        "lng": 3.2363748550415044,
         "nombre": "Casa del Sol"
     },
     "tnnoAkToEtlWWWWgmkfU": {
@@ -6429,8 +6435,8 @@
         "nombre": "Bv Apolo"
     },
     "trPoNQOHsFANkNQjAUui": {
-        "lat": 39.50430568230072,
-        "lng": 2.5320696830749516,
+        "lat": 39.50444633386574,
+        "lng": 2.5320535898208623,
         "nombre": "MELIA SOUTH BEACH"
     },
     "ttjFzowPDhvbSDiOjCbO": {
@@ -6920,8 +6926,8 @@
         "nombre": "Casa Poggibonsi al Mar"
     },
     "yWxisCeJvzL631s2YMnB": {
-        "lat": 39.365557,
-        "lng": 3.224353999999999,
+        "lat": 39.36549224249575,
+        "lng": 3.224347829818726,
         "nombre": "ONA Village Cala D'Or"
     },
     "yikdqS9i2spe5ikKufyR": {
@@ -6997,9 +7003,15 @@
         "nombre": "Casa Padrino"
     },
     "zAk4amjzLiOVeuzrvE7N": {
-        "lat": 39.41921701636176,
-        "lng": 3.2528060674667363,
+        "lat": 39.41789874864794,
+        "lng": 3.253085017204285,
         "nombre": "Apartamentos Can Gregori"
+    },
+    "zHwg6N3XAqJWg4Rz9LHy": {
+        "tipo": "hotel",
+        "lat": 39.38089863934183,
+        "lng": 3.23872447013855,
+        "nombre": "HOTEL PLAYA MARINA"
     },
     "zITXvFzIwtKKUGqaQJXK": {
         "lat": 39.759409948302455,
@@ -7027,8 +7039,8 @@
         "nombre": "Hotel Gayá"
     },
     "zVevI2hml2IZqXnKsNwt": {
-        "lat": 39.3761043,
-        "lng": 3.2384434,
+        "lat": 39.37739332786688,
+        "lng": 3.23723316192627,
         "nombre": "Inturotel Esmeralda Villas"
     },
     "zmrANBtlETNlb0qhYY21": {

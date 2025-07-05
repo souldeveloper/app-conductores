@@ -79,8 +79,15 @@ if (!exempt.includes(userData.usuario)) {
         deviceUid,
       };
       Cookies.set("currentUser", JSON.stringify(currentUser), { expires: 365 });
-
-      navigate('/mapa');
+      if (['admimanuel', 'adminjose'].includes(userData.usuario)) {
+        navigate('/mapa');
+        console.log('entra en nuevo')
+        return
+      } else {
+        navigate('/mapa');
+        console.log('entra en mapa')
+        return
+      }   
     } catch (err) {
       console.error("Error al iniciar sesión:", err);
       setError("Error al iniciar sesión.");

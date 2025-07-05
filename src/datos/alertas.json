@@ -98,6 +98,15 @@
             "lng": 3.0952646846257093
         }
     },
+    "ALhvSxlZUeyF1XA8VdGg": {
+        "tipo": "alerta",
+        "title": "DAR VUELTA AQUI Y SALIR",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.37485724398685,
+            "lng": 3.23499083518982
+        }
+    },
     "ANQT9iI0dlyimylgaRcD": {
         "tipo": "alerta",
         "title": "RECOJIDA Y DEJADA",
@@ -224,6 +233,15 @@
             "lng": 3.115835
         }
     },
+    "Gyte63Iw8NFBe6FqVwo1": {
+        "tipo": "alerta",
+        "title": "DAR VUELTA AQUI Y SALIR",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.35256095988783,
+            "lng": 3.1889319419860844
+        }
+    },
     "IF82iRWtCpSYYm9V6zXg": {
         "tipo": "alerta",
         "title": "INFORMACION",
@@ -258,6 +276,15 @@
         "coordenadas": {
             "lat": 39.436412391553866,
             "lng": 2.7603475260130232
+        }
+    },
+    "Lth7lYH1apFPY0IjFZxl": {
+        "tipo": "alerta",
+        "title": "ALERTA DAR VUELTA AQUI Y SALIR",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.362491586794675,
+            "lng": 3.22873592376709
         }
     },
     "NC7ZFgGLM5mTYZw1FViC": {
@@ -312,6 +339,15 @@
         "coordenadas": {
             "lat": 39.8401985,
             "lng": 3.1234852
+        }
+    },
+    "RaRU70Jcn8cbHJfAso5v": {
+        "tipo": "alerta",
+        "title": "ALERTA DAR VUELTA AQUI Y SALIR",
+        "description": "Descripción",
+        "coordenadas": {
+            "lat": 39.38142542996156,
+            "lng": 3.243123292922974
         }
     },
     "Rj19TRzaozfqv8iatzJi": {
