@@ -156,8 +156,8 @@
         "nombre": "Portocolom"
     },
     "13o0tqzMorrQJuLJIlmu": {
-        "lat": 39.920586099145915,
-        "lng": 3.0546659259120768,
+        "lat": 39.920030999529715,
+        "lng": 3.055685162544251,
         "nombre": "Hotel Hoposa Niu"
     },
     "160USjXylOrCjoMEbUYj": {
@@ -234,11 +234,6 @@
         "lat": 39.3183842,
         "lng": 3.125336499999999,
         "nombre": "Chalet Can Juanito by dracmallorca"
-    },
-    "1rTnynP5nt4KJ0dcr0ic": {
-        "lat": 39.841804112586445,
-        "lng": 3.1355077025141447,
-        "nombre": "Blu Hostal Diana"
     },
     "1rzgj0R1rlIKMgc4ZsBd": {
         "lat": 39.51617541728918,
@@ -568,8 +563,8 @@
         "nombre": "VILLA ITALIA"
     },
     "4JNFfwU3cgIJWNtJHiz2": {
-        "lat": 39.505704577322575,
-        "lng": 2.5295054912567143,
+        "lat": 39.50572941542196,
+        "lng": 2.529408931732178,
         "nombre": "HOTEL TENT MOJITO SUITES"
     },
     "4Jp8hbnUlZsbQr4qAKYa": {
@@ -1363,6 +1358,12 @@
         "lat": 39.912377,
         "lng": 3.0959026,
         "nombre": "The Palms"
+    },
+    "AYdICTqltyOlSOAzw4ZN": {
+        "tipo": "hotel",
+        "lat": 39.9188622641031,
+        "lng": 3.054360151290894,
+        "nombre": "HOTEL CALA SAN VICENTE"
     },
     "AYoXboNiKxSFPfnCNya0": {
         "lat": 39.90068300847426,
@@ -3897,8 +3898,8 @@
         "nombre": "Casa Sukha"
     },
     "WTmF6xjKgSoKOvnJxPGF": {
-        "lat": 39.50631716019533,
-        "lng": 2.5316512584686284,
+        "lat": 39.506350250505555,
+        "lng": 2.5318175554275517,
         "nombre": "HOTEL SOL Y VERA"
     },
     "WUbchgtHokLdysFzTk6S": {
@@ -5341,8 +5342,8 @@
         "nombre": "Auto"
     },
     "k38uvKdeO8BvlijNXspe": {
-        "lat": 39.91878408887316,
-        "lng": 3.0541616678237915,
+        "lat": 39.918911569875256,
+        "lng": 3.054429888725281,
         "nombre": "Cala Sant Vicenc Hotel"
     },
     "k3DZgXO4OBWIVkLU3r8C": {
@@ -6043,8 +6044,8 @@
         "nombre": "Africamar"
     },
     "qTcudAkepcMEf3NAyFGQ": {
-        "lat": 39.50648272186304,
-        "lng": 2.5321877002716064,
+        "lat": 39.50647444400109,
+        "lng": 2.532134056091309,
         "nombre": "INNSiDE by Meliá Calviá Beach"
     },
     "qUAdeY1yqqzbojdXMof2": {
@@ -6101,6 +6102,12 @@
         "lat": 39.522829613144154,
         "lng": 2.7431809902191167,
         "nombre": "Hotel Luxor"
+    },
+    "qfVeWmxZxBkncuDUfWpe": {
+        "tipo": "hotel",
+        "lat": 39.84291607870702,
+        "lng": 3.134139776229859,
+        "nombre": "BLUE HOSTAL DIANA"
     },
     "qfpdguJlE3INSZeNdSKK": {
         "lat": 39.537348113905566,
