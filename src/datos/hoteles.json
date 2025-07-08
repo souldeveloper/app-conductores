@@ -934,8 +934,8 @@
         "nombre": "Hipotels Bahia Cala Millor"
     },
     "6oJppMvMvP6B79HFvDWO": {
-        "lat": 39.89701207382182,
-        "lng": 3.0766010284423833,
+        "lat": 39.89705320056714,
+        "lng": 3.0764615898889995,
         "nombre": "Cabot Pollensa Park Spa"
     },
     "6weJNFEoZtGiJhxveZfN": {
@@ -992,6 +992,12 @@
         "lat": 39.840399557586565,
         "lng": 3.1372028585633953,
         "nombre": "Hostal Vista Alegre"
+    },
+    "7dqGqh1wTyCCCEFKmzbv": {
+        "tipo": "hotel",
+        "lat": 39.79793278236211,
+        "lng": 3.1212327313450587,
+        "nombre": "sarena de muro resort"
     },
     "7eDWtsaYhbztqzc2lxHC": {
         "lat": 39.378936512251066,
@@ -1279,8 +1285,8 @@
         "nombre": "PRESIDENT"
     },
     "9tzOZrp0wR01G74cPYxn": {
-        "lat": 39.842360160158236,
-        "lng": 3.1284105777740483,
+        "lat": 39.84243429948779,
+        "lng": 3.128453487526959,
         "nombre": "PALM GARDEN APARTAMENTOS"
     },
     "9wXQ4DQjVWPZIaXuHYws": {
@@ -1579,8 +1585,8 @@
         "nombre": "Cala Santanyí"
     },
     "CBS5ZYMgFpdveM21YiSQ": {
-        "lat": 39.837512097689334,
-        "lng": 3.119376897835991,
+        "lat": 39.8374585487816,
+        "lng": 3.119457353598563,
         "nombre": "grupotel port alcudia"
     },
     "CFKf2x9qFZqNoVlHfwAb": {
@@ -1619,8 +1625,8 @@
         "nombre": "FLIPFLOP CALA ROMANTICA"
     },
     "CRX0cSwx35DoCO9OtOZq": {
-        "lat": 39.893760613094685,
-        "lng": 3.077534437179566,
+        "lat": 39.89363725638025,
+        "lng": 3.0775129850944176,
         "nombre": "Parada Hobby Club"
     },
     "CScqE3hbhe3d3kjeXfj4": {
@@ -1795,8 +1801,8 @@
         "nombre": "Vell Marí Hotel & Resort"
     },
     "E6H539czKKuVHzigRoq9": {
-        "lat": 39.84156933559491,
-        "lng": 3.130052090221339,
+        "lat": 39.84161052460694,
+        "lng": 3.130052089691162,
         "nombre": "Apartamentos Carabela"
     },
     "EC5trmkOlGdWua5fz8XX": {
@@ -1880,8 +1886,8 @@
         "nombre": "Hotel Cala d'Or"
     },
     "EpEkSx7CNDfCtC7aPShD": {
-        "lat": 39.89369488728236,
-        "lng": 3.075238466262818,
+        "lat": 39.89381002406231,
+        "lng": 3.0752599183479656,
         "nombre": "Bahia Pollensa Aparthotel"
     },
     "Eq0Yd7FZrycwOanLvSs2": {
@@ -1946,8 +1952,8 @@
         "nombre": "Aparthotel La Pérgola Mallorca"
     },
     "FOkWlGilVykv1BiAucyO": {
-        "lat": 39.843109833834944,
-        "lng": 3.1284105777740483,
+        "lat": 39.84311802514092,
+        "lng": 3.1282925647709185,
         "nombre": "bahia de alcudia"
     },
     "FQt1aHbkfLdTNssc1Xs6": {
@@ -2076,8 +2082,8 @@
         "nombre": "Anjas Place"
     },
     "GNlweuIj32vo5k2jx9la": {
-        "lat": 39.89272353261578,
-        "lng": 3.077952861785889,
+        "lat": 39.89273584146873,
+        "lng": 3.078108389403154,
         "nombre": "Galeon Suites - Aparthotel Port Pollensa"
     },
     "GQ2XHqCFiXmM8EOxtYWr": {
@@ -2268,8 +2274,8 @@
         "nombre": "BJ Bona Vista"
     },
     "I1SQURXgFhLr3NP7E6Ql": {
-        "lat": 39.83701779851105,
-        "lng": 3.112049102060222,
+        "lat": 39.8370960627794,
+        "lng": 3.112156384853551,
         "nombre": "Mariner Club Apartments"
     },
     "I5TBln0YOxCZJjhPbhfL": {
@@ -2408,8 +2414,8 @@
         "nombre": "Hipotels Bahia Grande"
     },
     "Jga8ZFznF3XgyCC7tPMo": {
-        "lat": 39.84246729671089,
-        "lng": 3.1310284137725835,
+        "lat": 39.84247548797719,
+        "lng": 3.131146415593019,
         "nombre": "Alcudia port suites"
     },
     "JgwqtqKJZDneltmsGvkb": {
@@ -3263,8 +3269,8 @@
         "nombre": "Hotel Balear"
     },
     "RIDMexw1cXZwt8Jhy9Fo": {
-        "lat": 39.897752738185346,
-        "lng": 3.075978755950928,
+        "lat": 39.89717687989576,
+        "lng": 3.076407820001617,
         "nombre": "Hotel Panorama"
     },
     "RKNZmDoxZtKTO80D00V9": {
@@ -3363,8 +3369,8 @@
         "nombre": "Sol Lunamar Palmanova Apartamentos - Adults only"
     },
     "S4IB2YKZT3Eih9D7VVzm": {
-        "lat": 39.89765403288286,
-        "lng": 3.0758929252624516,
+        "lat": 39.897119271772105,
+        "lng": 3.076375616732486,
         "nombre": "Apartamentos Don Miguel"
     },
     "S5MfyYFmOE26moOhfvt9": {
@@ -3588,8 +3594,8 @@
         "nombre": "Hotel Brisa Marina"
     },
     "TjOaiOSDNhblTwKi6vt3": {
-        "lat": 39.842994479838325,
-        "lng": 3.1268334388732915,
+        "lat": 39.843023292473234,
+        "lng": 3.126881712345311,
         "nombre": "Zafiro Tropic"
     },
     "TlIEFpNryOCJWUr8D5gi": {
@@ -3613,8 +3619,8 @@
         "nombre": "INNSiDE by Meliá Palma Bosque"
     },
     "TwLWmvwFYMUA2qkQ9ukm": {
-        "lat": 39.83366882791211,
-        "lng": 3.1127250195995604,
+        "lat": 39.83370178290701,
+        "lng": 3.1127142920167388,
         "nombre": "VIVA Sunrise"
     },
     "TwYa76i9TV1FBGTmwNBk": {
@@ -3968,8 +3974,8 @@
         "nombre": "Aparthotel Peguera Beach"
     },
     "WuowMZXppXXp6ktGx77r": {
-        "lat": 39.842574319136666,
-        "lng": 3.1287217140197754,
+        "lat": 39.842496082216385,
+        "lng": 3.128635894513994,
         "nombre": "GLOBALES CONDES DE ALCUDIA"
     },
     "WwRQikJsvlJdyW9sJK4R": {
@@ -4339,8 +4345,8 @@
         "nombre": "Hotel Copacabana"
     },
     "aoSe2YPXqPfcFK8effg3": {
-        "lat": 39.842488,
-        "lng": 3.128334,
+        "lat": 39.84251255759116,
+        "lng": 3.1284266591465224,
         "nombre": "Alcudia Garden Aparthotel"
     },
     "ar3M115cQXp8a8xH32L8": {
@@ -4865,8 +4871,8 @@
         "nombre": "Villa piccola"
     },
     "eX7hU1xO2qBMf61wrmJ6": {
-        "lat": 39.84384293164445,
-        "lng": 3.1292581558227544,
+        "lat": 39.84391706937943,
+        "lng": 3.1293600797653203,
         "nombre": "Hotel Estrella de Mar"
     },
     "ecXPH6I04YD3hATZ2Dhn": {
@@ -5196,8 +5202,8 @@
         "nombre": "Apartments Leo"
     },
     "iCfNvL0bhHeTKSwCkoKf": {
-        "lat": 39.84367612145078,
-        "lng": 3.133378028869629,
+        "lat": 39.84369053716164,
+        "lng": 3.1334048474651737,
         "nombre": "alcudia htl"
     },
     "iL25pSR7GGNYPwBJ4SWx": {
@@ -6089,8 +6095,8 @@
         "nombre": "Cala d'Or"
     },
     "qdoXuIw0NrtVI9bzHP7B": {
-        "lat": 39.83758624225663,
-        "lng": 3.1194305420403894,
+        "lat": 39.83750797854348,
+        "lng": 3.1194680880259504,
         "nombre": "Grupotel Port d'Alcúdia"
     },
     "qdqIBqWWzflIHyI3SgV7": {
@@ -6105,8 +6111,8 @@
     },
     "qfVeWmxZxBkncuDUfWpe": {
         "tipo": "hotel",
-        "lat": 39.84291607870702,
-        "lng": 3.134139776229859,
+        "lat": 39.842949153774114,
+        "lng": 3.1341880497018786,
         "nombre": "BLUE HOSTAL DIANA"
     },
     "qfpdguJlE3INSZeNdSKK": {
@@ -6155,8 +6161,8 @@
         "nombre": "HOTEL GLOBALES SANTA LUCIA"
     },
     "r5YeOhxjuMjkC9KXCktX": {
-        "lat": 39.83653911688991,
-        "lng": 3.1505762951689196,
+        "lat": 39.83654411794928,
+        "lng": 3.1500989100912506,
         "nombre": "ona aucanada"
     },
     "r6j8Upf8sYbSURqFWDvV": {
@@ -6210,8 +6216,8 @@
         "nombre": "Hostal Gami"
     },
     "rQBZR4JcrdiYa1Uvd8jA": {
-        "lat": 39.83738440406846,
-        "lng": 3.1193071600641935,
+        "lat": 39.83737204661279,
+        "lng": 3.1194037073215024,
         "nombre": "APARTAMENTO TAMARINDOS-OLIVA"
     },
     "rRYk9iciIyRnzUm5IQP8": {
@@ -6245,8 +6251,8 @@
         "nombre": "Cala San Vicente | Holiday Rental"
     },
     "rjvjmMw5m2fYRIUcnMOs": {
-        "lat": 39.84371936857276,
-        "lng": 3.133313655515902,
+        "lat": 39.84373584366429,
+        "lng": 3.133345838167925,
         "nombre": "EIX Alcudia Hotel"
     },
     "rkFtqSRR1dEDNRFRKnq5": {
@@ -6452,18 +6458,18 @@
         "nombre": "Es Ferreret Ferienhaus"
     },
     "tu3yEXPzYxgXxXt0ibsa": {
-        "lat": 39.8340271809838,
-        "lng": 3.1145167350769047,
+        "lat": 39.83394482552038,
+        "lng": 3.114543553672449,
         "nombre": "Sea club Alcudia Mediterranean Resort - Hotel & Apartaments"
     },
     "u2xjA4OXyKDkQoyrKVMX": {
-        "lat": 39.8432498268924,
-        "lng": 3.128314018249512,
+        "lat": 39.84316745083301,
+        "lng": 3.1282925633730763,
         "nombre": "Bahia de Alcudia Hotel & Spa"
     },
     "u7T6t5r8y7IRZk2bcfCp": {
-        "lat": 39.837454429632224,
-        "lng": 3.1193554399469647,
+        "lat": 39.83742147643579,
+        "lng": 3.119425177574158,
         "nombre": "BQ Delfin Azul Hotel"
     },
     "u86FwWNzt31B4NXDzWNL": {
@@ -6522,13 +6528,13 @@
         "nombre": "Hotel THB Cala Lliteras"
     },
     "uiAdvxChakx4sLoJ83hh": {
-        "lat": 39.84301093602504,
-        "lng": 3.134075402972494,
+        "lat": 39.84302741128837,
+        "lng": 3.134118312966412,
         "nombre": "BLUESEA Piscis Adults Only"
     },
     "ujB8eLGMaTFr3Hfv2yw4": {
-        "lat": 39.838331802641044,
-        "lng": 3.1186848868015953,
+        "lat": 39.83831944534865,
+        "lng": 3.118658069290504,
         "nombre": "Bordoy Alcudia Bay"
     },
     "uoFqQxtsYaiVKGHLCVAU": {
