@@ -608,8 +608,8 @@
         "nombre": "BQ Alcúdia Sun Village"
     },
     "4jTKu3jGR1k6eTIgI9gQ": {
-        "lat": 39.50713253731114,
-        "lng": 2.753008561088528,
+        "lat": 39.507952022496575,
+        "lng": 2.7533036470413212,
         "nombre": "Hotel Arcadia"
     },
     "4k4b99fz2rmFHV6zW1xT": {
@@ -1050,8 +1050,8 @@
         "nombre": "HOTEL BELLEVUE VISTANOVA"
     },
     "7zChH8khDuCRzNvXUSHs": {
-        "lat": 39.32412239999999,
-        "lng": 2.9875829,
+        "lat": 39.3241395293902,
+        "lng": 2.9877823332632762,
         "nombre": "Universal Casa Marquesa"
     },
     "810Cs7iH7bUx73OrKYLF": {
@@ -1665,8 +1665,8 @@
         "nombre": "Diamant Beauty"
     },
     "Cq8swKALE7wRWH0iAxyY": {
-        "lat": 39.3220596,
-        "lng": 2.9850525,
+        "lat": 39.322438102792795,
+        "lng": 2.9857331171888473,
         "nombre": "Universal Hotel Cabo Blanco - Adults Only"
     },
     "CxA3dgKBW0u8LaoS4CLE": {
@@ -1708,6 +1708,12 @@
         "lat": 39.76054400043748,
         "lng": 3.1646847724914555,
         "nombre": "Hotel Stil Picafort Park"
+    },
+    "DAAyEJTGKd4dkqFWCnPV": {
+        "tipo": "hotel",
+        "lat": 39.45195779586851,
+        "lng": 2.7529982826592603,
+        "nombre": "Best Delta ( Maioris )"
     },
     "DAcaqwUNaejODPjoRSC6": {
         "lat": 39.55206636784103,
@@ -2374,8 +2380,8 @@
         "nombre": "Holiday Park Apartments"
     },
     "JIVV0rEKU1eTsOnqqicD": {
-        "lat": 39.3226507,
-        "lng": 2.9871041,
+        "lat": 39.32269539434646,
+        "lng": 2.987063532698566,
         "nombre": "Apartaments Posidonia"
     },
     "JKrzDX3Gu5lxg0Zgo9p6": {
@@ -2394,8 +2400,8 @@
         "nombre": "Mix Smart"
     },
     "JZtBA6dMPfQCztVCTO71": {
-        "lat": 39.71334378028776,
-        "lng": 3.462120294570923,
+        "lat": 39.71303033689437,
+        "lng": 3.462372422218323,
         "nombre": "Hotel Bellavista"
     },
     "JbR6pl7cuUurwFBRuxEA": {
@@ -2732,8 +2738,8 @@
         "nombre": "DAURADA CAN PICAFORT"
     },
     "MWrqlUwHDsfsRnEY8Whu": {
-        "lat": 39.32342560000001,
-        "lng": 2.9854994,
+        "lat": 39.32332201983313,
+        "lng": 2.9856204825821258,
         "nombre": "Hotel Tres Playas"
     },
     "MX4OxcyOaF8AH6wzPczt": {
@@ -3144,8 +3150,8 @@
         "nombre": "Alua Suites Las Rocas"
     },
     "QNCvUJYINF1lnrpbeUm8": {
-        "lat": 39.3242127,
-        "lng": 2.9860438,
+        "lat": 39.32425572286581,
+        "lng": 2.9857975566024524,
         "nombre": "Villa Chiquita Hotel Resort & Spa - Adults Only (+12)"
     },
     "QOLFgKNjL8d8YDALH3h4": {
@@ -3169,8 +3175,8 @@
         "nombre": "BLUESEA Mediodia"
     },
     "Qiq11GfetxCK0viecShF": {
-        "lat": 39.51348540160172,
-        "lng": 2.752557992935181,
+        "lat": 39.51334472592446,
+        "lng": 2.7522575883211973,
         "nombre": "Grupotel Taurus Park"
     },
     "QpdpFPwp5nwRu2eVFBi2": {
@@ -3229,8 +3235,8 @@
         "nombre": "Aparthotel Ciudad Laurel"
     },
     "R31WpvLw4NT7ewnXjbhs": {
-        "lat": 39.3230033,
-        "lng": 2.9859022,
+        "lat": 39.32300663287036,
+        "lng": 2.9857224463630243,
         "nombre": "Apartamentos Ibiza"
     },
     "R3LjaIymgHfQH3SlZsEG": {
@@ -3334,8 +3340,8 @@
         "nombre": "Villa \"Isla Bonita\""
     },
     "RpRKDPFlh5gu7pmhR3dn": {
-        "lat": 39.71264225554751,
-        "lng": 3.4638315410583562,
+        "lat": 39.71185860893754,
+        "lng": 3.464464545249939,
         "nombre": "Villa Massanet"
     },
     "Rshh74zSVL9LASXmhnwG": {
@@ -3689,8 +3695,8 @@
         "nombre": "Steigenberger Golf & Spa Resort Camp de Mar"
     },
     "UGESFzbKuqenQyntImNp": {
-        "lat": 39.32237860000001,
-        "lng": 2.9858113,
+        "lat": 39.322438102789285,
+        "lng": 2.9858189814254086,
         "nombre": "Universal Hotel Romántica"
     },
     "UGcXwYthtjs95Ca4g8o6": {
@@ -4490,8 +4496,8 @@
         "nombre": "Hipotels Gran Playa de Palma"
     },
     "c7beh2DGLPd3w1P4b8T9": {
-        "lat": 39.50716973855473,
-        "lng": 2.753008540085289,
+        "lat": 39.507943744809644,
+        "lng": 2.7533197402954106,
         "nombre": "Planet Blue Hotel"
     },
     "c8eIe6dtmME32LpLU5mY": {
@@ -4550,8 +4556,8 @@
         "nombre": "Finca Ceguer MHM"
     },
     "cb0wtE7K7A2CRgPR0EZq": {
-        "lat": 39.71287739663596,
-        "lng": 3.464072850128562,
+        "lat": 39.713112583438296,
+        "lng": 3.4648400545120244,
         "nombre": "Hostal Casa Bauzà by Eurotels"
     },
     "ceX98m8Vne4PQe8Qn6gO": {
@@ -4595,8 +4601,8 @@
         "nombre": "Cala Ferrera apartment"
     },
     "d2tmxuX65b4DDpSjeumA": {
-        "lat": 39.3227596,
-        "lng": 2.9879478,
+        "lat": 39.322965134466564,
+        "lng": 2.9877555621941547,
         "nombre": "Apartaments Andreas"
     },
     "d93dcGEEx2P2yG1mzwT3": {
@@ -4851,8 +4857,8 @@
         "nombre": "HOTEL OLEANDER"
     },
     "eS86Q4tz3hoVhuggIelm": {
-        "lat": 39.3231207,
-        "lng": 2.9875301,
+        "lat": 39.323043981405384,
+        "lng": 2.98767505189185,
         "nombre": "Blue House Mallorca"
     },
     "eSjvRRjs5hVF3Ziq3vLm": {
@@ -4866,8 +4872,8 @@
         "nombre": "Cala San Vicente | Holiday Rental"
     },
     "eWipWyilcWgvR9TbO941": {
-        "lat": 39.3246078,
-        "lng": 2.9873612,
+        "lat": 39.324782740848434,
+        "lng": 2.987262023154878,
         "nombre": "Villa piccola"
     },
     "eX7hU1xO2qBMf61wrmJ6": {
@@ -5752,8 +5758,8 @@
         "nombre": "Botel Alcudiamar Club"
     },
     "nRDfpg6HQvJT7rDEMvHH": {
-        "lat": 39.71260100197462,
-        "lng": 3.463858356465651,
+        "lat": 39.711837965004854,
+        "lng": 3.4644162654876713,
         "nombre": "Mamboo Hotel Cala Ratjada"
     },
     "nSUzJvwq5FXM3dAK1UN5": {
@@ -5805,11 +5811,6 @@
         "lat": 39.5866644,
         "lng": 2.5993321,
         "nombre": "Sheraton Mallorca Arabella Golf Hotel"
-    },
-    "nnKPCX68rWt5NSoLvDix": {
-        "lat": 39.45204275077293,
-        "lng": 2.752965556003155,
-        "nombre": "Hotel Best Delta"
     },
     "noZV913AWAEOFaONa0gA": {
         "lat": 39.537344004385034,
@@ -6864,8 +6865,8 @@
         "nombre": "Iberostar Grand Portals Nous"
     },
     "y0OgWX0FTJUgxSRIUOYM": {
-        "lat": 39.71400404304464,
-        "lng": 3.4615355674143493,
+        "lat": 39.71397929646773,
+        "lng": 3.4614926576614384,
         "nombre": "Hotel Capricho & SPA"
     },
     "y1ISSu3msICT4DCsoKWM": {
@@ -7032,8 +7033,8 @@
         "nombre": "Es Bauló Petit Hotel"
     },
     "zNezn4cF7kKhphcxma1q": {
-        "lat": 39.3237898,
-        "lng": 2.9876737,
+        "lat": 39.323844895061676,
+        "lng": 2.987814527459545,
         "nombre": "Boutique Hotel El Coto"
     },
     "zNlCorasWYERnpCNOnEq": {
