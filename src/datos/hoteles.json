@@ -721,8 +721,8 @@
         "nombre": "Apartments Arcadia Cala Millor Mallorca"
     },
     "5KtVzixKHeY8Bk41TtR4": {
-        "lat": 39.51174309945448,
-        "lng": 2.5396388769149785,
+        "lat": 39.51172654498292,
+        "lng": 2.5380134582519536,
         "nombre": "Cook’s Club Calviá Beach"
     },
     "5OFRQg5RmRv7BTnmSRK3": {
@@ -789,11 +789,6 @@
         "lat": 39.329932,
         "lng": 3.147613,
         "nombre": "Hotel Palmaria"
-    },
-    "5s2G0otXt9Q9FyWzRRD8": {
-        "lat": 39.54024441194952,
-        "lng": 2.447054464423695,
-        "nombre": "Valentin Park Club Hotel & Aptos"
     },
     "5uj20ryYsDTgKcoui27j": {
         "lat": 39.51800869211391,
@@ -3850,8 +3845,8 @@
         "nombre": "Son Brull Hotel & Spa"
     },
     "Vxy0sVfum61nRSMDJf5p": {
-        "lat": 39.54019019321727,
-        "lng": 2.447086560236103,
+        "lat": 39.540215089722984,
+        "lng": 2.44705436361941,
         "nombre": "HSM S'Olivera"
     },
     "W1wrWWiQos3YWd0DC8SY": {
@@ -3925,8 +3920,8 @@
         "nombre": "La Caracola Beach House for rent in Mallorca Sol - Casa de Vacaciones - Miethaus in Cala Ratjada"
     },
     "WczALIYgc7MvHwWUEc4b": {
-        "lat": 39.52731506657321,
-        "lng": 2.5438606739044194,
+        "lat": 39.527348072681455,
+        "lng": 2.5439304113388066,
         "nombre": "Son Caliu Apartamentos"
     },
     "WeaJiJtf335gJGxElZW9": {
@@ -4136,8 +4131,8 @@
         "nombre": "Costa Beach"
     },
     "YuKRyMp3VL47vre5wFEd": {
-        "lat": 39.5126179,
-        "lng": 2.4746385,
+        "lat": 39.512711523121624,
+        "lng": 2.4753356660741237,
         "nombre": "Flipflop Surfing Playa Apartments"
     },
     "YyT8k02wKLjyUo8nGHx8": {
@@ -5273,8 +5268,8 @@
         "nombre": "Hotel Na Taconera Sport & Relax"
     },
     "j2UyiJLPda6XL8OJedny": {
-        "lat": 39.52746393843966,
-        "lng": 2.5438445806503296,
+        "lat": 39.52733565961733,
+        "lng": 2.5439035892486577,
         "nombre": "Martha´s Apartamentos"
     },
     "j4qjVNreRFE6uO6HQjVm": {
@@ -5566,8 +5561,8 @@
         "nombre": "Zafiro Palmanova"
     },
     "lrGrxAv1yQsG31Y7rWaf": {
-        "lat": 39.540124079509404,
-        "lng": 2.4471133984031916,
+        "lat": 39.54016957989577,
+        "lng": 2.447081205086819,
         "nombre": "hsm solivera"
     },
     "lySoeOIzwfKMlk1qEpQJ": {
@@ -5738,8 +5733,8 @@
         "nombre": "Aquasol Aparthotel"
     },
     "n8rG6ZEMLe2iEVU63FPJ": {
-        "lat": 39.527385354260915,
-        "lng": 2.5438553094863896,
+        "lat": 39.527302558102186,
+        "lng": 2.543946504592896,
         "nombre": "Hotel Son Caliu Spa Oasis"
     },
     "nBDDgCI1EZK7O2UKgq6y": {
@@ -6292,8 +6287,8 @@
         "nombre": "Hotel Boogaloo"
     },
     "s4bsgY0up5cDlF3pVaoR": {
-        "lat": 39.54009511812568,
-        "lng": 2.4471294879913335,
+        "lat": 39.54012407293253,
+        "lng": 2.447102652284756,
         "nombre": "BQ Bulevar Peguera Hotel - ONLY ADULTS"
     },
     "s7yXabsm0cZpHyj63JTe": {
@@ -6477,6 +6472,12 @@
         "lat": 39.3177063,
         "lng": 3.1361008,
         "nombre": "Casa Caribbean"
+    },
+    "uAfRyCgNpGsKY4fQUvWN": {
+        "tipo": "hotel",
+        "lat": 39.540254317814274,
+        "lng": 2.4470436882017004,
+        "nombre": "Valentin Gran Park Suite // Park Club // (Paguera)"
     },
     "uDUoalwoysqm5LYTf91V": {
         "lat": 39.851355186367535,
