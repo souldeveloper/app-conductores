@@ -44,6 +44,15 @@
             "lng": 2.437618780740505
         }
     },
+    "2BCpI0eoffh5VGXSI0z1": {
+        "tipo": "puntoRecogida",
+        "title": "FINCA SON VILA",
+        "description": "ENTRAR HASTA EL FONDO",
+        "coordenadas": {
+            "lat": 39.827447454206,
+            "lng": 3.0211483162071633
+        }
+    },
     "4IhK077l0iHtCXfcoJKO": {
         "tipo": "alerta",
         "title": "PRECAUCION",
