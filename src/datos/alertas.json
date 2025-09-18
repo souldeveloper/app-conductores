@@ -341,6 +341,15 @@
             "lng": 3.112209
         }
     },
+    "QEWlWDTtKThb3vKewfLS": {
+        "tipo": "alerta",
+        "title": "CUIDADO ",
+        "description": "ESQUINA MUY MALA DE GIRAR ALERTA Y PRECAUCION",
+        "coordenadas": {
+            "lat": 39.52157221171832,
+            "lng": 2.745036734989648
+        }
+    },
     "QghP2DovoZsMpEuxa7qA": {
         "tipo": "alerta",
         "title": "PRECAUCION",

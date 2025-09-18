@@ -50,8 +50,8 @@
         "nombre": "Hotel Rocamarina"
     },
     "0NTdIt9XP5Ct5hMnbgGE": {
-        "lat": 39.5238291,
-        "lng": 2.747188,
+        "lat": 39.52350405446473,
+        "lng": 2.746297833114855,
         "nombre": "Hotel Don Miguel Playa"
     },
     "0RkaU2yxUUSbOf9WKJLU": {
@@ -2839,6 +2839,12 @@
         "lng": 2.7516192197799687,
         "nombre": "Iberostar Selection Llaut Palma"
     },
+    "NNBM4syqepkEfDCbhd5u": {
+        "tipo": "hotel",
+        "lat": 39.53735716494979,
+        "lng": 2.4485867354254953,
+        "nombre": "aehtos"
+    },
     "NNDmZi4Q06sk97mubBMi": {
         "lat": 39.6227629,
         "lng": 3.3931698,
@@ -2882,8 +2888,8 @@
         "nombre": "Campament Hipocampo"
     },
     "NitcTmjhoODOa81xp81e": {
-        "lat": 39.536111087022014,
-        "lng": 2.7194434490295643,
+        "lat": 39.53585887083716,
+        "lng": 2.7191484694600736,
         "nombre": "Hotel Amic Miraflores"
     },
     "NsIG4jcQPfWPQqcXtDF9": {
@@ -3323,8 +3329,8 @@
         "nombre": "Poppys Beach Houses Mallorca"
     },
     "RnZGvnqy7xbJGbfmnvnl": {
-        "lat": 39.537451569218966,
-        "lng": 2.448797824093441,
+        "lat": 39.53745157079749,
+        "lng": 2.4488139127368984,
         "nombre": "Venecia Paguera Hotel"
     },
     "RncDVhjI9K14BdcOzv2E": {
@@ -5469,8 +5475,8 @@
         "nombre": "Protur Bonaire Aparthotel"
     },
     "l01mm2Bqwa7fDtVBLZfJ": {
-        "lat": 39.53021129139512,
-        "lng": 2.730215191841126,
+        "lat": 39.52965272646646,
+        "lng": 2.7313631772994995,
         "nombre": "Hotel Sant Jordi Mallorca"
     },
     "l0oStnHgyd46dLQksr49": {
@@ -6623,8 +6629,8 @@
         "nombre": "CASA TINTORERA"
     },
     "vu882mQN7vQsBHdY3FPj": {
-        "lat": 39.536222896386725,
-        "lng": 2.719261080774467,
+        "lat": 39.535796879374416,
+        "lng": 2.71910015696399,
         "nombre": "Hotel Amic Gala"
     },
     "vyxncGcRaMX85Lof2QHj": {
