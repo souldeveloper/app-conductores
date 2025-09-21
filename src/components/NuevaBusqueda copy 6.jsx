@@ -1,3 +1,7 @@
+import { db } from '../firebaseConfig';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+
+
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -23,11 +27,47 @@ import {
 import Cookies from 'js-cookie';
 import L from 'leaflet';
 import 'leaflet-polylinedecorator';
-
 import rutasData       from '../datos/rutas.json';
 import alertasData     from '../datos/alertas.json';
 import hotelesData     from '../datos/hoteles.json';
 import direccionesData from '../datos/direcciones.json';
+
+// Hook para detectar long press en el mapa
+function useMapLongPress(map, onLongPress, ms = 600) {
+  React.useEffect(() => {
+    if (!map) return;
+    let timer = null;
+    let downLatLng = null;
+    function onMouseDown(e) {
+      downLatLng = e.latlng;
+      timer = setTimeout(() => {
+        onLongPress(downLatLng);
+        timer = null;
+      }, ms);
+    }
+    function onMouseUp() {
+      if (timer) clearTimeout(timer);
+      timer = null;
+    }
+    map.on('mousedown', onMouseDown);
+    map.on('mouseup', onMouseUp);
+    map.on('mouseout', onMouseUp);
+    return () => {
+      map.off('mousedown', onMouseDown);
+      map.off('mouseup', onMouseUp);
+      map.off('mouseout', onMouseUp);
+    };
+  }, [map, onLongPress, ms]);
+}
+
+// Iconos grandes para resaltar
+const getHotelIcon = (tipo, large = false) => L.divIcon({
+  html:`<div style="position:relative;display:inline-block;">
+          <img src="/iconos/${tipo==='hotel_vial'?'hotel_azul':'hotel'}.png" style="width:${large?"48px":"32px"};height:${large?"48px":"32px"};transition:width 0.2s,height 0.2s;"/>
+        </div>`,
+  iconSize: large ? [40,40] : [25,25],
+  iconAnchor: large ? [20,20] : [12,12]
+});
 
 const alertaIcon        = L.icon({ iconUrl: '/iconos/alerta.png',      iconSize: [25,25], iconAnchor: [12,12] });
 const puntoRecogidaIcon = L.icon({ iconUrl: '/iconos/guia.png',        iconSize: [25,25], iconAnchor: [12,12] });
@@ -85,8 +125,41 @@ const getColor = tipo => {
 
 const STORAGE_KEY = 'hotelLists';
 
+// Utilidad para obtener el usuario actual desde la cookie
+function getCurrentUser() {
+  try {
+    const user = JSON.parse(Cookies.get('currentUser'));
+    return user?.usuario || null;
+  } catch {
+    return null;
+  }
+}
+
 const MapaConductor = () => {
+  // Detectar usuario actual
+  const currentUser = getCurrentUser();
+  const isAdminManuel = currentUser === 'admimanuel';
+
+  // mapa y controles (declaración única, debe ir primero)
+  const [mapInstance, setMapInstance]   = useState(null);
+
+  // Notas personalizadas
+  const [customNotes, setCustomNotes] = useState([]);
+
+  // Handler para añadir nota en el mapa
+  const handleLongPress = React.useCallback((latlng) => {
+    const note = window.prompt('Escribe una nota para esta ubicación:');
+    if (note && note.trim()) {
+      setCustomNotes(notes => [...notes, { lat: latlng.lat, lng: latlng.lng, note }]);
+    }
+  }, []);
+
+  // Hook para detectar long press en el mapa (debe ir después de mapInstance)
+  useMapLongPress(mapInstance, handleLongPress, 700);
   const navigate = useNavigate();
+
+  // Estado para hotel resaltado
+  const [highlightedHotelId, setHighlightedHotelId] = useState(null);
 
   // datos
   const [rutas, setRutas]             = useState([]);
@@ -99,6 +172,22 @@ const MapaConductor = () => {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
     catch { return []; }
   });
+
+  // Sincronización Firestore: cargar listas al iniciar (solo admimanuel)
+  useEffect(() => {
+    if (!isAdminManuel) return;
+    async function fetchLists() {
+      const ref = doc(db, 'listasConductores', 'admimanuel');
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data && Array.isArray(data.lists)) {
+          setHotelLists(data.lists);
+        }
+      }
+    }
+    fetchLists();
+  }, [isAdminManuel]);
   const [selectedListId, setSelectedListId] = useState(hotelLists[0]?.id || null);
 
   // búsqueda
@@ -109,8 +198,7 @@ const MapaConductor = () => {
   // inputs reordenar
   const [positionInputs, setPositionInputs] = useState({});
 
-  // mapa y controles
-  const [mapInstance, setMapInstance]   = useState(null);
+  // mapa y controles (declaración única, ya está arriba)
   const [conductorPos, setConductorPos] = useState(null);
   const [tracking, setTracking]         = useState(false);
   const [showZoomButtons, setShowZoomButtons] = useState(true);
@@ -134,9 +222,33 @@ const MapaConductor = () => {
     })));
   }, [navigate]);
 
+  // Función para limpiar undefined de objetos/arrays recursivamente
+  function sanitizeForFirestore(obj) {
+    if (Array.isArray(obj)) {
+      return obj.map(sanitizeForFirestore);
+    } else if (obj && typeof obj === 'object') {
+      const clean = {};
+      for (const [k, v] of Object.entries(obj)) {
+        if (v !== undefined) {
+          clean[k] = sanitizeForFirestore(v);
+        } else {
+          clean[k] = null; // Firestore allows null, not undefined
+        }
+      }
+      return clean;
+    }
+    return obj;
+  }
+
   // persiste listas
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
+    // Guardar en Firestore si es admimanuel y hotelLists es un array válido
+    if (isAdminManuel && Array.isArray(hotelLists)) {
+      const ref = doc(db, 'listasConductores', 'admimanuel');
+      const sanitizedLists = sanitizeForFirestore(hotelLists);
+      setDoc(ref, { lists: sanitizedLists });
+    }
   }, [hotelLists]);
 
   const currentList = hotelLists.find(l => l.id === selectedListId);
@@ -179,6 +291,7 @@ const MapaConductor = () => {
 
   // hoteles en lista
   const addHotel    = h => {
+    if (!currentList) return;
     if (!currentList.hotels.some(x=>x.id===h.id)) {
       setHotelLists(prev=>prev.map(l=>
         l.id===currentList.id
@@ -298,6 +411,23 @@ const MapaConductor = () => {
             )}
 
             {conductorPos && <Marker position={conductorPos} icon={conductorIcon}><Popup>Tu ubicación</Popup></Marker>}
+
+            {/* Marcas de notas personalizadas */}
+            {customNotes.map((n, i) => (
+              <Marker key={i} position={[n.lat, n.lng]} icon={L.divIcon({
+                html: `<div style='background:#fffbe6;border:2px solid #e6c200;border-radius:8px;padding:2px 6px;font-size:16px;'>📝</div>`,
+                iconSize: [32,32], iconAnchor: [16,32]
+              })}>
+                <Popup>
+                  <div>
+                    <div style={{marginBottom:'0.5rem'}}>{n.note}</div>
+                    <Button size="sm" variant="danger" onClick={() => {
+                      setCustomNotes(notes => notes.filter((_, idx) => idx !== i));
+                    }}>Eliminar</Button>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
             {rutas.map(r=><Polyline key={r.id} positions={r.coordenadas} color={getColor(r.tipo)}/>)}
             {alertas.map(a=>(
               <Marker key={a.id} position={a.coordenadas} icon={a.tipo==='puntoRecogida'?puntoRecogidaIcon:alertaIcon}>
@@ -308,18 +438,7 @@ const MapaConductor = () => {
               <Marker
                 key={h.id}
                 position={[h.lat,h.lng]}
-                icon={L.divIcon({
-                  html:`<div style="position:relative;display:inline-block;">
-                          <img src="/iconos/${h.tipo==='hotel_vial'?'hotel_azul':'hotel'}.png" style="width:32px;height:32px;"/>
-                          <span style="position:absolute;top:-6px;right:-6px;
-                                       font-size:14px;background:white;
-                                       border:1px solid rgba(0,0,0,0.3);
-                                       border-radius:50%;padding:2px 5px;">
-                            ${idx+1}
-                          </span>
-                        </div>`,
-                  iconSize:[25,25], iconAnchor:[12,12]
-                })}
+                icon={getHotelIcon(h.tipo, h.id === highlightedHotelId)}
               >
                 <Popup>
                   <div>
@@ -387,7 +506,11 @@ const MapaConductor = () => {
               {myHotels.map((h,idx)=>(
                 <ListGroup.Item key={h.id} className="mb-2 p-0 border-0 d-flex">
                   <div
-                    onClick={()=>toggleSide(h.id,'left')}
+                    onClick={() => {
+                      toggleSide(h.id, 'left');
+                      setHighlightedHotelId(h.id);
+                      setTimeout(() => setHighlightedHotelId(null), 2000);
+                    }}
                     style={{
                       flex:1, padding:'1rem',
                       borderLeft: h.loadedSides.left?'4px solid green':'4px solid transparent',
@@ -398,7 +521,11 @@ const MapaConductor = () => {
                     {idx+1}. {h.nombre}
                   </div>
                   <div
-                    onClick={()=>toggleSide(h.id,'right')}
+                    onClick={() => {
+                      toggleSide(h.id, 'right');
+                      setHighlightedHotelId(h.id);
+                      setTimeout(() => setHighlightedHotelId(null), 2000);
+                    }}
                     style={{
                       flex:1, padding:'1rem',
                       borderRight: h.loadedSides.right?'4px solid green':'4px solid transparent',
