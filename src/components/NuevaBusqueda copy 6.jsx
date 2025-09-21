@@ -246,6 +246,7 @@ const MapaConductor = () => {
 
   // mapa y controles (declaración única, ya está arriba)
   const [conductorPos, setConductorPos] = useState(null);
+  const [conductorHeading, setConductorHeading] = useState(0); // heading en grados
   const [tracking, setTracking]         = useState(false);
   const [showZoomButtons, setShowZoomButtons] = useState(true);
   const watchIdRef = useRef(null);
@@ -306,11 +307,33 @@ const MapaConductor = () => {
   const myHotels    = currentList?.hotels || [];
 
   // tracking
+  // Calcula heading a partir del GPS (si está disponible) o de la diferencia de posiciones
+  const prevPosRef = useRef(null);
   const toggleTracking = () => {
     if (!tracking && navigator.geolocation) {
       setTracking(true);
       watchIdRef.current = navigator.geolocation.watchPosition(
-        pos => setConductorPos([pos.coords.latitude,pos.coords.longitude]),
+        pos => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setConductorPos([lat, lng]);
+          // Usar heading del GPS si está disponible
+          if (typeof pos.coords.heading === 'number' && !isNaN(pos.coords.heading)) {
+            setConductorHeading(pos.coords.heading);
+          } else {
+            // Calcular heading a partir de la posición anterior
+            const prev = prevPosRef.current;
+            if (prev) {
+              const dLat = lat - prev[0];
+              const dLng = lng - prev[1];
+              if (dLat !== 0 || dLng !== 0) {
+                const angle = Math.atan2(dLng, dLat) * 180 / Math.PI;
+                setConductorHeading((angle + 360) % 360);
+              }
+            }
+            prevPosRef.current = [lat, lng];
+          }
+        },
         err => console.error(err),
         { enableHighAccuracy: true, maximumAge: 0 }
       );
@@ -461,7 +484,16 @@ const MapaConductor = () => {
               </div>
             )}
 
-            {conductorPos && <Marker position={conductorPos} icon={conductorIcon}><Popup>Tu ubicación</Popup></Marker>}
+            {conductorPos && (
+              <Marker position={conductorPos} icon={L.divIcon({
+                className: '',
+                html: `<img src="/iconos/flecha_gps.svg" style="width:48px;height:48px;transform:rotate(${conductorHeading}deg);transition:transform 0.2s;" alt="Flecha dirección"/>`,
+                iconSize: [48,48],
+                iconAnchor: [24,24]
+              })}>
+                <Popup>Tu ubicación</Popup>
+              </Marker>
+            )}
 
             {/* Marcas de notas personalizadas */}
             {customNotes.map((n, i) => (
