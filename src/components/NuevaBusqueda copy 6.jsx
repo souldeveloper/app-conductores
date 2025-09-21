@@ -184,32 +184,45 @@ const MapaConductor = () => {
   const [direcciones, setDirecciones] = useState([]);
 
   // listas
-  const [hotelLists, setHotelLists]         = useState(() => {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch { return []; }
-  });
+  const [hotelLists, setHotelLists] = useState([]);
 
   // Sincronización Firestore: cargar listas al iniciar (solo admimanuel)
   useEffect(() => {
-    if (!isAdminManuel) return;
-    async function fetchLists() {
-      const ref = doc(db, 'listasConductores', 'admimanuel');
-      const snap = await getDoc(ref);
-      if (snap.exists()) {
-        const data = snap.data();
-        if (data && Array.isArray(data.lists)) {
-          setHotelLists(data.lists);
-          // Seleccionar la primera lista si no hay ninguna seleccionada o la seleccionada ya no existe
-          setSelectedListId(prevId => {
-            if (!prevId || !data.lists.some(l => l.id === prevId)) {
-              return data.lists[0]?.id || null;
-            }
-            return prevId;
-          });
+    if (isAdminManuel) {
+      async function fetchLists() {
+        const ref = doc(db, 'listasConductores', 'admimanuel');
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data && Array.isArray(data.lists)) {
+            setHotelLists(data.lists);
+            setSelectedListId(prevId => {
+              if (!prevId || !data.lists.some(l => l.id === prevId)) {
+                return data.lists[0]?.id || null;
+              }
+              return prevId;
+            });
+          } else {
+            setHotelLists([]);
+            setSelectedListId(null);
+          }
+        } else {
+          setHotelLists([]);
+          setSelectedListId(null);
         }
       }
+      fetchLists();
+    } else {
+      // Para otros usuarios, seguir usando localStorage
+      try {
+        const local = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        setHotelLists(local);
+        setSelectedListId(local[0]?.id || null);
+      } catch {
+        setHotelLists([]);
+        setSelectedListId(null);
+      }
     }
-    fetchLists();
   }, [isAdminManuel]);
   const [selectedListId, setSelectedListId] = useState(hotelLists[0]?.id || null);
 
@@ -265,14 +278,18 @@ const MapaConductor = () => {
 
   // persiste listas y notas
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
-    // Guardar en Firestore si es admimanuel y hotelLists es un array válido
-    if (isAdminManuel && Array.isArray(hotelLists)) {
-      const ref = doc(db, 'listasConductores', 'admimanuel');
-      const sanitizedLists = sanitizeForFirestore(hotelLists);
-      setDoc(ref, { lists: sanitizedLists, customNotes: sanitizeForFirestore(customNotes) }, { merge: true });
+    if (isAdminManuel) {
+      // Guardar en Firestore si es admimanuel y hotelLists es un array válido
+      if (Array.isArray(hotelLists)) {
+        const ref = doc(db, 'listasConductores', 'admimanuel');
+        const sanitizedLists = sanitizeForFirestore(hotelLists);
+        setDoc(ref, { lists: sanitizedLists, customNotes: sanitizeForFirestore(customNotes) }, { merge: true });
+      }
+    } else {
+      // Para otros usuarios, guardar en localStorage
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
     }
-  }, [hotelLists, customNotes]);
+  }, [hotelLists, customNotes, isAdminManuel]);
 
   const currentList = hotelLists.find(l => l.id === selectedListId);
   const myHotels    = currentList?.hotels || [];
