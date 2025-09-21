@@ -309,6 +309,16 @@ const MapaConductor = () => {
   // tracking
   // Calcula heading a partir del GPS (si está disponible) o de la diferencia de posiciones
   const prevPosRef = useRef(null);
+  // Distancia entre dos puntos GPS en metros
+  function haversine(lat1, lng1, lat2, lng2) {
+    const R = 6371000; // radio de la Tierra en metros
+    const toRad = deg => deg * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2)**2;
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }
+
   const toggleTracking = () => {
     if (!tracking && navigator.geolocation) {
       setTracking(true);
@@ -317,21 +327,26 @@ const MapaConductor = () => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
           setConductorPos([lat, lng]);
-          // Usar heading del GPS si está disponible
-          if (typeof pos.coords.heading === 'number' && !isNaN(pos.coords.heading)) {
+          // Usar heading del GPS solo si la velocidad es suficiente
+          if (typeof pos.coords.heading === 'number' && !isNaN(pos.coords.heading) && pos.coords.speed > 1) {
             setConductorHeading(pos.coords.heading);
           } else {
-            // Calcular heading a partir de la posición anterior
+            // Calcular heading a partir de la posición anterior solo si el movimiento es suficiente
             const prev = prevPosRef.current;
             if (prev) {
-              const dLat = lat - prev[0];
-              const dLng = lng - prev[1];
-              if (dLat !== 0 || dLng !== 0) {
-                const angle = Math.atan2(dLng, dLat) * 180 / Math.PI;
-                setConductorHeading((angle + 360) % 360);
+              const dist = haversine(lat, lng, prev[0], prev[1]);
+              if (dist > 2) { // solo si se movió más de 2 metros
+                const dLat = lat - prev[0];
+                const dLng = lng - prev[1];
+                if (dLat !== 0 || dLng !== 0) {
+                  const angle = Math.atan2(dLng, dLat) * 180 / Math.PI;
+                  setConductorHeading((angle + 360) % 360);
+                }
+                prevPosRef.current = [lat, lng];
               }
+            } else {
+              prevPosRef.current = [lat, lng];
             }
-            prevPosRef.current = [lat, lng];
           }
         },
         err => console.error(err),
