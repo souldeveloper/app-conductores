@@ -146,6 +146,22 @@ const MapaConductor = () => {
   // Notas personalizadas
   const [customNotes, setCustomNotes] = useState([]);
 
+  // Cargar notas personalizadas desde Firestore al iniciar (solo admimanuel)
+  useEffect(() => {
+    if (!isAdminManuel) return;
+    async function fetchNotes() {
+      const ref = doc(db, 'listasConductores', 'admimanuel');
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data && Array.isArray(data.customNotes)) {
+          setCustomNotes(data.customNotes);
+        }
+      }
+    }
+    fetchNotes();
+  }, [isAdminManuel]);
+
   // Handler para añadir nota en el mapa
   const handleLongPress = React.useCallback((latlng) => {
     const note = window.prompt('Escribe una nota para esta ubicación:');
@@ -183,6 +199,13 @@ const MapaConductor = () => {
         const data = snap.data();
         if (data && Array.isArray(data.lists)) {
           setHotelLists(data.lists);
+          // Seleccionar la primera lista si no hay ninguna seleccionada o la seleccionada ya no existe
+          setSelectedListId(prevId => {
+            if (!prevId || !data.lists.some(l => l.id === prevId)) {
+              return data.lists[0]?.id || null;
+            }
+            return prevId;
+          });
         }
       }
     }
@@ -240,16 +263,16 @@ const MapaConductor = () => {
     return obj;
   }
 
-  // persiste listas
+  // persiste listas y notas
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
     // Guardar en Firestore si es admimanuel y hotelLists es un array válido
     if (isAdminManuel && Array.isArray(hotelLists)) {
       const ref = doc(db, 'listasConductores', 'admimanuel');
       const sanitizedLists = sanitizeForFirestore(hotelLists);
-      setDoc(ref, { lists: sanitizedLists });
+      setDoc(ref, { lists: sanitizedLists, customNotes: sanitizeForFirestore(customNotes) }, { merge: true });
     }
-  }, [hotelLists]);
+  }, [hotelLists, customNotes]);
 
   const currentList = hotelLists.find(l => l.id === selectedListId);
   const myHotels    = currentList?.hotels || [];
