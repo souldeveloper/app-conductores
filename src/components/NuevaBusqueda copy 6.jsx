@@ -185,6 +185,7 @@ const MapaConductor = () => {
 
   // listas
   const [hotelLists, setHotelLists] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(!isAdminManuel); // Solo false si es admimanuel
 
   // Sincronización Firestore: cargar listas al iniciar (solo admimanuel)
   useEffect(() => {
@@ -210,6 +211,7 @@ const MapaConductor = () => {
           setHotelLists([]);
           setSelectedListId(null);
         }
+        setIsLoaded(true);
       }
       fetchLists();
     } else {
@@ -222,6 +224,7 @@ const MapaConductor = () => {
         setHotelLists([]);
         setSelectedListId(null);
       }
+      setIsLoaded(true);
     }
   }, [isAdminManuel]);
   const [selectedListId, setSelectedListId] = useState(null);
@@ -286,8 +289,8 @@ const MapaConductor = () => {
   // persiste listas y notas
   useEffect(() => {
     if (isAdminManuel) {
-      // Guardar en Firestore si es admimanuel y hotelLists es un array válido
-      if (Array.isArray(hotelLists)) {
+      // Guardar en Firestore solo si los datos ya están cargados
+      if (isLoaded && Array.isArray(hotelLists)) {
         const ref = doc(db, 'listasConductores', 'admimanuel');
         const sanitizedLists = sanitizeForFirestore(hotelLists);
         setDoc(ref, { lists: sanitizedLists, customNotes: sanitizeForFirestore(customNotes) }, { merge: true });
@@ -296,7 +299,7 @@ const MapaConductor = () => {
       // Para otros usuarios, guardar en localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
     }
-  }, [hotelLists, customNotes, isAdminManuel]);
+  }, [hotelLists, customNotes, isAdminManuel, isLoaded]);
 
   // Evitar renderizar dependencias de listas hasta que estén cargadas
   const currentList = hotelLists.find(l => l.id === selectedListId);
