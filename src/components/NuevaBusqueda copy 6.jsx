@@ -224,7 +224,14 @@ const MapaConductor = () => {
       }
     }
   }, [isAdminManuel]);
-  const [selectedListId, setSelectedListId] = useState(hotelLists[0]?.id || null);
+  const [selectedListId, setSelectedListId] = useState(null);
+
+  // Cuando cambian las listas, si no hay ninguna seleccionada o la seleccionada ya no existe, seleccionar la primera
+  useEffect(() => {
+    if (!selectedListId || !hotelLists.some(l => l.id === selectedListId)) {
+      setSelectedListId(hotelLists[0]?.id || null);
+    }
+  }, [hotelLists]);
 
   // búsqueda
   const [searchQuery, setSearchQuery]     = useState('');
@@ -291,6 +298,7 @@ const MapaConductor = () => {
     }
   }, [hotelLists, customNotes, isAdminManuel]);
 
+  // Evitar renderizar dependencias de listas hasta que estén cargadas
   const currentList = hotelLists.find(l => l.id === selectedListId);
   const myHotels    = currentList?.hotels || [];
 
