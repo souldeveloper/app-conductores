@@ -179,6 +179,15 @@
             "lng": 3.051522374153137
         }
     },
+    "CMgDOWp7npSiOPmX07sD": {
+        "tipo": "puntoRecogida",
+        "title": "Finca Son Doblons",
+        "description": "DAR LA VUELTA EN EL PRIMER ARBOL DIRECCION IZQUIERDA",
+        "coordenadas": {
+            "lat": 39.700155965399844,
+            "lng": 3.207241095598392
+        }
+    },
     "CeSeeJqqzRguSQ5SIN6e": {
         "tipo": "alerta",
         "title": "INFORMACION",

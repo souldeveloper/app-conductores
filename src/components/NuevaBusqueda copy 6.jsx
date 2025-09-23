@@ -1,7 +1,5 @@
 import { db } from '../firebaseConfig';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-
-
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,6 +29,54 @@ import rutasData       from '../datos/rutas.json';
 import alertasData     from '../datos/alertas.json';
 import hotelesData     from '../datos/hoteles.json';
 import direccionesData from '../datos/direcciones.json';
+
+// --- FUNCIONES UTILITARIAS ---
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const toRad = deg => deg * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+function getTurnAngle(p1, p2, p3) {
+  const toRad = deg => deg * Math.PI / 180;
+  const toDeg = rad => rad * 180 / Math.PI;
+  const v1 = [p2[0]-p1[0], p2[1]-p1[1]];
+  const v2 = [p3[0]-p2[0], p3[1]-p2[1]];
+  const angle = Math.atan2(v2[1], v2[0]) - Math.atan2(v1[1], v1[0]);
+  return ((toDeg(angle) + 540) % 360) - 180;
+}
+
+// ...existing code...
+
+// Dentro del componente, después de declarar rutas y conductorPos:
+//   const activeRoute = rutas[0]?.coordenadas || [];
+//   let navInstruction = null;
+//   if (conductorPos && activeRoute.length > 1) {
+//     let minDist = Infinity, closestIdx = 0;
+//     for (let i = 0; i < activeRoute.length; i++) {
+//       const d = haversine(conductorPos[0], conductorPos[1], activeRoute[i][0], activeRoute[i][1]);
+//       if (d < minDist) { minDist = d; closestIdx = i; }
+//     }
+//     const nextIdx = Math.min(closestIdx + 1, activeRoute.length - 1);
+//     const nextPoint = activeRoute[nextIdx];
+//     const distToNext = haversine(conductorPos[0], conductorPos[1], nextPoint[0], nextPoint[1]);
+//     let turn = null;
+//     if (nextIdx < activeRoute.length - 1) {
+//       const angle = getTurnAngle(activeRoute[closestIdx], nextPoint, activeRoute[nextIdx + 1]);
+//       if (angle > 30) turn = 'Gira a la izquierda';
+//       else if (angle < -30) turn = 'Gira a la derecha';
+//       else turn = 'Sigue recto';
+//     } else {
+//       turn = 'Fin de la ruta';
+//     }
+//     navInstruction = { dist: distToNext, turn };
+//   }
+
+
+
+
 
 // Hook para detectar long press en el mapa
 function useMapLongPress(map, onLongPress, ms = 600) {
@@ -142,9 +188,52 @@ const MapaConductor = () => {
 
   // mapa y controles (declaración única, debe ir primero)
   const [mapInstance, setMapInstance]   = useState(null);
-
   // Notas personalizadas
   const [customNotes, setCustomNotes] = useState([]);
+  // datos y listas
+  const [rutas, setRutas] = useState([]);
+  const [alertas, setAlertas] = useState([]);
+  const [allHotels, setAllHotels] = useState([]);
+  const [direcciones, setDirecciones] = useState([]);
+  const [hotelLists, setHotelLists] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(!isAdminManuel);
+  const [selectedListId, setSelectedListId] = useState(null);
+  // búsqueda y reordenar
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [positionInputs, setPositionInputs] = useState({});
+  // mapa y controles
+  const [conductorPos, setConductorPos] = useState(null);
+  const [conductorHeading, setConductorHeading] = useState(0); // heading en grados
+  const [tracking, setTracking] = useState(false);
+  const [showZoomButtons, setShowZoomButtons] = useState(true);
+  const watchIdRef = useRef(null);
+
+  // --- NAVIGATION INSTRUCTION LOGIC ---
+  // Calcula la instrucción de giro y distancia hasta el siguiente punto de la ruta activa
+  const activeRoute = rutas[0]?.coordenadas || [];
+  let navInstruction = null;
+  if (conductorPos && activeRoute.length > 1) {
+    let minDist = Infinity, closestIdx = 0;
+    for (let i = 0; i < activeRoute.length; i++) {
+      const d = haversine(conductorPos[0], conductorPos[1], activeRoute[i][0], activeRoute[i][1]);
+      if (d < minDist) { minDist = d; closestIdx = i; }
+    }
+    const nextIdx = Math.min(closestIdx + 1, activeRoute.length - 1);
+    const nextPoint = activeRoute[nextIdx];
+    const distToNext = haversine(conductorPos[0], conductorPos[1], nextPoint[0], nextPoint[1]);
+    let turn = null;
+    if (nextIdx < activeRoute.length - 1) {
+      const angle = getTurnAngle(activeRoute[closestIdx], nextPoint, activeRoute[nextIdx + 1]);
+      if (angle > 30) turn = 'Gira a la izquierda';
+      else if (angle < -30) turn = 'Gira a la derecha';
+      else turn = 'Sigue recto';
+    } else {
+      turn = 'Fin de la ruta';
+    }
+    navInstruction = { dist: distToNext, turn };
+  }
 
   // Cargar notas personalizadas desde Firestore al iniciar (solo admimanuel)
   useEffect(() => {
@@ -177,79 +266,9 @@ const MapaConductor = () => {
   // Estado para hotel resaltado
   const [highlightedHotelId, setHighlightedHotelId] = useState(null);
 
-  // datos
-  const [rutas, setRutas]             = useState([]);
-  const [alertas, setAlertas]         = useState([]);
-  const [allHotels, setAllHotels]     = useState([]);
-  const [direcciones, setDirecciones] = useState([]);
+  // ...existing code...
 
-  // listas
-  const [hotelLists, setHotelLists] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(!isAdminManuel); // Solo false si es admimanuel
-
-  // Sincronización Firestore: cargar listas al iniciar (solo admimanuel)
-  useEffect(() => {
-    if (isAdminManuel) {
-      async function fetchLists() {
-        const ref = doc(db, 'listasConductores', 'admimanuel');
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data && Array.isArray(data.lists)) {
-            setHotelLists(data.lists);
-            setSelectedListId(prevId => {
-              if (!prevId || !data.lists.some(l => l.id === prevId)) {
-                return data.lists[0]?.id || null;
-              }
-              return prevId;
-            });
-          } else {
-            setHotelLists([]);
-            setSelectedListId(null);
-          }
-        } else {
-          setHotelLists([]);
-          setSelectedListId(null);
-        }
-        setIsLoaded(true);
-      }
-      fetchLists();
-    } else {
-      // Para otros usuarios, seguir usando localStorage
-      try {
-        const local = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        setHotelLists(local);
-        setSelectedListId(local[0]?.id || null);
-      } catch {
-        setHotelLists([]);
-        setSelectedListId(null);
-      }
-      setIsLoaded(true);
-    }
-  }, [isAdminManuel]);
-  const [selectedListId, setSelectedListId] = useState(null);
-
-  // Cuando cambian las listas, si no hay ninguna seleccionada o la seleccionada ya no existe, seleccionar la primera
-  useEffect(() => {
-    if (!selectedListId || !hotelLists.some(l => l.id === selectedListId)) {
-      setSelectedListId(hotelLists[0]?.id || null);
-    }
-  }, [hotelLists]);
-
-  // búsqueda
-  const [searchQuery, setSearchQuery]     = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [loadingSearch, setLoadingSearch] = useState(false);
-
-  // inputs reordenar
-  const [positionInputs, setPositionInputs] = useState({});
-
-  // mapa y controles (declaración única, ya está arriba)
-  const [conductorPos, setConductorPos] = useState(null);
-  const [conductorHeading, setConductorHeading] = useState(0); // heading en grados
-  const [tracking, setTracking]         = useState(false);
-  const [showZoomButtons, setShowZoomButtons] = useState(true);
-  const watchIdRef = useRef(null);
+  // ...existing code...
 
   // carga inicial
   useEffect(() => {
@@ -309,15 +328,7 @@ const MapaConductor = () => {
   // tracking
   // Calcula heading a partir del GPS (si está disponible) o de la diferencia de posiciones
   const prevPosRef = useRef(null);
-  // Distancia entre dos puntos GPS en metros
-  function haversine(lat1, lng1, lat2, lng2) {
-    const R = 6371000; // radio de la Tierra en metros
-    const toRad = deg => deg * Math.PI / 180;
-    const dLat = toRad(lat2 - lat1);
-    const dLng = toRad(lng2 - lng1);
-    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2)**2;
-    return 2 * R * Math.asin(Math.sqrt(a));
-  }
+  // ...existing code...
 
   const toggleTracking = () => {
     if (!tracking && navigator.geolocation) {
@@ -429,6 +440,16 @@ const MapaConductor = () => {
 
   return (
     <Container fluid className="p-3">
+      {/* Instrucciones de navegación */}
+      {navInstruction && (
+        <div style={{position:'fixed',top:10,left:'50%',transform:'translateX(-50%)',zIndex:2000,background:'#fff',borderRadius:8,padding:'10px 20px',boxShadow:'0 2px 8px #0002',fontSize:20,fontWeight:600}}>
+          {navInstruction.turn} {navInstruction.turn!=='Fin de la ruta' && (
+            <span style={{fontWeight:400}}>
+              &nbsp;en {Math.round(navInstruction.dist)} m
+            </span>
+          )}
+        </div>
+      )}
       <Row className="mb-3">
         <Col>
           <h2>Mapa del Conductor</h2>{' '}

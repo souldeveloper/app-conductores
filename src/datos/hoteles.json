@@ -5363,8 +5363,8 @@
         "nombre": "Boho Concept"
     },
     "kB0UEkEk8mKCxNStQM3a": {
-        "lat": 39.52714613918651,
-        "lng": 2.4681028578921853,
+        "lat": 39.52043779046171,
+        "lng": 2.4768161924629695,
         "nombre": "Apartamentos Vista Club"
     },
     "kDbAVJlQoWMB60CAfVxW": {
@@ -5423,6 +5423,12 @@
         "lat": 39.51112130000001,
         "lng": 2.4814567,
         "nombre": "KingsPark"
+    },
+    "kdEwbetz41gyo8IDcJ6i": {
+        "tipo": "hotel",
+        "lat": 39.722460624766185,
+        "lng": 2.9072412670083922,
+        "nombre": "Prueba"
     },
     "kggDbtBi7pq9Fo3vhPB1": {
         "lat": 39.574170851555735,
