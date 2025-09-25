@@ -48,36 +48,6 @@ function getTurnAngle(p1, p2, p3) {
   return ((toDeg(angle) + 540) % 360) - 180;
 }
 
-// ...existing code...
-
-// Dentro del componente, después de declarar rutas y conductorPos:
-//   const activeRoute = rutas[0]?.coordenadas || [];
-//   let navInstruction = null;
-//   if (conductorPos && activeRoute.length > 1) {
-//     let minDist = Infinity, closestIdx = 0;
-//     for (let i = 0; i < activeRoute.length; i++) {
-//       const d = haversine(conductorPos[0], conductorPos[1], activeRoute[i][0], activeRoute[i][1]);
-//       if (d < minDist) { minDist = d; closestIdx = i; }
-//     }
-//     const nextIdx = Math.min(closestIdx + 1, activeRoute.length - 1);
-//     const nextPoint = activeRoute[nextIdx];
-//     const distToNext = haversine(conductorPos[0], conductorPos[1], nextPoint[0], nextPoint[1]);
-//     let turn = null;
-//     if (nextIdx < activeRoute.length - 1) {
-//       const angle = getTurnAngle(activeRoute[closestIdx], nextPoint, activeRoute[nextIdx + 1]);
-//       if (angle > 30) turn = 'Gira a la izquierda';
-//       else if (angle < -30) turn = 'Gira a la derecha';
-//       else turn = 'Sigue recto';
-//     } else {
-//       turn = 'Fin de la ruta';
-//     }
-//     navInstruction = { dist: distToNext, turn };
-//   }
-
-
-
-
-
 // Hook para detectar long press en el mapa
 function useMapLongPress(map, onLongPress, ms = 600) {
   React.useEffect(() => {
@@ -181,6 +151,24 @@ function getCurrentUser() {
   }
 }
 
+// Import React y useState
+
+// Función para guardar listas en localStorage
+const guardarListasEnLocalStorage = (listas) => {
+    localStorage.setItem("listasHoteles", JSON.stringify(listas));
+};
+
+// Función para cargar listas desde localStorage
+const cargarListasDesdeLocalStorage = () => {
+    const listasGuardadas = localStorage.getItem("listasHoteles");
+    return listasGuardadas ? JSON.parse(listasGuardadas) : [];
+};
+
+// Función para eliminar listas de localStorage
+const borrarListasDeLocalStorage = () => {
+    localStorage.removeItem("listasHoteles");
+};
+
 const MapaConductor = () => {
   // Detectar usuario actual
   const currentUser = getCurrentUser();
@@ -195,7 +183,7 @@ const MapaConductor = () => {
   const [alertas, setAlertas] = useState([]);
   const [allHotels, setAllHotels] = useState([]);
   const [direcciones, setDirecciones] = useState([]);
-  const [hotelLists, setHotelLists] = useState([]);
+  const [hotelLists, setHotelLists] = useState(() => cargarListasDesdeLocalStorage());
   const [isLoaded, setIsLoaded] = useState(!isAdminManuel);
   const [selectedListId, setSelectedListId] = useState(null);
   // búsqueda y reordenar
@@ -266,10 +254,6 @@ const MapaConductor = () => {
   // Estado para hotel resaltado
   const [highlightedHotelId, setHighlightedHotelId] = useState(null);
 
-  // ...existing code...
-
-  // ...existing code...
-
   // carga inicial
   useEffect(() => {
     if (!Cookies.get('currentUser') || !Cookies.get('deviceUid')) navigate('/');
@@ -320,6 +304,11 @@ const MapaConductor = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(hotelLists));
     }
   }, [hotelLists, customNotes, isAdminManuel, isLoaded]);
+
+  // Actualizar el estado de hotelLists y guardar en localStorage
+  useEffect(() => {
+    guardarListasEnLocalStorage(hotelLists);
+  }, [hotelLists]);
 
   // Evitar renderizar dependencias de listas hasta que estén cargadas
   const currentList = hotelLists.find(l => l.id === selectedListId);
