@@ -653,81 +653,87 @@ const MapaConductor = () => {
                 <Popup><h5>{a.title}</h5><p>{a.description}</p></Popup>
               </Marker>
             ))}
-            {myHotels.map((h, idx) => (
-              <Marker
-                key={h.id}
-                position={[h.lat, h.lng]}
-                icon={L.divIcon({
-                  className: '',
-                  html: `
-                    <div style="position: relative; display: inline-block;">
-                      <div style="
-                        position: absolute;
-                        top: -10px;
-                        left: -10px;
-                        width: 20px;
-                        height: 20px;
-                        background: white;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-size: 12px;
-                        font-weight: bold;
-                        border: 1px solid black;
-                      ">
-                        ${idx + 1}
+            {myHotels.map((h, idx) => {
+              if (h.lat === undefined || h.lng === undefined) {
+                console.warn(`Hotel con id ${h.id} tiene coordenadas inválidas: (${h.lat}, ${h.lng})`);
+                return null; // No renderizar si las coordenadas son inválidas
+              }
+              return (
+                <Marker
+                  key={h.id}
+                  position={[h.lat, h.lng]}
+                  icon={L.divIcon({
+                    className: '',
+                    html: `
+                      <div style="position: relative; display: inline-block;">
+                        <div style="
+                          position: absolute;
+                          top: -10px;
+                          left: -10px;
+                          width: 20px;
+                          height: 20px;
+                          background: white;
+                          border-radius: 50%;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-size: 12px;
+                          font-weight: bold;
+                          border: 1px solid black;
+                        ">
+                          ${idx + 1}
+                        </div>
+                        <img src="/iconos/${h.tipo === 'hotel_vial' ? 'hotel_azul' : 'hotel'}.png" 
+                             style="width: 32px; height: 32px;"/>
                       </div>
-                      <img src="/iconos/${h.tipo === 'hotel_vial' ? 'hotel_azul' : 'hotel'}.png" 
-                           style="width: 32px; height: 32px;"/>
-                    </div>
-                  `,
-                  iconSize: [32, 32],
-                  iconAnchor: [16, 32],
-                })}
-              >
-                <Popup>
-                  <div>
-                    <h5>{h.nombre}</h5>
-                    <Form onSubmit={(e) => e.preventDefault()}>
-                      <FormControl
-                        type="number"
-                        min="1"
-                        max={myHotels.length}
-                        placeholder="Posición"
-                        value={positionInputs[h.id] || ''}
-                        onChange={(e) =>
-                          setPositionInputs((p) => ({ ...p, [h.id]: e.target.value }))
-                        }
-                        style={{ width: 80, marginRight: '0.5rem' }}
-                      />
+                    `,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                  })}
+                >
+                  <Popup>
+                    <div>
+                      <h5>{h.nombre}</h5>
+                      <Form onSubmit={(e) => e.preventDefault()}>
+                        <FormControl
+                          type="number"
+                          min="1"
+                          max={myHotels.length}
+                          placeholder="Posición"
+                          value={positionInputs[h.id] || ''}
+                          onChange={(e) =>
+                            setPositionInputs((p) => ({ ...p, [h.id]: e.target.value }))
+                          }
+                          style={{ width: 80, marginRight: '0.5rem' }}
+                        />
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            const p = parseInt(positionInputs[h.id], 10);
+                            if (!p || p < 1 || p > myHotels.length) {
+                              alert(`Posición inválida. Debe estar entre 1 y ${myHotels.length}.`);
+                            } else {
+                              reorderHotel(h.id, p);
+                              setPositionInputs((p) => ({ ...p, [h.id]: '' }));
+                            }
+                          }}
+                        >
+                          Asignar
+                        </Button>
+                      </Form>
                       <Button
                         size="sm"
-                        onClick={() => {
-                          const p = parseInt(positionInputs[h.id], 10);
-                          if (!p || p < 1 || p > myHotels.length) {
-                            alert(`Posición inválida. Debe estar entre 1 y ${myHotels.length}.`);
-                          } else {
-                            reorderHotel(h.id, p);
-                            setPositionInputs((p) => ({ ...p, [h.id]: '' }));
-                          }
-                        }}
+                        variant="danger"
+                        onClick={() => removeHotel(h.id)}
+                        style={{ marginTop: '0.5rem' }}
                       >
-                        Asignar
+                        Eliminar
                       </Button>
-                    </Form>
-                    <Button
-                      size="sm"
-                      variant="danger"
-                      onClick={() => removeHotel(h.id)}
-                      style={{ marginTop: '0.5rem' }}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
             {direcciones.map(d=>(
               <Fragment key={d.id}>
                 <Polyline positions={d.coords} pathOptions={{ color:'black', dashArray:'5,10' }}/>
