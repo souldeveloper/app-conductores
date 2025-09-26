@@ -312,7 +312,9 @@ const MapaConductor = () => {
 
   // Evitar renderizar dependencias de listas hasta que estén cargadas
   const currentList = hotelLists.find(l => l.id === selectedListId);
-  const myHotels    = currentList?.hotels || [];
+  const myHotels    = isAdminManuel
+    ? currentList?.hotels || []
+    : hotelLists; // Para usuarios no administradores, usar directamente hotelLists
 
   // tracking
   // Calcula heading a partir del GPS (si está disponible) o de la diferencia de posiciones
@@ -373,51 +375,137 @@ const MapaConductor = () => {
   };
   const clearSearch = () => { setSearchQuery(''); setSearchResults([]); };
 
+  // Añadir búsqueda dinámica con sugerencias
+  const handleSearchInput = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+    const suggestions = allHotels.filter((hotel) =>
+      hotel.nombre.toLowerCase().includes(query)
+    );
+    setSearchResults(suggestions.slice(0, 5)); // Limitar a 5 sugerencias
+  };
+
+  const handleSuggestionClick = (hotel) => {
+    addHotel(hotel);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+
   // listas
   const addList    = () => { const name = prompt('Nueva lista:'); if (!name) return; const id = Date.now().toString(); setHotelLists(prev=>[...prev,{id,name,hotels:[]}]); setSelectedListId(id); };
   const selectList = id => setSelectedListId(id);
   const removeList = id => { setHotelLists(prev=>prev.filter(l=>l.id!==id)); if (selectedListId===id) setSelectedListId(hotelLists[0]?.id||null); };
 
   // hoteles en lista
-  const addHotel    = h => {
-    if (!currentList) return;
-    if (!currentList.hotels.some(x=>x.id===h.id)) {
-      setHotelLists(prev=>prev.map(l=>
-        l.id===currentList.id
-          ? {...l,hotels:[...l.hotels,{...h,loadedSides:{left:false,right:false}}]}
-          : l
-      ));
+  // Modificar la función addHotel para evitar duplicados y mostrar una alerta
+  const addHotel = (h) => {
+    if (isAdminManuel) {
+      if (!currentList) return;
+      if (currentList.hotels.some((x) => x.id === h.id)) {
+        alert("Este hotel ya está en tu lista.");
+        return;
+      }
+      setHotelLists((prev) =>
+        prev.map((l) =>
+          l.id === currentList.id
+            ? { ...l, hotels: [...l.hotels, { ...h, loadedSides: { left: false, right: false } }] }
+            : l
+        )
+      );
+    } else {
+      // Para usuarios no administradores, verificar duplicados en localStorage
+      const hotelesGuardados = cargarListasDesdeLocalStorage();
+      if (hotelesGuardados.some((x) => x.id === h.id)) {
+        alert("Este hotel ya está en tu lista.");
+        return;
+      }
+      const hotelesActualizados = [...hotelesGuardados, h];
+      guardarListasEnLocalStorage(hotelesActualizados);
+      setHotelLists(hotelesActualizados);
     }
   };
-  const removeHotel = id => {
-    setHotelLists(prev=>prev.map(l=>
-      l.id===currentList.id
-        ? {...l,hotels:l.hotels.filter(h=>h.id!==id)}
-        : l
-    ));
+  // Ajustar la función removeHotel para manejar casos donde el hotel no exista
+  const removeHotel = (id) => {
+    if (isAdminManuel) {
+      setHotelLists((prev) =>
+        prev.map((l) =>
+          l.id === currentList?.id
+            ? { ...l, hotels: l.hotels.filter((h) => h.id !== id) }
+            : l
+        )
+      );
+    } else {
+      const hotelesActualizados = hotelLists.filter((h) => h.id !== id);
+      guardarListasEnLocalStorage(hotelesActualizados);
+      setHotelLists(hotelesActualizados);
+    }
   };
-  const toggleSide = (id,side) => {
-    setHotelLists(prev=>prev.map(l=>
-      l.id===currentList.id
-        ? {...l,hotels:l.hotels.map(h=>
-            h.id===id
-              ? {...h,loadedSides:{...h.loadedSides,[side]:!h.loadedSides[side]}}
-              : h
-          )}
-        : l
-    ));
+  // Corregir la función toggleSide para manejar correctamente los lados de los hoteles
+  const toggleSide = (id, side) => {
+    if (isAdminManuel) {
+      setHotelLists((prev) =>
+        prev.map((l) =>
+          l.id === currentList?.id
+            ? {
+                ...l,
+                hotels: l.hotels.map((h) =>
+                  h.id === id
+                    ? {
+                        ...h,
+                        loadedSides: {
+                          ...h.loadedSides,
+                          [side]: !h.loadedSides?.[side],
+                        },
+                      }
+                    : h
+                ),
+              }
+            : l
+        )
+      );
+    } else {
+      const updatedHotels = hotelLists.map((h) =>
+        h.id === id
+          ? {
+              ...h,
+              loadedSides: {
+                ...h.loadedSides,
+                [side]: !h.loadedSides?.[side],
+              },
+            }
+          : h
+      );
+      guardarListasEnLocalStorage(updatedHotels);
+      setHotelLists(updatedHotels);
+    }
   };
-  const reorderHotel = (id,pos) => {
-    const idx = myHotels.findIndex(h=>h.id===id);
-    if (idx<0) return;
+  // Corregir la función reorderHotel para actualizar correctamente la lista
+  const reorderHotel = (id, pos) => {
+    const idx = myHotels.findIndex((h) => h?.id === id);
+    if (idx < 0) {
+      alert("El hotel no se encontró en la lista.");
+      return;
+    }
     const copy = [...myHotels];
-    const [itm] = copy.splice(idx,1);
-    copy.splice(pos-1,0,itm);
-    setHotelLists(prev=>prev.map(l=>
-      l.id===currentList.id
-        ? {...l,hotels:copy}
-        : l
-    ));
+    const [itm] = copy.splice(idx, 1);
+    copy.splice(pos - 1, 0, itm);
+
+    if (isAdminManuel) {
+      setHotelLists((prev) =>
+        prev.map((l) =>
+          l.id === currentList?.id
+            ? { ...l, hotels: copy }
+            : l
+        )
+      );
+    } else {
+      guardarListasEnLocalStorage(copy);
+      setHotelLists(copy);
+    }
   };
 
   // logout
@@ -452,22 +540,45 @@ const MapaConductor = () => {
         </Col>
       </Row>
 
+      {/* Modificar el renderizado para restringir las opciones de listas a admimanuel */}
       <Row className="mb-3">
         <Col>
-          <Dropdown className="d-inline me-2">
-            <Dropdown.Toggle variant="secondary">
-              {currentList?.name||'Lista'}
-            </Dropdown.Toggle>
-            <Dropdown.Menu style={{ minWidth:200 }}>
-              {hotelLists.map(l=>(
-                <div key={l.id} className="d-flex justify-content-between align-items-center px-2">
-                  <span onClick={()=>selectList(l.id)} style={{ cursor:'pointer', flex:1 }}>{l.name}</span>
-                  <Button variant="link" size="sm" onClick={()=>removeList(l.id)}>🗑</Button>
-                </div>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Button size="sm" onClick={addList}>+ Añadir Lista</Button>
+          {isAdminManuel ? (
+            <>
+              <Dropdown className="d-inline me-2">
+                <Dropdown.Toggle variant="secondary">
+                  {currentList?.name || 'Lista'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ minWidth: 200 }}>
+                  {hotelLists.map((l) => (
+                    <div
+                      key={l.id}
+                      className="d-flex justify-content-between align-items-center px-2"
+                    >
+                      <span
+                        onClick={() => selectList(l.id)}
+                        style={{ cursor: 'pointer', flex: 1 }}
+                      >
+                        {l.name}
+                      </span>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        onClick={() => removeList(l.id)}
+                      >
+                        🗑
+                      </Button>
+                    </div>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+              <Button size="sm" onClick={addList}>
+                + Añadir Lista
+              </Button>
+            </>
+          ) : (
+            <p></p>
+          )}
         </Col>
       </Row>
 
@@ -573,7 +684,8 @@ const MapaConductor = () => {
                   `,
                   iconSize: [32, 32],
                   iconAnchor: [16, 32],
-                })}>
+                })}
+              >
                 <Popup>
                   <div>
                     <h5>{h.nombre}</h5>
@@ -593,8 +705,9 @@ const MapaConductor = () => {
                         size="sm"
                         onClick={() => {
                           const p = parseInt(positionInputs[h.id], 10);
-                          if (!p || p < 1 || p > myHotels.length) alert(`1–${myHotels.length}`);
-                          else {
+                          if (!p || p < 1 || p > myHotels.length) {
+                            alert(`Posición inválida. Debe estar entre 1 y ${myHotels.length}.`);
+                          } else {
                             reorderHotel(h.id, p);
                             setPositionInputs((p) => ({ ...p, [h.id]: '' }));
                           }
@@ -603,6 +716,14 @@ const MapaConductor = () => {
                         Asignar
                       </Button>
                     </Form>
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={() => removeHotel(h.id)}
+                      style={{ marginTop: '0.5rem' }}
+                    >
+                      Eliminar
+                    </Button>
                   </div>
                 </Popup>
               </Marker>
@@ -624,11 +745,33 @@ const MapaConductor = () => {
               type="text"
               placeholder="Nombre del hotel"
               value={searchQuery}
-              onChange={e=>setSearchQuery(e.target.value)}
+              onChange={handleSearchInput}
             />
-            <Button variant="primary" type="submit" className="ms-2">Buscar</Button>
-            <Button variant="secondary" type="button" className="ms-2" onClick={clearSearch}>Limpiar</Button>
+            <Button variant="primary" type="submit" className="ms-2">
+              Buscar
+            </Button>
+            <Button
+              variant="secondary"
+              type="button"
+              className="ms-2"
+              onClick={clearSearch}
+            >
+              Limpiar
+            </Button>
           </Form>
+          {searchResults.length > 0 && (
+            <ListGroup className="position-absolute" style={{ zIndex: 1000 }}>
+              {searchResults.map((hotel) => (
+                <ListGroup.Item
+                  key={hotel.id}
+                  action
+                  onClick={() => handleSuggestionClick(hotel)}
+                >
+                  {hotel.nombre}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
           {loadingSearch && <Spinner animation="border" className="d-block mx-auto mb-3"/>}
           {searchResults.length>0 && (
             <ListGroup className="mb-4">
@@ -646,7 +789,7 @@ const MapaConductor = () => {
             <Alert variant="info">No has agregado ningún hotel aún.</Alert>
           ) : (
             <ListGroup>
-              {myHotels.map((h,idx)=>(
+              {myHotels.map((h, idx) => (
                 <ListGroup.Item key={h.id} className="mb-2 p-0 border-0 d-flex">
                   <div
                     onClick={() => {
@@ -655,13 +798,14 @@ const MapaConductor = () => {
                       setTimeout(() => setHighlightedHotelId(null), 2000);
                     }}
                     style={{
-                      flex:1, padding:'1rem',
-                      borderLeft: h.loadedSides.left?'4px solid green':'4px solid transparent',
-                      backgroundColor: h.loadedSides.left?'#eaffea':'transparent',
-                      cursor:'pointer'
+                      flex: 1,
+                      padding: '1rem',
+                      borderLeft: h.loadedSides?.left ? '4px solid green' : '4px solid transparent',
+                      backgroundColor: h.loadedSides?.left ? '#eaffea' : 'transparent',
+                      cursor: 'pointer',
                     }}
                   >
-                    {idx+1}. {h.nombre}
+                    {idx + 1}. {h.nombre}
                   </div>
                   <div
                     onClick={() => {
@@ -670,15 +814,17 @@ const MapaConductor = () => {
                       setTimeout(() => setHighlightedHotelId(null), 2000);
                     }}
                     style={{
-                      flex:1, padding:'1rem',
-                      borderRight: h.loadedSides.right?'4px solid green':'4px solid transparent',
-                      backgroundColor: h.loadedSides.right?'#eaffea':'transparent',
-                      cursor:'pointer'
+                      flex: 1,
+                      padding: '1rem',
+                      borderRight: h.loadedSides?.right ? '4px solid green' : '4px solid transparent',
+                      backgroundColor: h.loadedSides?.right ? '#eaffea' : 'transparent',
+                      cursor: 'pointer',
                     }}
                   />
                   <Button
-                    variant="danger" size="sm"
-                    onClick={()=>removeHotel(h.id)}
+                    variant="danger"
+                    size="sm"
+                    onClick={() => removeHotel(h.id)}
                     className="ms-2"
                   >
                     Quitar
