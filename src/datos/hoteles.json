@@ -558,8 +558,8 @@
         "nombre": "VILLA ITALIA"
     },
     "4JNFfwU3cgIJWNtJHiz2": {
-        "lat": 39.50572941542196,
-        "lng": 2.529408931732178,
+        "lat": 39.50574184507082,
+        "lng": 2.5293767502556146,
         "nombre": "HOTEL TENT MOJITO SUITES"
     },
     "4Jp8hbnUlZsbQr4qAKYa": {
@@ -1481,8 +1481,8 @@
         "nombre": "Apartamentos El Pino"
     },
     "BjuTGRq1mTocJHWLZAul": {
-        "lat": 39.56628918124586,
-        "lng": 3.3719980019779614,
+        "lat": 39.565081877366005,
+        "lng": 3.3716493504575067,
         "nombre": "Moreia beach / Playa moreya"
     },
     "BkJC6S4Gzae8Bd2I01g3": {
@@ -1905,8 +1905,8 @@
         "nombre": "HM Dunas Blancas"
     },
     "Et6qkJJUvGSempZbrRGC": {
-        "lat": 39.61449097590463,
-        "lng": 3.390344381332398,
+        "lat": 39.614404327809,
+        "lng": 3.3901459083445933,
         "nombre": "Hotel Catalonia del Mar - Adults Only"
     },
     "EwtHIoUyrg3lUBHFq0uZ": {
@@ -2177,8 +2177,8 @@
     },
     "HBC5vaGFy5mj7T1s5r4m": {
         "tipo": "hotel_vial",
-        "lat": 39.5225023648638,
-        "lng": 2.5320160388946538,
+        "lat": 39.52440611428975,
+        "lng": 2.5350786427493333,
         "nombre": "Azuline Hotel Palmanova Garden"
     },
     "HDplMv0BNqoC1a1xE0Wg": {
@@ -2908,8 +2908,8 @@
         "nombre": "Hotel Playa Sol"
     },
     "O91NgPfeKz9YgjCbcN5Z": {
-        "lat": 39.512169375738175,
-        "lng": 2.5423908233642583,
+        "lat": 39.512152821380226,
+        "lng": 2.542374507881293,
         "nombre": "Leonardo Royal Hotel Mallorca Palmanova Bay"
     },
     "OAP9jljJRj2z6VCf6unZ": {
@@ -3099,13 +3099,13 @@
         "nombre": "AluaSoul Palma"
     },
     "Q2UzuhKiiV6wykR8D6Wl": {
-        "lat": 39.6043532014004,
-        "lng": 3.3783549128635664,
+        "lat": 39.604316047268334,
+        "lng": 3.378231525421143,
         "nombre": "Palma de Majorque"
     },
     "Q4UHkznimOsaRi6mjJ7y": {
-        "lat": 39.505812122781535,
-        "lng": 2.5305461883544926,
+        "lat": 39.50544797726199,
+        "lng": 2.5302726458035623,
         "nombre": "Sol Guadalupe"
     },
     "Q77NjlpVVets0gD59WyW": {
@@ -3294,8 +3294,8 @@
         "nombre": "Protur Villas"
     },
     "RYHI8gungY0udJPckOY6": {
-        "lat": 39.60436516021036,
-        "lng": 3.38053822517395,
+        "lat": 39.60443989794234,
+        "lng": 3.3801627159118657,
         "nombre": "Hotel Ilusion Vista Blava"
     },
     "RbYciC3UJG3ljRmgLzyl": {
@@ -4085,8 +4085,8 @@
         "nombre": "Copaiba by Honne Hotels"
     },
     "YH3JY9wf6JZxJDgBQwME": {
-        "lat": 39.61096170545114,
-        "lng": 3.389845490455628,
+        "lat": 39.61071399516424,
+        "lng": 3.3898186736051277,
         "nombre": "Aparthotel & Suites Cap De Mar"
     },
     "YI27PLylxwA2tny8oBzw": {
@@ -5195,11 +5195,6 @@
         "lat": 39.57182223734374,
         "lng": 2.642265558242798,
         "nombre": "Hotel Saratoga"
-    },
-    "i5jA2MaCzHD01irWmB5s": {
-        "lat": 39.59245169999999,
-        "lng": 3.379968299999999,
-        "nombre": "Cala milor"
     },
     "i8Mj4m9eC2je5XtZ6jDr": {
         "lat": 39.90150203484524,
@@ -6660,8 +6655,8 @@
         "nombre": "allsun Hotel Bella Peguera"
     },
     "w7YwPXMsL79JEftBjtGL": {
-        "lat": 39.60446461276498,
-        "lng": 3.3803451061248784,
+        "lat": 39.604547347268834,
+        "lng": 3.38030219078064,
         "nombre": "Tropicana Hotel"
     },
     "wAAcPvUNlPhFRrF7QZ8o": {
@@ -6821,8 +6816,8 @@
         "nombre": "Villa Antonio Holiday Home"
     },
     "xQeU44sS97PLbVH61iwg": {
-        "lat": 39.59005129999999,
-        "lng": 3.3829975,
+        "lat": 39.59012555037982,
+        "lng": 3.383333004443002,
         "nombre": "Aqua Rituals Experience Spa"
     },
     "xZyBSK1r0rbeWuWbZLc8": {
@@ -7030,8 +7025,8 @@
         "nombre": "Levahotel Gran Sol"
     },
     "z5Cm49HTPplVgc11ZFwc": {
-        "lat": 39.604258135907415,
-        "lng": 3.3806240558624268,
+        "lat": 39.60459660530468,
+        "lng": 3.3803987503051762,
         "nombre": "Hotel Flamenco"
     },
     "z6iUlTvH8Nxs1akuCAJ1": {
