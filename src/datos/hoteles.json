@@ -30,8 +30,8 @@
         "nombre": "Jaime Pons Rigo"
     },
     "0FQyY5MAQZUFT99ieePI": {
-        "lat": 39.502252584706234,
-        "lng": 2.7512276172637944,
+        "lat": 39.50303102100155,
+        "lng": 2.751549482345581,
         "nombre": "Hotel Gracia"
     },
     "0HnJUOTrSOtEBLhLMT2U": {
@@ -980,8 +980,8 @@
         "nombre": "Apartaments Alborada"
     },
     "7WS1CTlRnkWeLpzdiEFN": {
-        "lat": 39.53663244422171,
-        "lng": 2.7169382572174077,
+        "lat": 39.536702777532184,
+        "lng": 2.7167612314224243,
         "nombre": "Hotel Marbel - Can Pastilla"
     },
     "7Wn1mpAZ4jZehVoT1UPG": {
@@ -1481,8 +1481,8 @@
         "nombre": "Apartamentos El Pino"
     },
     "BjuTGRq1mTocJHWLZAul": {
-        "lat": 39.565081877366005,
-        "lng": 3.3716493504575067,
+        "lat": 39.566206630583025,
+        "lng": 3.371987290002694,
         "nombre": "Moreia beach / Playa moreya"
     },
     "BkJC6S4Gzae8Bd2I01g3": {
@@ -1904,11 +1904,6 @@
         "lng": 2.7509969472885136,
         "nombre": "HM Dunas Blancas"
     },
-    "Et6qkJJUvGSempZbrRGC": {
-        "lat": 39.614404327809,
-        "lng": 3.3901459083445933,
-        "nombre": "Hotel Catalonia del Mar - Adults Only"
-    },
     "EwtHIoUyrg3lUBHFq0uZ": {
         "lat": 39.70960915356988,
         "lng": 3.4547817707061768,
@@ -2018,11 +2013,6 @@
         "lat": 39.51166860430146,
         "lng": 2.5380188226699834,
         "nombre": "Apartaments Vistasol"
-    },
-    "FgzYOuqeGXbOLrT4AY30": {
-        "lat": 39.57754488710756,
-        "lng": 3.3741759776560096,
-        "nombre": "BLUESEA Gran Playa"
     },
     "FjAcZiGoUXsNkgoFjcn1": {
         "lat": 39.51230170665238,
@@ -2810,8 +2800,8 @@
         "nombre": "La Perla Holiday Home"
     },
     "N7XSUmVxbuDi4ObEKlMR": {
-        "lat": 39.566175615373815,
-        "lng": 3.3719658851623535,
+        "lat": 39.56616527010243,
+        "lng": 3.371933698654175,
         "nombre": "Hotel Club SiIllot"
     },
     "N8eSlFxm4P145apxbnQD": {
@@ -3274,8 +3264,8 @@
         "nombre": "Hotel"
     },
     "RHvVq3RhK5tHCQKSL0S6": {
-        "lat": 39.53635092137771,
-        "lng": 2.7174532461217287,
+        "lat": 39.5363221276753,
+        "lng": 2.717394232749939,
         "nombre": "Hotel Balear"
     },
     "RIDMexw1cXZwt8Jhy9Fo": {
@@ -3804,7 +3794,7 @@
         "nombre": "Playa Dorada  ( Can Picafort )"
     },
     "VSqPX8qXTwmCJrZiBP9N": {
-        "lat": 39.53691372639456,
+        "lat": 39.53683511631735,
         "lng": 2.716530561447144,
         "nombre": "BQ Amfora Beach Hotel - ONLY ADULTS"
     },
@@ -4225,8 +4215,8 @@
         "nombre": "Hapimag Resort Peguera"
     },
     "ZWDrV1vVIqSA8zO8DORa": {
-        "lat": 39.5364003106847,
-        "lng": 2.717324661432073,
+        "lat": 39.53637591200994,
+        "lng": 2.717297673225403,
         "nombre": "Hotel Bari"
     },
     "ZbLz5EZBd0mvlwvhCJgU": {
@@ -4338,6 +4328,12 @@
         "lat": 39.586814202420605,
         "lng": 3.3853554725646977,
         "nombre": "Iberostar Waves Cala Millor"
+    },
+    "al7mSPYxyESPneX2h3C3": {
+        "tipo": "hotel",
+        "lat": 39.58587459376312,
+        "lng": 3.379154205322266,
+        "nombre": "HM Mar Blau ( SA COMA )"
     },
     "alZsNXROuYco5VeDxXn4": {
         "lat": 39.32318050000001,
@@ -4525,8 +4521,8 @@
         "nombre": "APARTAMENTOS VENT I MAR"
     },
     "cIPgfNjpy6SDkJyazSWq": {
-        "lat": 39.53650821561346,
-        "lng": 2.717206478118897,
+        "lat": 39.536442092691146,
+        "lng": 2.7172118425369267,
         "nombre": "Hotel Las Arenas"
     },
     "cNNn5N8pvw5lPhuI3T2L": {
@@ -4583,6 +4579,12 @@
         "lat": 39.832894380962216,
         "lng": 3.1132292747497563,
         "nombre": "Sol Alcudia apartamentos"
+    },
+    "cupvN53fcpABpUKUGft0": {
+        "tipo": "hotel",
+        "lat": 39.53674669895375,
+        "lng": 2.716664671897888,
+        "nombre": "Hotel ilusion Calma"
     },
     "cvsBf3mgd2x982ERkAGJ": {
         "lat": 39.52240332806907,
@@ -4915,6 +4917,12 @@
         "lng": 3.018375635147095,
         "nombre": "Mon Boutique Hotel"
     },
+    "ez80ywnKLKU5vH2pboLl": {
+        "tipo": "hotel",
+        "lat": 39.61436108276182,
+        "lng": 3.3901351690292363,
+        "nombre": "Hotel Catalonia del Mar - Adults Only ( CALA BONA )"
+    },
     "f3kG6ZeZHTwcFxoOMPJA": {
         "lat": 39.3645338,
         "lng": 2.9269597,
@@ -4976,6 +4984,12 @@
         "lng": 2.633185,
         "nombre": "AC Hotel Ciutat de Palma"
     },
+    "fkCg1EX6ERPrUVWBBCZN": {
+        "tipo": "hotel",
+        "lat": 39.57636021477684,
+        "lng": 3.3751738504432502,
+        "nombre": "Welikehotel Marfil Playa ( SA COMA )"
+    },
     "fsChUzvvBgshrjrR9mtM": {
         "lat": 39.5226085,
         "lng": 3.3161863,
@@ -5015,6 +5029,12 @@
         "lat": 39.88536819999999,
         "lng": 3.0777002,
         "nombre": "VILLA CAROLINA (Luxury Villas Mallorca)"
+    },
+    "gQe22172rVEDDjmPeD36": {
+        "tipo": "hotel",
+        "lat": 39.57755265857987,
+        "lng": 3.3740992781723644,
+        "nombre": "BLUESEA Gran Playa  ( SA COMA )"
     },
     "gS0omZvEl3NmWzjcHWr3": {
         "lat": 39.65838886517549,
@@ -5293,8 +5313,8 @@
         "nombre": "HOTEL CECILIA"
     },
     "jcpnp879tIGZZlDXtuN7": {
-        "lat": 39.50250509135692,
-        "lng": 2.753705978393555,
+        "lat": 39.501561042625234,
+        "lng": 2.753545045852661,
         "nombre": "MLL Caribbean Bay"
     },
     "jdt9avdmDuFC811GMNuk": {
@@ -5511,8 +5531,8 @@
         "nombre": "Apartamentos Villa Margarita"
     },
     "lSUt59TBTqkdtwycKFrL": {
-        "lat": 39.536392102099896,
-        "lng": 2.7173782168259524,
+        "lat": 39.536367637710114,
+        "lng": 2.7173459529876713,
         "nombre": "HM Alma Beach - Adults Only"
     },
     "lT8bTBCrAnd4F3OKK6HF": {
@@ -5973,11 +5993,6 @@
         "lng": 2.5370907783508305,
         "nombre": "Son Matias Beach"
     },
-    "p5zJoKg2nIOvXBHu5Icq": {
-        "lat": 39.53671522501513,
-        "lng": 2.7168202400207524,
-        "nombre": "Hotel Ilusion Calma & SPA"
-    },
     "pBPuixV82cyLfT94g7pl": {
         "lat": 39.36478229999999,
         "lng": 3.2221236,
@@ -6014,8 +6029,8 @@
         "nombre": "BLUE BAY"
     },
     "pyXNWBtlPFA884huAxAQ": {
-        "lat": 39.536284928303786,
-        "lng": 2.7175927162170415,
+        "lat": 39.536284902866804,
+        "lng": 2.717447876930237,
         "nombre": "PARADA DE TAXI Y FARMACIA"
     },
     "pzMVQS3j3KxU8R5jVSIZ": {
@@ -6079,11 +6094,6 @@
         "lat": 39.759517167683796,
         "lng": 3.1672757863998418,
         "nombre": "Ferrer Janeiro Hotel & Spa"
-    },
-    "qZzUWqagiIGL8UEY4gXu": {
-        "lat": 39.58584686152544,
-        "lng": 3.379186391830445,
-        "nombre": "HM Mar Blau"
     },
     "qcxZTkBTA2EHw0YZq3ld": {
         "lat": 39.536363413380414,
@@ -6686,8 +6696,8 @@
         "nombre": "HOTEL LIME PLAYA"
     },
     "wWoCiUWq6nOg43YXTR7T": {
-        "lat": 39.53680615701386,
-        "lng": 2.7166700363159184,
+        "lat": 39.53679790546574,
+        "lng": 2.716600298881531,
         "nombre": "Nautic Hotel & Spa"
     },
     "wWwZzOkYMLjNaqZXlTwU": {
@@ -6764,11 +6774,6 @@
         "lat": 39.53953663060919,
         "lng": 2.450450155707893,
         "nombre": "Villa Columbus restaurant and boutique hotel Paguera Mallorca"
-    },
-    "x4MAwZbZjlvsRanCtVZR": {
-        "lat": 39.57630859594174,
-        "lng": 3.375179180154442,
-        "nombre": "Welikehotel Marfil Playa"
     },
     "x4lfzxuHZ3PklFqRIOW7": {
         "lat": 39.58100966638689,
