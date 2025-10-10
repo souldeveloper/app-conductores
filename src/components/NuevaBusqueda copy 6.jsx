@@ -305,6 +305,41 @@ const MapaConductor = () => {
     }
   }, [hotelLists, customNotes, isAdminManuel, isLoaded]);
 
+  // Sincronizar listas con Firestore para admimanuel y usar localStorage para otros usuarios
+  useEffect(() => {
+    if (isAdminManuel) {
+      // Cargar listas desde Firestore al iniciar
+      const fetchListsFromFirestore = async () => {
+        const ref = doc(db, 'listasConductores', 'admimanuel');
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data && Array.isArray(data.lists)) {
+            setHotelLists(data.lists);
+          }
+        }
+      };
+      fetchListsFromFirestore();
+    } else {
+      // Cargar listas desde localStorage para otros usuarios
+      setHotelLists(cargarListasDesdeLocalStorage());
+    }
+  }, [isAdminManuel]);
+
+  useEffect(() => {
+    if (isAdminManuel) {
+      // Guardar listas en Firestore cuando se actualicen
+      const saveListsToFirestore = async () => {
+        const ref = doc(db, 'listasConductores', 'admimanuel');
+        await setDoc(ref, { lists: hotelLists }, { merge: true });
+      };
+      saveListsToFirestore();
+    } else {
+      // Guardar listas en localStorage para otros usuarios
+      guardarListasEnLocalStorage(hotelLists);
+    }
+  }, [hotelLists, isAdminManuel]);
+
   // Actualizar el estado de hotelLists y guardar en localStorage
   useEffect(() => {
     guardarListasEnLocalStorage(hotelLists);
@@ -375,16 +410,25 @@ const MapaConductor = () => {
   };
   const clearSearch = () => { setSearchQuery(''); setSearchResults([]); };
 
+  // Normalizar cadenas para ignorar acentos y caracteres especiales
+  const normalizeString = (str) => {
+    return str
+      .normalize("NFD") // Descomponer caracteres con tilde
+      .replace(/\p{Diacritic}/gu, "") // Eliminar marcas diacríticas
+      .replace(/[^\w\s]/gi, "") // Eliminar caracteres especiales
+      .toLowerCase();
+  };
+
   // Añadir búsqueda dinámica con sugerencias
   const handleSearchInput = (e) => {
-    const query = e.target.value.toLowerCase();
+    const query = normalizeString(e.target.value);
     setSearchQuery(query);
     if (query.trim() === "") {
       setSearchResults([]);
       return;
     }
     const suggestions = allHotels.filter((hotel) =>
-      hotel.nombre.toLowerCase().includes(query)
+      normalizeString(hotel.nombre).includes(query)
     );
     setSearchResults(suggestions.slice(0, 5)); // Limitar a 5 sugerencias
   };
