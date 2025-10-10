@@ -326,12 +326,15 @@ const MapaConductor = () => {
     }
   }, [isAdminManuel]);
 
+  // Guardar listas en Firestore solo después de sanitizarlas para evitar undefined
   useEffect(() => {
     if (isAdminManuel) {
       // Guardar listas en Firestore cuando se actualicen
       const saveListsToFirestore = async () => {
         const ref = doc(db, 'listasConductores', 'admimanuel');
-        await setDoc(ref, { lists: hotelLists }, { merge: true });
+        // Limpiar datos antes de guardar
+        const sanitizedLists = sanitizeForFirestore(hotelLists);
+        await setDoc(ref, { lists: sanitizedLists }, { merge: true });
       };
       saveListsToFirestore();
     } else {
