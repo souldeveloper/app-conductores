@@ -562,6 +562,42 @@ const MapaConductor = () => {
     navigate('/');
   };
 
+  // Agregar botones de Guardar y Cargar Listas para el usuario admimanuel
+  const guardarListasEnFirestore = async () => {
+    try {
+      const listasDesdeLocalStorage = cargarListasDesdeLocalStorage();
+      const ref = doc(db, 'listasConductores', 'admimanuel');
+      const sanitizedLists = sanitizeForFirestore(listasDesdeLocalStorage);
+      await setDoc(ref, { lists: sanitizedLists }, { merge: true });
+      alert('Listas guardadas en Firestore correctamente.');
+    } catch (error) {
+      console.error('Error al guardar listas en Firestore:', error);
+      alert('Hubo un error al guardar las listas en Firestore.');
+    }
+  };
+
+  const cargarListasDesdeFirestore = async () => {
+    try {
+      const ref = doc(db, 'listasConductores', 'admimanuel');
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data && Array.isArray(data.lists) && data.lists.length > 0) {
+          guardarListasEnLocalStorage(data.lists);
+          setHotelLists(data.lists);
+          alert('Listas cargadas desde Firestore correctamente.');
+        } else {
+          alert('No se encontraron listas válidas en Firestore.');
+        }
+      } else {
+        alert('No se encontraron listas en Firestore.');
+      }
+    } catch (error) {
+      console.error('Error al cargar listas desde Firestore:', error);
+      alert('Hubo un error al cargar las listas desde Firestore.');
+    }
+  };
+
   return (
     <Container fluid className="p-3">
       {/* Instrucciones de navegación */}
@@ -888,6 +924,18 @@ const MapaConductor = () => {
           )}
         </Col>
       </Row>
+
+      {/* Agregar botones de Guardar y Cargar Listas para el usuario admimanuel */}
+      {isAdminManuel && (
+        <div className="mb-3">
+          <Button variant="primary" onClick={guardarListasEnFirestore} className="me-2">
+            Guardar Listas
+          </Button>
+          <Button variant="secondary" onClick={cargarListasDesdeFirestore}>
+            Cargar Listas
+          </Button>
+        </div>
+      )}
     </Container>
   );
 };
